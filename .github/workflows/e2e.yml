@@ -3,7 +3,7 @@ name: E2E-Tests
 on:
   push:
     branches: [main]
-    paths-ignore: ['**.glb', 'CI-LOG.md']
+    paths-ignore: ['**.glb', 'CI-LOG.md', 'ci-screenshots/**']
   pull_request:
   workflow_dispatch:
 
@@ -46,18 +46,19 @@ jobs:
           echo "exit=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
           echo "=== Testlauf beendet: $(date -u '+%Y-%m-%d %H:%M:%S') UTC ==="
 
-      - name: Test-Report als Artefakt hochladen
+      - name: Test-Report und Screenshots als Artefakt hochladen
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report
           path: |
             playwright-report/
+            ci-screenshots/
             test-output.log
           retention-days: 14
           if-no-files-found: ignore
 
-      - name: Protokoll als CI-LOG.md ins Repository committen
+      - name: Protokoll und Karten-Screenshots ins Repository committen
         if: always() && github.event_name != 'pull_request'
         run: |
           {
@@ -79,11 +80,22 @@ jobs:
               if [ -f "$GITHUB_WORKSPACE/$f" ]; then tail -n 200 "$GITHUB_WORKSPACE/$f"; else echo "(nicht vorhanden)"; fi
               echo '```'
             done
+            echo
+            echo "## Karten-Screenshots"
+            echo
+            if [ -d "$GITHUB_WORKSPACE/ci-screenshots" ]; then
+              for p in "$GITHUB_WORKSPACE"/ci-screenshots/*.png; do
+                [ -f "$p" ] && echo "- [$(basename "$p")](ci-screenshots/$(basename "$p")) ($(stat -c%s "$p") Bytes)"
+              done
+            else
+              echo "(keine Screenshots vorhanden)"
+            fi
           } > CI-LOG.md
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add CI-LOG.md
-          ( git diff --cached --quiet || (git commit -m "CI: Protokoll Lauf #${GITHUB_RUN_NUMBER}" && git push) ) || echo "Protokoll-Push nicht moeglich"
+          if [ -d ci-screenshots ]; then git add ci-screenshots; fi
+          ( git diff --cached --quiet || (git commit -m "CI: Protokoll und Karten-Screenshots Lauf #${GITHUB_RUN_NUMBER}" && git push) ) || echo "Protokoll-Push nicht moeglich"
 
       - name: Lauf bewerten
         if: always()
