@@ -5,7 +5,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>PRO SKATER 99 — Warehouse Sessions Pro</title>
 <style>
-:root{color-scheme:dark}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#101820;font-family:Arial,Helvetica,sans-serif;color:#fff;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}canvas{display:block;width:100%;height:100%;touch-action:none}
+:root{color-scheme:dark}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#101820;font-family:Arial,Helvetica,sans-serif;color:#fff;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}canvas{display:block;width:100%;height:100%;touch-action:none}/* Haupt-Canvas am Viewport verankern (wie die Builder-Ansicht): Die Prozentkette html/body kann auf Android-Browsern zusammenbrechen (Leinwand 0x0, schwarzer Bildschirm), position:fixed misst sich immer am sichtbaren Bereich. */#game{position:fixed;inset:0;z-index:0}#hud{z-index:2}
 #hud{position:fixed;inset:0;pointer-events:none;padding:14px;display:none;text-shadow:2px 2px 3px #000}
 .row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.plate{background:#101820d9;border:1px solid #f5c542;border-radius:9px;padding:9px 13px;box-shadow:0 4px 16px #0006}.big{font-size:clamp(22px,4vw,34px);font-weight:900}.gold{color:#ffd34e}.cyan{color:#6de4ef}.muted{font-size:10px;letter-spacing:1.5px;color:#b8c6d1}.right{text-align:right}#trick{position:absolute;top:30%;left:50%;transform:translateX(-50%);font-size:clamp(20px,5vw,42px);font-weight:1000;color:#ffe46b;text-align:center;white-space:nowrap;text-shadow:3px 4px #111}#combo{font-size:16px;color:#fff}#help{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:#101820d9;padding:8px 12px;border-radius:7px;font-size:12px;white-space:nowrap}
 #pbtn{display:none;position:absolute;top:74px;right:14px;width:44px;height:44px;padding:0;border-radius:50%;pointer-events:auto;background:#152a3dcc;color:#fff;border:1px solid #ffffff99;box-shadow:none;font-size:15px}
@@ -277,7 +277,7 @@ let diagF=0;
     const gl=(renderer&&renderer.getContext)?renderer.getContext():null;
     const lost=gl&&gl.isContextLost?gl.isContextLost():false;
     const dr=(renderer&&renderer.info)?renderer.info.render.calls:0;
-    st.textContent='FPS '+f+(lost?' | 3D-KONTEXT TOT':' | 3D OK')+' | Draw '+dr+' | Leinwand '+canvas.clientWidth+'x'+canvas.clientHeight+' | Kamera '+(camera?camera.position.x.toFixed(1)+' '+camera.position.y.toFixed(1)+' '+camera.position.z.toFixed(1):'-');
+    st.textContent='FPS '+f+(lost?' | 3D-KONTEXT TOT':' | 3D OK')+' | Draw '+dr+' | Leinwand '+canvas.clientWidth+'x'+canvas.clientHeight+' (Puffer '+(gl?gl.drawingBufferWidth+'x'+gl.drawingBufferHeight:'-')+')'+' | Kamera '+(camera?camera.position.x.toFixed(1)+' '+camera.position.y.toFixed(1)+' '+camera.position.z.toFixed(1):'-');
    }catch(e){}
   },1000);
  }catch(e){}
@@ -3151,7 +3151,7 @@ function start(){
     Browser zwischenzeitlich eine Fenstergroesse von 0 (Leinwand kollabierte auf 0x0
     und der Bildschirm blieb schwarz). Die Leinwand wird deshalb nie auf 0 skaliert
     (siehe resize-Handler) und ihre Groesse mehrfach nachsynchronisiert. */
- const syncSize=()=>{try{const w=innerWidth,h=innerHeight;if(renderer&&camera&&w>0&&h>0){camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false)}}catch(e){}};
+ const syncSize=()=>{try{const w=canvas.clientWidth||innerWidth,h=canvas.clientHeight||innerHeight;if(renderer&&camera&&w>0&&h>0){camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false)}}catch(e){}};
  setTimeout(syncSize,350);setTimeout(syncSize,1000);setTimeout(syncSize,2500);
  /* Vorschau-Renderer der Menuevorschauen waehrend der Session freigeben:
     Mobil-Browser haben nur ein begrenztes WebGL-Kontextkontingent pro Tab. */
@@ -3238,7 +3238,7 @@ function init(){
    if(clock)clock.getDelta();
   },false);
   renderer.setPixelRatio(Math.min(devicePixelRatio,1.8));
-  renderer.setSize(Math.max(innerWidth,1),Math.max(innerHeight,1),false); /* updateStyle=false: CSS-Groesse 100% bleibt aktiv, die Leinwand kann nie auf 0px kollabieren */
+  renderer.setSize(Math.max(canvas.clientWidth||innerWidth,1),Math.max(canvas.clientHeight||innerHeight,1),false); /* Groesse vom fix verankerten Canvas selbst (Layout-Mass statt Fenster-Mass) */
   renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
   renderer.outputEncoding=THREE.sRGBEncoding;
   renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.0;
@@ -3824,7 +3824,7 @@ document.querySelectorAll('[data-act]').forEach(b=>{
 })();
 addEventListener('contextmenu',e=>e.preventDefault());
 addEventListener('orientationchange',()=>{tilt.cal=true});
-addEventListener('resize',()=>{if(camera&&renderer&&innerWidth>0&&innerHeight>0){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight,false)} /* Groesse 0 waehrend Android-Vollbild-Wechsel ignorieren: CSS-100% haelt die Leinwand sichtbar */
+addEventListener('resize',()=>{const w=canvas.clientWidth,h=canvas.clientHeight;if(camera&&renderer&&w>0&&h>0){camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false)} /* Groesse 0 ignorieren: Das Canvas ist position:fixed und misst sich am Viewport, nicht an der html/body-Prozentkette */
  if(prevMapR){const mc=$('mapprev'),cc=$('charprev');if(mc&&cc){const mw=mc.clientWidth||224,mh=mc.clientHeight||138,cw=cc.clientWidth||224,chh=cc.clientHeight||138;
   prevMapR.setSize(mw,mh,false);prevMapCam.aspect=mw/mh;prevMapCam.updateProjectionMatrix();
   prevCharR.setSize(cw,chh,false);prevCharCam.aspect=cw/chh;prevCharCam.updateProjectionMatrix()}}});
