@@ -59,54 +59,6 @@ async function canvasAlive(page, selector) {
   }, selector);
 }
 
-/* HUD und Diagnose-Overlays ausblenden, damit das Bild nur die 3D-Szene zeigt */
-async function hideOverlays(page) {
-  return page.evaluate(() => {
-    const hidden = [];
-    const hud = document.getElementById('hud');
-    if (hud) { hidden.push(hud); hud.style.display = 'none'; }
-    for (const d of Array.from(document.querySelectorAll('body > div'))) {
-      const fixed = d.style.position === 'fixed';
-      const status = fixed && d.style.left === '0px' && d.style.bottom === '0px';
-      const errBar = fixed && d.style.top === '0px' && d.style.left === '0px' && d.style.right === '0px';
-      if (status || errBar) { hidden.push(d); d.style.display = 'none'; }
-    }
-    return hidden.length;
-  });
-}
-
-/* Bildschirmfoto auswerten: mittlere Helligkeit und Anzahl unterschiedlicher
-   Farbtoene (quantisiert auf 4096 Bins). Ein schwarzer Bildschirm (das
-   bekannte Fehlerbild auf Mobil-Geräten) liefert nahezu keine Bins. */
-async function sceneStats(page) {
-  const shot = await page.screenshot();
-  return page.evaluate(async b64 => {
-    const img = new Image();
-    img.src = 'data:image/png;base64,' + b64;
-    await img.decode();
-    const cv = document.createElement('canvas');
-    cv.width = img.width; cv.height = img.height;
-    const ctx = cv.getContext('2d');
-    ctx.drawImage(img, 0, 0);
-    const d = ctx.getImageData(0, 0, cv.width, cv.height).data;
-    let lum = 0, dark = 0;
-    const bins = new Set();
-    for (let i = 0; i < d.length; i += 4) {
-      const r = d[i], g = d[i + 1], b = d[i + 2];
-      lum += 0.2126 * r + 0.7152 * g + 0.0722 * b;
-      if (r + g + b < 24) dark++;
-      bins.add(((r >> 4) << 8) | ((g >> 4) << 4) | (b >> 4));
-    }
-    const n = d.length / 4;
-    return {
-      breite: img.width, hoehe: img.height,
-      meanLum: Math.round(lum / n * 10) / 10,
-      darkFraction: Math.round(dark / n * 1000) / 1000,
-      colorBins: bins.size
-    };
-  }, shot.toString('base64'));
-}
-
 async function startSession(page) {
   await page.goto('/pro-skater-99.html');
   await page.locator('#start').click();
@@ -132,6 +84,48 @@ test('Startmenü: Seite lädt ohne JS-Fehler, 3D-Grafik wird bereit', async ({ p
 test('Karte lädt und ist sichtbar: Szene rendert, kein schwarzer Bildschirm', async ({ page }) => {
   const errs = [];
   attachErrors(errs, page);
+  /* Sichtbarkeit direkt im WebGL-Puffer messen: Headless-Screenshots zeigen
+     WebGL-Inhalte unter SwiftShader oft als leer (Kompositing-Artefakt),
+     obwohl der Renderer zeichnet. Deshalb wird requestAnimationFrame so
+     ummantelt, dass nach einem gerenderten Frame ein Bildausschnitt aus der
+     Mitte des Puffers gelesen wird (readPixels ist nur unmittelbar nach dem
+     Render gueltig, solange preserveDrawingBuffer nicht gesetzt ist).
+     Ein schwarzer Bildschirm liefert fast nur dunkle, gleichfoermige Pixel. */
+  await page.addInitScript(() => {
+    window.__ps99Sample = null;
+    window.__ps99Want = false;
+    const orig = window.requestAnimationFrame.bind(window);
+    window.requestAnimationFrame = cb => orig(t => {
+      cb(t);
+      if (!window.__ps99Want) return;
+      window.__ps99Want = false;
+      try {
+        const c = document.getElementById('game');
+        if (!c) return;
+        const gl = c.getContext('webgl2') || c.getContext('webgl') || c.getContext('experimental-webgl');
+        if (!gl || gl.isContextLost()) return;
+        const w = 96, h = 96;
+        const x = Math.max(0, Math.floor((gl.drawingBufferWidth - w) / 2));
+        const y = Math.max(0, Math.floor((gl.drawingBufferHeight - h) / 2));
+        const px = new Uint8Array(w * h * 4);
+        gl.readPixels(x, y, w, h, gl.RGBA, gl.UNSIGNED_BYTE, px);
+        let lum = 0, dark = 0;
+        const bins = new Set();
+        for (let i = 0; i < px.length; i += 4) {
+          const r = px[i], g = px[i + 1], b = px[i + 2];
+          lum += 0.2126 * r + 0.7152 * g + 0.0722 * b;
+          if (r + g + b < 24) dark++;
+          bins.add(((r >> 4) << 8) | ((g >> 4) << 4) | (b >> 4));
+        }
+        const n = w * h;
+        window.__ps99Sample = {
+          meanLum: Math.round(lum / n * 10) / 10,
+          darkFraction: Math.round(dark / n * 1000) / 1000,
+          colorBins: bins.size
+        };
+      } catch (e) { /* Beprobung darf das Spiel niemals stoeren */ }
+    });
+  });
   await startSession(page);
   /* Szene einige Sekunden rendern lassen, dann den Zustand prüfen */
   const s = parseStatus(await waitForStatus(page));
@@ -140,12 +134,12 @@ test('Karte lädt und ist sichtbar: Szene rendert, kein schwarzer Bildschirm', a
   expect(await canvasAlive(page, '#game'), 'WebGL-Kontext des Hauptspiels muss leben').toBeTruthy();
   await expect(page.locator('#ctxlost'), 'Kontextverlust-Overlay darf nicht erscheinen').toBeHidden();
   await page.waitForTimeout(2000);
-  /* Sichtbarkeit der Karte: HUD und Diagnose ausblenden und das
-     tatsächliche Bild der 3D-Szene vermessen */
-  await hideOverlays(page);
-  const stats = await sceneStats(page);
-  expect(stats.colorBins, 'Die Karte muss sichtbaren, farbigen Inhalt zeigen: ' + JSON.stringify(stats)).toBeGreaterThan(40);
-  expect(stats.meanLum, 'Der Bildschirm darf nicht (nahezu) schwarz sein: ' + JSON.stringify(stats)).toBeGreaterThan(6);
+  /* Einen frisch gerenderten Frame beproben */
+  await page.evaluate(() => { window.__ps99Want = true; });
+  await page.waitForFunction(() => window.__ps99Sample !== null, null, { timeout: 15000 });
+  const stats = await page.evaluate(() => window.__ps99Sample);
+  expect(stats.colorBins, 'Die Karte muss sichtbaren, farbigen Inhalt zeigen (Beprobung des WebGL-Puffers, Mitte): ' + JSON.stringify(stats)).toBeGreaterThan(40);
+  expect(stats.meanLum, 'Das gerenderte Bild darf nicht (nahezu) schwarz sein: ' + JSON.stringify(stats)).toBeGreaterThan(6);
   expect(stats.darkFraction, 'Fast alle Pixel dürfen nicht schwarz sein: ' + JSON.stringify(stats)).toBeLessThan(0.99);
   expect(errs).toEqual([]);
   await test.info().attach('screenshot-karte', { body: await page.screenshot(), contentType: 'image/png' });
