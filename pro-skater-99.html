@@ -271,6 +271,12 @@ let diagF=0;
   const st=document.createElement('div');
   st.style.cssText='position:fixed;left:0;bottom:0;z-index:9999;background:#000000b8;color:#8fe8ff;font:10px/1.35 monospace;padding:2px 6px;pointer-events:none;white-space:nowrap;overflow:hidden;max-width:100vw';
   host.appendChild(st);
+  /* Detail-Diagnose (Zeile darueber, gold): erklaert, WARUM die Leinwand eine Groesse hat
+     oder warum nicht: Layout-Masse, berechnete CSS-Werte, Inline-Stil, DOM-Anbindung,
+     Fenster- und Pixeldichte. Bei Problemen genuegt ein Screenshot dieser Zeile. */
+  const st2=document.createElement('div');
+  st2.style.cssText='position:fixed;left:0;bottom:24px;z-index:9999;background:#000000b8;color:#ffd34e;font:10px/1.4 monospace;padding:2px 6px;pointer-events:none;white-space:pre-wrap;word-break:break-all;max-width:100vw';
+  host.appendChild(st2);
   setInterval(()=>{
    try{
     const f=diagF;diagF=0;
@@ -278,6 +284,10 @@ let diagF=0;
     const lost=gl&&gl.isContextLost?gl.isContextLost():false;
     const dr=(renderer&&renderer.info)?renderer.info.render.calls:0;
     st.textContent='FPS '+f+(lost?' | 3D-KONTEXT TOT':' | 3D OK')+' | Draw '+dr+' | Leinwand '+canvas.clientWidth+'x'+canvas.clientHeight+' (Puffer '+(gl?gl.drawingBufferWidth+'x'+gl.drawingBufferHeight:'-')+')'+' | Kamera '+(camera?camera.position.x.toFixed(1)+' '+camera.position.y.toFixed(1)+' '+camera.position.z.toFixed(1):'-');
+    try{
+     const cs=getComputedStyle(canvas),rc=canvas.getBoundingClientRect();
+     st2.textContent='Layout client '+canvas.clientWidth+'x'+canvas.clientHeight+' | rect '+Math.round(rc.width)+'x'+Math.round(rc.height)+' | CSS '+cs.display+' '+cs.position+' '+cs.width+'x'+cs.height+' | inline "'+(canvas.getAttribute('style')||'')+'" | Eltern '+(canvas.parentElement?canvas.parentElement.tagName:'-')+' | imDOM='+canvas.isConnected+' | Fenster '+innerWidth+'x'+innerHeight+' | dPR '+Math.round(devicePixelRatio*100)/100;
+    }catch(e2){}
    }catch(e){}
   },1000);
  }catch(e){}
@@ -3151,7 +3161,7 @@ function start(){
     Browser zwischenzeitlich eine Fenstergroesse von 0 (Leinwand kollabierte auf 0x0
     und der Bildschirm blieb schwarz). Die Leinwand wird deshalb nie auf 0 skaliert
     (siehe resize-Handler) und ihre Groesse mehrfach nachsynchronisiert. */
- const syncSize=()=>{try{const w=canvas.clientWidth||innerWidth,h=canvas.clientHeight||innerHeight;if(renderer&&camera&&w>0&&h>0){camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false)}}catch(e){}};
+ const syncSize=()=>{try{const w=innerWidth,h=innerHeight;if(renderer&&camera&&w>0&&h>0){camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h)}}catch(e){}}; // Fenstergroesse + Inline-Px-Stil (siehe init)
  setTimeout(syncSize,350);setTimeout(syncSize,1000);setTimeout(syncSize,2500);
  /* Vorschau-Renderer der Menuevorschauen waehrend der Session freigeben:
     Mobil-Browser haben nur ein begrenztes WebGL-Kontextkontingent pro Tab. */
@@ -3238,7 +3248,7 @@ function init(){
    if(clock)clock.getDelta();
   },false);
   renderer.setPixelRatio(Math.min(devicePixelRatio,1.8));
-  renderer.setSize(Math.max(canvas.clientWidth||innerWidth,1),Math.max(canvas.clientHeight||innerHeight,1),false); /* Groesse vom fix verankerten Canvas selbst (Layout-Mass statt Fenster-Mass) */
+  renderer.setSize(Math.max(innerWidth,1),Math.max(innerHeight,1)); /* Fenstergroesse ALS INLINE-PX-STIL: Die CSS-Prozentkette kollabierte auf Samsung Browser (Leinwand 0x0, schwarzer Bildschirm), Inline-Pixelstile sind auf jedem Browser stabil. Bewaehrt im Standalone-Map-Builder. Guards verhindern 0. */
   renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
   renderer.outputEncoding=THREE.sRGBEncoding;
   renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.0;
@@ -3649,12 +3659,12 @@ function initPreviews(){
   const mw=mc.clientWidth||224,mh=mc.clientHeight||138,cw=cc.clientWidth||224,chh=cc.clientHeight||138;
   prevMapR=new THREE.WebGLRenderer({canvas:mc,antialias:true});
   prevMapR.setPixelRatio(Math.min(devicePixelRatio||1,1.5));
-  prevMapR.setSize(mw,mh,false);
+  prevMapR.setSize(mw,mh); // Inline-Px-Stil statt Prozentkette (gleiches Robustheitsmuster wie Haupt-Canvas)
   prevMapR.shadowMap.enabled=false;
   prevMapCam=new THREE.PerspectiveCamera(50,mw/mh,1,320);
   prevCharR=new THREE.WebGLRenderer({canvas:cc,antialias:true});
   prevCharR.setPixelRatio(Math.min(devicePixelRatio||1,1.5));
-  prevCharR.setSize(cw,chh,false);
+  prevCharR.setSize(cw,chh); // Inline-Px-Stil statt Prozentkette
   prevCharR.shadowMap.enabled=false;
   prevCharCam=new THREE.PerspectiveCamera(40,cw/chh,.05,20);
   prevScene=new THREE.Scene();
@@ -3824,10 +3834,10 @@ document.querySelectorAll('[data-act]').forEach(b=>{
 })();
 addEventListener('contextmenu',e=>e.preventDefault());
 addEventListener('orientationchange',()=>{tilt.cal=true});
-addEventListener('resize',()=>{const w=canvas.clientWidth,h=canvas.clientHeight;if(camera&&renderer&&w>0&&h>0){camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false)} /* Groesse 0 ignorieren: Das Canvas ist position:fixed und misst sich am Viewport, nicht an der html/body-Prozentkette */
+addEventListener('resize',()=>{if(camera&&renderer&&innerWidth>0&&innerHeight>0){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)} /* Groesse 0 ignorieren (Vollbild-/Orientierungswechsel); Inline-Px-Stil haelt die Leinwand auf allen Browsern sichtbar */
  if(prevMapR){const mc=$('mapprev'),cc=$('charprev');if(mc&&cc){const mw=mc.clientWidth||224,mh=mc.clientHeight||138,cw=cc.clientWidth||224,chh=cc.clientHeight||138;
-  prevMapR.setSize(mw,mh,false);prevMapCam.aspect=mw/mh;prevMapCam.updateProjectionMatrix();
-  prevCharR.setSize(cw,chh,false);prevCharCam.aspect=cw/chh;prevCharCam.updateProjectionMatrix()}}});
+  prevMapR.setSize(mw,mh);prevMapCam.aspect=mw/mh;prevMapCam.updateProjectionMatrix();
+  prevCharR.setSize(cw,chh);prevCharCam.aspect=cw/chh;prevCharCam.updateProjectionMatrix()}}});
 init();
 })();</script>
 <script>
