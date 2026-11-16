@@ -1,11 +1,11 @@
 # E2E-Testlauf
 
-- Commit: d28726d
-- Lauf: 9 (ID 43967999919)
-- Zeit (UTC): 2026-11-16 22:20:04
+- Commit: 83f1fc1
+- Lauf: 10 (ID 43970008376)
+- Zeit (UTC): 2026-11-16 22:30:42
 - npm install: success
 - Playwright-Installation: success
-- Testlauf: success (Exit-Code: 1)
+- Testlauf: success (Exit-Code: 0)
 
 ## Ausgaben
 
@@ -13,7 +13,7 @@
 
 ```
 
-added 3 packages in 2s
+added 3 packages in 1s
 ```
 
 ### pw-install.log
@@ -21,29 +21,29 @@ added 3 packages in 2s
 ```
 Installing dependencies...
 Switching to root user to install dependencies...
-Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
-Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
-Get:6 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
-Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
-Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
-Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
-Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [711 kB]
+Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [152 B]
+Get:5 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+Get:6 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [711 kB]
+Hit:2 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble InRelease
+Get:7 http://security.ubuntu.com/ubuntu noble-security InRelease [126 kB]
 Get:8 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [781 kB]
-Get:9 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1450 kB]
-Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [315 kB]
-Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1713 kB]
-Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [345 kB]
-Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1883 kB]
-Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [430 kB]
-Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [14.6 kB]
-Get:16 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1195 kB]
-Get:17 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [238 kB]
-Get:18 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1229 kB]
-Get:19 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [248 kB]
-Get:20 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1788 kB]
-Get:21 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [411 kB]
-Get:22 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse Translation-en [12.7 kB]
-Fetched 13.1 MB in 1s (9249 kB/s)
+Get:3 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+Get:4 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+Get:9 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1450 kB]
+Get:16 http://security.ubuntu.com/ubuntu noble-security/main amd64 Packages [1195 kB]
+Get:10 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [315 kB]
+Get:11 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1713 kB]
+Get:12 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [345 kB]
+Get:13 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1883 kB]
+Get:14 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [430 kB]
+Get:15 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [14.6 kB]
+Get:17 http://security.ubuntu.com/ubuntu noble-security/main Translation-en [238 kB]
+Get:18 http://security.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1229 kB]
+Get:19 http://security.ubuntu.com/ubuntu noble-security/universe Translation-en [248 kB]
+Get:20 http://security.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1788 kB]
+Get:21 http://security.ubuntu.com/ubuntu noble-security/restricted Translation-en [411 kB]
+Get:22 http://security.ubuntu.com/ubuntu noble-security/multiverse Translation-en [12.7 kB]
+Fetched 13.1 MB in 3s (4657 kB/s)
 Reading package lists...
 Reading package lists...
 Building dependency tree...
@@ -106,22 +106,22 @@ The following NEW packages will be installed:
   fonts-freefont-ttf fonts-ipafont-gothic fonts-tlwg-loma-otf fonts-unifont
   fonts-wqy-zenhei xfonts-cyrillic xfonts-encodings xfonts-scalable
   xfonts-utils
-0 upgraded, 9 newly installed, 0 to remove and 21 not upgraded.
+0 upgraded, 9 newly installed, 0 to remove and 24 not upgraded.
 Need to get 21.1 MB of archives.
 After this operation, 79.5 MB of additional disk space will be used.
-Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
-Get:2 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-ipafont-gothic all 00303-21ubuntu1 [3513 kB]
-Get:3 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 fonts-freefont-ttf all 20211204+svn4273-2 [5641 kB]
-Get:4 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-tlwg-loma-otf all 1:0.7.3-1 [107 kB]
-Get:5 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-unifont all 1:15.1.01-1build1 [2993 kB]
-Get:6 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-wqy-zenhei all 0.9.45-8 [7472 kB]
-Get:7 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-encodings all 1:1.0.5-0ubuntu2 [578 kB]
-Get:8 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-utils amd64 1:7.7+6build3 [94.4 kB]
-Get:9 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 xfonts-cyrillic all 1:1.0.5+nmu1 [384 kB]
-Get:10 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-scalable all 1:1.0.3-1.3 [304 kB]
-Fetched 21.1 MB in 1s (18.1 MB/s)
+Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [152 B]
+Get:2 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-ipafont-gothic all 00303-21ubuntu1 [3513 kB]
+Get:3 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 fonts-freefont-ttf all 20211204+svn4273-2 [5641 kB]
+Get:4 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-tlwg-loma-otf all 1:0.7.3-1 [107 kB]
+Get:5 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-unifont all 1:15.1.01-1build1 [2993 kB]
+Get:6 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-wqy-zenhei all 0.9.45-8 [7472 kB]
+Get:7 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-encodings all 1:1.0.5-0ubuntu2 [578 kB]
+Get:8 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-utils amd64 1:7.7+6build3 [94.4 kB]
+Get:9 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 xfonts-cyrillic all 1:1.0.5+nmu1 [384 kB]
+Get:10 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-scalable all 1:1.0.3-1.3 [304 kB]
+Fetched 21.1 MB in 2s (11.3 MB/s)
 Selecting previously unselected package fonts-ipafont-gothic.
-(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 216752 files and directories currently installed.)
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 216380 files and directories currently installed.)
 Preparing to unpack .../0-fonts-ipafont-gothic_00303-21ubuntu1_all.deb ...
 Unpacking fonts-ipafont-gothic (00303-21ubuntu1) ...
 Selecting previously unselected package fonts-freefont-ttf.
@@ -215,145 +215,53 @@ Chromium Headless Shell 133.0.6943.16 (playwright build v1155) downloaded to /ho
 ### test-output.log
 
 ```
-[WebServer] 127.0.0.1 - - [16/Nov/2026 22:14:38] "GET / HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:27:24] "GET / HTTP/1.1" 200 -
 
 Running 12 tests using 1 worker
 
-[WebServer] 127.0.0.1 - - [16/Nov/2026 22:14:39] "GET /pro-skater-99.html HTTP/1.1" 200 -
-  ✓  1 [chromium] › tests/game.spec.js:68:1 › Startmenü: Seite lädt ohne JS-Fehler, 3D-Grafik wird bereit (5.8s)
-[WebServer] 127.0.0.1 - - [16/Nov/2026 22:14:47] "GET /pro-skater-99.html HTTP/1.1" 200 -
-  ✓  2 [chromium] › tests/game.spec.js:84:1 › Karte lädt und ist sichtbar: Szene rendert, kein schwarzer Bildschirm (33.3s)
-[WebServer] 127.0.0.1 - - [16/Nov/2026 22:15:22] "GET /pro-skater-99.html HTTP/1.1" 200 -
-  ✓  3 [chromium] › tests/game.spec.js:148:1 › Session: HUD sichtbar, Renderer aktiv, Draw-Calls über null (16.9s)
-[WebServer] 127.0.0.1 - - [16/Nov/2026 22:15:38] "GET /pro-skater-99.html HTTP/1.1" 200 -
-  ✓  4 [chromium] › tests/game.spec.js:161:1 › Fahrt: Beschleunigen und Ollie bewegen die Kamera, kein Fehler (23.5s)
-[WebServer] 127.0.0.1 - - [16/Nov/2026 22:15:59] "GET /pro-skater-99.html HTTP/1.1" 200 -
-  ✓  5 [chromium] › tests/game.spec.js:183:1 › Map Builder: öffnen und schließen, Haupt-3D läuft danach weiter (20.6s)
-[WebServer] 127.0.0.1 - - [16/Nov/2026 22:16:22] "GET /mapbuilder.html HTTP/1.1" 200 -
-  ✓  6 [chromium] › tests/mapbuilder.spec.js:15:1 › Standalone-Builder: lädt, rendert und zeigt die Demo-Karte an (6.1s)
-[WebServer] 127.0.0.1 - - [16/Nov/2026 22:16:26] "GET /pro-skater-99.html HTTP/1.1" 200 -
-  ✘  7 [chromium] › tests/screenshots.spec.js:126:3 › Karte tutorial laedt und ist sichtbar (Screenshot als Beleg) (26.5s)
-[WebServer] 127.0.0.1 - - [16/Nov/2026 22:16:54] "GET /pro-skater-99.html HTTP/1.1" 200 -
-  ✘  8 [chromium] › tests/screenshots.spec.js:126:3 › Karte tutorial laedt und ist sichtbar (Screenshot als Beleg) (retry #1) (23.9s)
-[WebServer] 127.0.0.1 - - [16/Nov/2026 22:17:21] "GET /pro-skater-99.html HTTP/1.1" 200 -
-  ✘  9 [chromium] › tests/screenshots.spec.js:126:3 › Karte warehouse laedt und ist sichtbar (Screenshot als Beleg) (23.9s)
-[WebServer] 127.0.0.1 - - [16/Nov/2026 22:17:46] "GET /pro-skater-99.html HTTP/1.1" 200 -
-  ✘  10 [chromium] › tests/screenshots.spec.js:126:3 › Karte warehouse laedt und ist sichtbar (Screenshot als Beleg) (retry #1) (23.4s)
-[WebServer] 127.0.0.1 - - [16/Nov/2026 22:18:15] "GET /pro-skater-99.html HTTP/1.1" 200 -
-KARTEN-SCREENSHOT school: {"datei":"ci-screenshots/school.png","bytes":142283,"breite":1280,"hoehe":720,"meanLum":206.9,"darkFraction":0.002,"colorBins":463}
-  ✓  11 [chromium] › tests/screenshots.spec.js:126:3 › Karte school laedt und ist sichtbar (Screenshot als Beleg) (20.8s)
-[WebServer] 127.0.0.1 - - [16/Nov/2026 22:18:39] "GET /pro-skater-99.html HTTP/1.1" 200 -
-KARTEN-SCREENSHOTS: [{"datei":"ci-screenshots/school.png","bytes":142283,"breite":1280,"hoehe":720,"meanLum":206.9,"darkFraction":0.002,"colorBins":463}]
-  ✘  12 [chromium] › tests/screenshots.spec.js:126:3 › Karte minipark laedt und ist sichtbar (Screenshot als Beleg) (27.6s)
-[WebServer] 127.0.0.1 - - [16/Nov/2026 22:19:06] "GET /pro-skater-99.html HTTP/1.1" 200 -
-  ✘  13 [chromium] › tests/screenshots.spec.js:126:3 › Karte minipark laedt und ist sichtbar (Screenshot als Beleg) (retry #1) (24.3s)
-[WebServer] 127.0.0.1 - - [16/Nov/2026 22:19:32] "GET /pro-skater-99.html HTTP/1.1" 200 -
-KARTEN-SCREENSHOT funpark: {"datei":"ci-screenshots/funpark.png","bytes":134058,"breite":1280,"hoehe":720,"meanLum":205.6,"darkFraction":0.001,"colorBins":369}
-  ✓  14 [chromium] › tests/screenshots.spec.js:126:3 › Karte funpark laedt und ist sichtbar (Screenshot als Beleg) (20.3s)
-[WebServer] 127.0.0.1 - - [16/Nov/2026 22:19:58] "GET /mapbuilder.html HTTP/1.1" 200 -
-KARTEN-SCREENSHOT builder-demo: {"datei":"ci-screenshots/builder-demo.png","bytes":48893,"breite":1280,"hoehe":720,"meanLum":84.4,"darkFraction":0,"colorBins":96}
-KARTEN-SCREENSHOTS: [{"datei":"ci-screenshots/funpark.png","bytes":134058,"breite":1280,"hoehe":720,"meanLum":205.6,"darkFraction":0.001,"colorBins":369},{"datei":"ci-screenshots/builder-demo.png","bytes":48893,"breite":1280,"hoehe":720,"meanLum":84.4,"darkFraction":0,"colorBins":96}]
-  ✓  15 [chromium] › tests/screenshots.spec.js:152:1 › Map-Builder-Demo-Karte laedt und ist sichtbar (Screenshot als Beleg) (8.3s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:27:25] "GET /pro-skater-99.html HTTP/1.1" 200 -
+  ✓  1 [chromium] › tests/game.spec.js:68:1 › Startmenü: Seite lädt ohne JS-Fehler, 3D-Grafik wird bereit (4.3s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:27:31] "GET /pro-skater-99.html HTTP/1.1" 200 -
+  ✓  2 [chromium] › tests/game.spec.js:84:1 › Karte lädt und ist sichtbar: Szene rendert, kein schwarzer Bildschirm (23.4s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:27:56] "GET /pro-skater-99.html HTTP/1.1" 200 -
+  ✓  3 [chromium] › tests/game.spec.js:148:1 › Session: HUD sichtbar, Renderer aktiv, Draw-Calls über null (13.7s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:28:08] "GET /pro-skater-99.html HTTP/1.1" 200 -
+  ✓  4 [chromium] › tests/game.spec.js:161:1 › Fahrt: Beschleunigen und Ollie bewegen die Kamera, kein Fehler (19.7s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:28:27] "GET /pro-skater-99.html HTTP/1.1" 200 -
+  ✓  5 [chromium] › tests/game.spec.js:183:1 › Map Builder: öffnen und schließen, Haupt-3D läuft danach weiter (19.0s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:28:49] "GET /mapbuilder.html HTTP/1.1" 200 -
+  ✓  6 [chromium] › tests/mapbuilder.spec.js:15:1 › Standalone-Builder: lädt, rendert und zeigt die Demo-Karte an (6.0s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:28:51] "GET /pro-skater-99.html HTTP/1.1" 200 -
+KARTEN-SCREENSHOT tutorial: {"datei":"ci-screenshots/tutorial.png","bytes":92900,"breite":480,"hoehe":270,"meanLum":200.2,"darkFraction":0,"colorBins":213}
+  ✓  7 [chromium] › tests/screenshots.spec.js:178:3 › Karte tutorial laedt und ist sichtbar (Screenshot als Beleg) (20.0s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:29:11] "GET /pro-skater-99.html HTTP/1.1" 200 -
+KARTEN-SCREENSHOT warehouse: {"datei":"ci-screenshots/warehouse.png","bytes":65488,"breite":480,"hoehe":270,"meanLum":239.7,"darkFraction":0,"colorBins":178}
+  ✓  8 [chromium] › tests/screenshots.spec.js:178:3 › Karte warehouse laedt und ist sichtbar (Screenshot als Beleg) (24.4s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:29:36] "GET /pro-skater-99.html HTTP/1.1" 200 -
+KARTEN-SCREENSHOT school: {"datei":"ci-screenshots/school.png","bytes":102341,"breite":480,"hoehe":270,"meanLum":214.6,"darkFraction":0,"colorBins":216}
+  ✓  9 [chromium] › tests/screenshots.spec.js:178:3 › Karte school laedt und ist sichtbar (Screenshot als Beleg) (17.5s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:29:54] "GET /pro-skater-99.html HTTP/1.1" 200 -
+KARTEN-SCREENSHOT minipark: {"datei":"ci-screenshots/minipark.png","bytes":87045,"breite":480,"hoehe":270,"meanLum":213.2,"darkFraction":0.002,"colorBins":272}
+  ✓  10 [chromium] › tests/screenshots.spec.js:178:3 › Karte minipark laedt und ist sichtbar (Screenshot als Beleg) (19.8s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:30:14] "GET /pro-skater-99.html HTTP/1.1" 200 -
+KARTEN-SCREENSHOT funpark: {"datei":"ci-screenshots/funpark.png","bytes":94988,"breite":480,"hoehe":270,"meanLum":202.1,"darkFraction":0,"colorBins":301}
+  ✓  11 [chromium] › tests/screenshots.spec.js:178:3 › Karte funpark laedt und ist sichtbar (Screenshot als Beleg) (22.4s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 22:30:36] "GET /mapbuilder.html HTTP/1.1" 200 -
+KARTEN-SCREENSHOT builder-demo: {"datei":"ci-screenshots/builder-demo.png","bytes":36775,"breite":480,"hoehe":270,"meanLum":189.1,"darkFraction":0,"colorBins":91}
+KARTEN-SCREENSHOTS: [{"datei":"ci-screenshots/tutorial.png","bytes":92900,"breite":480,"hoehe":270,"meanLum":200.2,"darkFraction":0,"colorBins":213},{"datei":"ci-screenshots/warehouse.png","bytes":65488,"breite":480,"hoehe":270,"meanLum":239.7,"darkFraction":0,"colorBins":178},{"datei":"ci-screenshots/school.png","bytes":102341,"breite":480,"hoehe":270,"meanLum":214.6,"darkFraction":0,"colorBins":216},{"datei":"ci-screenshots/minipark.png","bytes":87045,"breite":480,"hoehe":270,"meanLum":213.2,"darkFraction":0.002,"colorBins":272},{"datei":"ci-screenshots/funpark.png","bytes":94988,"breite":480,"hoehe":270,"meanLum":202.1,"darkFraction":0,"colorBins":301},{"datei":"ci-screenshots/builder-demo.png","bytes":36775,"breite":480,"hoehe":270,"meanLum":189.1,"darkFraction":0,"colorBins":91}]
+  ✓  12 [chromium] › tests/screenshots.spec.js:204:1 › Map-Builder-Demo-Karte laedt und ist sichtbar (Screenshot als Beleg) (3.9s)
 
-
-  1) [chromium] › tests/screenshots.spec.js:126:3 › Karte tutorial laedt und ist sichtbar (Screenshot als Beleg) 
-
-    TimeoutError: page.waitForFunction: Timeout 10000ms exceeded.
-
-      81 |   for (let i = 0; i < attempts; i++) {
-      82 |     await page.evaluate(() => { const st = window.__ps99; st.done = false; st.error = null; st.wantShot = true; });
-    > 83 |     await page.waitForFunction(() => window.__ps99 && window.__ps99.done, null, { timeout: 10000 });
-         |                ^
-      84 |     const r = await page.evaluate(() => ({ dataUrl: window.__ps99.dataUrl, stats: window.__ps99.stats, error: window.__ps99.error }));
-      85 |     if (r.error) throw new Error('Aufnahme fehlgeschlagen: ' + r.error);
-      86 |     if (!r.stats) throw new Error('Aufnahme ohne Messwerte');
-        at capture (/home/runner/work/skater/skater/tests/screenshots.spec.js:83:16)
-        at /home/runner/work/skater/skater/tests/screenshots.spec.js:142:18
-
-    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
-
-    TimeoutError: page.waitForFunction: Timeout 10000ms exceeded.
-
-      81 |   for (let i = 0; i < attempts; i++) {
-      82 |     await page.evaluate(() => { const st = window.__ps99; st.done = false; st.error = null; st.wantShot = true; });
-    > 83 |     await page.waitForFunction(() => window.__ps99 && window.__ps99.done, null, { timeout: 10000 });
-         |                ^
-      84 |     const r = await page.evaluate(() => ({ dataUrl: window.__ps99.dataUrl, stats: window.__ps99.stats, error: window.__ps99.error }));
-      85 |     if (r.error) throw new Error('Aufnahme fehlgeschlagen: ' + r.error);
-      86 |     if (!r.stats) throw new Error('Aufnahme ohne Messwerte');
-        at capture (/home/runner/work/skater/skater/tests/screenshots.spec.js:83:16)
-        at /home/runner/work/skater/skater/tests/screenshots.spec.js:142:18
-
-  2) [chromium] › tests/screenshots.spec.js:126:3 › Karte warehouse laedt und ist sichtbar (Screenshot als Beleg) 
-
-    TimeoutError: page.waitForFunction: Timeout 10000ms exceeded.
-
-      81 |   for (let i = 0; i < attempts; i++) {
-      82 |     await page.evaluate(() => { const st = window.__ps99; st.done = false; st.error = null; st.wantShot = true; });
-    > 83 |     await page.waitForFunction(() => window.__ps99 && window.__ps99.done, null, { timeout: 10000 });
-         |                ^
-      84 |     const r = await page.evaluate(() => ({ dataUrl: window.__ps99.dataUrl, stats: window.__ps99.stats, error: window.__ps99.error }));
-      85 |     if (r.error) throw new Error('Aufnahme fehlgeschlagen: ' + r.error);
-      86 |     if (!r.stats) throw new Error('Aufnahme ohne Messwerte');
-        at capture (/home/runner/work/skater/skater/tests/screenshots.spec.js:83:16)
-        at /home/runner/work/skater/skater/tests/screenshots.spec.js:142:18
-
-    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
-
-    TimeoutError: page.waitForFunction: Timeout 10000ms exceeded.
-
-      81 |   for (let i = 0; i < attempts; i++) {
-      82 |     await page.evaluate(() => { const st = window.__ps99; st.done = false; st.error = null; st.wantShot = true; });
-    > 83 |     await page.waitForFunction(() => window.__ps99 && window.__ps99.done, null, { timeout: 10000 });
-         |                ^
-      84 |     const r = await page.evaluate(() => ({ dataUrl: window.__ps99.dataUrl, stats: window.__ps99.stats, error: window.__ps99.error }));
-      85 |     if (r.error) throw new Error('Aufnahme fehlgeschlagen: ' + r.error);
-      86 |     if (!r.stats) throw new Error('Aufnahme ohne Messwerte');
-        at capture (/home/runner/work/skater/skater/tests/screenshots.spec.js:83:16)
-        at /home/runner/work/skater/skater/tests/screenshots.spec.js:142:18
-
-  3) [chromium] › tests/screenshots.spec.js:126:3 › Karte minipark laedt und ist sichtbar (Screenshot als Beleg) 
-
-    TimeoutError: page.waitForFunction: Timeout 10000ms exceeded.
-
-      81 |   for (let i = 0; i < attempts; i++) {
-      82 |     await page.evaluate(() => { const st = window.__ps99; st.done = false; st.error = null; st.wantShot = true; });
-    > 83 |     await page.waitForFunction(() => window.__ps99 && window.__ps99.done, null, { timeout: 10000 });
-         |                ^
-      84 |     const r = await page.evaluate(() => ({ dataUrl: window.__ps99.dataUrl, stats: window.__ps99.stats, error: window.__ps99.error }));
-      85 |     if (r.error) throw new Error('Aufnahme fehlgeschlagen: ' + r.error);
-      86 |     if (!r.stats) throw new Error('Aufnahme ohne Messwerte');
-        at capture (/home/runner/work/skater/skater/tests/screenshots.spec.js:83:16)
-        at /home/runner/work/skater/skater/tests/screenshots.spec.js:142:18
-
-    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
-
-    TimeoutError: page.waitForFunction: Timeout 10000ms exceeded.
-
-      81 |   for (let i = 0; i < attempts; i++) {
-      82 |     await page.evaluate(() => { const st = window.__ps99; st.done = false; st.error = null; st.wantShot = true; });
-    > 83 |     await page.waitForFunction(() => window.__ps99 && window.__ps99.done, null, { timeout: 10000 });
-         |                ^
-      84 |     const r = await page.evaluate(() => ({ dataUrl: window.__ps99.dataUrl, stats: window.__ps99.stats, error: window.__ps99.error }));
-      85 |     if (r.error) throw new Error('Aufnahme fehlgeschlagen: ' + r.error);
-      86 |     if (!r.stats) throw new Error('Aufnahme ohne Messwerte');
-        at capture (/home/runner/work/skater/skater/tests/screenshots.spec.js:83:16)
-        at /home/runner/work/skater/skater/tests/screenshots.spec.js:142:18
-
-  Slow test file: [chromium] › tests/game.spec.js (1.7m)
+  Slow test file: [chromium] › tests/screenshots.spec.js (1.8m)
+  Slow test file: [chromium] › tests/game.spec.js (1.3m)
   Consider running tests from slow files in parallel, see https://playwright.dev/docs/test-parallel.
-  3 failed
-    [chromium] › tests/screenshots.spec.js:126:3 › Karte tutorial laedt und ist sichtbar (Screenshot als Beleg) 
-    [chromium] › tests/screenshots.spec.js:126:3 › Karte warehouse laedt und ist sichtbar (Screenshot als Beleg) 
-    [chromium] › tests/screenshots.spec.js:126:3 › Karte minipark laedt und ist sichtbar (Screenshot als Beleg) 
-  9 passed (5.4m)
+  12 passed (3.3m)
 ```
 
 ## Karten-Screenshots
 
-- [builder-demo.png](ci-screenshots/builder-demo.png) (48893 Bytes)
-- [funpark.png](ci-screenshots/funpark.png) (134058 Bytes)
-- [minipark.png](ci-screenshots/minipark.png) (127211 Bytes)
-- [school.png](ci-screenshots/school.png) (142283 Bytes)
-- [tutorial.png](ci-screenshots/tutorial.png) (163874 Bytes)
-- [warehouse.png](ci-screenshots/warehouse.png) (158431 Bytes)
+- [builder-demo.png](ci-screenshots/builder-demo.png) (36775 Bytes)
+- [funpark.png](ci-screenshots/funpark.png) (94988 Bytes)
+- [minipark.png](ci-screenshots/minipark.png) (87045 Bytes)
+- [school.png](ci-screenshots/school.png) (102341 Bytes)
+- [tutorial.png](ci-screenshots/tutorial.png) (92900 Bytes)
+- [warehouse.png](ci-screenshots/warehouse.png) (65488 Bytes)
