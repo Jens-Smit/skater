@@ -5,7 +5,18 @@
    Die CI committet diese Bilder ins Repository.
    Grund: Headless-Screenshots zeigen WebGL-Inhalte unter SwiftShader
    oft als leere Flaeche (Kompositing-Artefakt); der Pufferinhalt ist
-   die direkte Wahrheit ueber das gezeichnete Bild. */
+   die direkte Wahrheit ueber das gezeichnete Bild.
+
+   Robustheit (Lauf 8/9 Lehre): readPixels + toDataURL ueber den Vollen
+   1280x720-Puffer sind unter SwiftShader so teuer, dass eine einzige
+   synchrone Aufnahme Zehntsekunden blockieren kann, waehrend der Test
+   parallel per requestAnimationFrame pollt und dann abbricht. Deshalb:
+   - Aufnahme eines zentralen 480x270-Ausschnitts (16x weniger Arbeit),
+   - Warten per Intervall-Polling (unabhaengig von ausgesetztem rAF),
+   - mehrere Versuche pro Karte statt sofortigem Abbruch,
+   - Herzschlag-Zaehler (rAF-Delta) und Aufzeichnung von Exceptions im
+     Spiel-Callback: schlaegt eine Aufnahme dennoch fehl, steht die
+     Ursache im Fehlermeldungstext und damit im CI-LOG. */
 const { test, expect } = require('@playwright/test');
 const fs = require('fs');
 const path = require('path');
@@ -25,21 +36,34 @@ function attachErrors(collector, page) {
    und kann auf Zuruf den Frame-Puffer des Spiels (oder Builders) lesen,
    wenden, skalieren und als PNG-Daten-URL bereitstellen. */
 const HOOK = () => {
-  window.__ps99 = { wantShot: false, done: false, sel: 'game', dataUrl: null, stats: null, error: null };
+  window.__ps99 = { wantShot: false, done: false, sel: 'game', dataUrl: null, stats: null, error: null, cbError: null, rafCount: 0, raf0: 0 };
   const orig = window.requestAnimationFrame.bind(window);
   window.requestAnimationFrame = cb => orig(t => {
-    cb(t);
+    const st0 = window.__ps99;
+    if (st0) st0.rafCount++; // Herzschlag: jede ausgelieferte Animationframe zaehlt
+    let cbErr = null;
+    try {
+      cb(t);
+    } catch (e) {
+      cbErr = (e && e.message) ? e.message : String(e);
+    }
     const st = window.__ps99;
-    if (!st || !st.wantShot) return;
+    if (!st) { if (cbErr) throw cbErr; return; }
+    if (!st.wantShot) { if (cbErr) { st.cbError = cbErr; throw cbErr; } return; }
     st.wantShot = false;
+    if (cbErr) st.cbError = cbErr;
     try {
       const c = st.sel === 'game' ? document.getElementById('game') : document.querySelector(st.sel);
-      if (!c) { st.error = 'Canvas nicht gefunden: ' + st.sel; st.done = true; return; }
+      if (!c) { st.error = 'Canvas nicht gefunden: ' + st.sel; st.done = true; if (cbErr) throw cbErr; return; }
       const gl = c.getContext('webgl2') || c.getContext('webgl') || c.getContext('experimental-webgl');
-      if (!gl || gl.isContextLost()) { st.error = 'Kein lebender WebGL-Kontext'; st.done = true; return; }
-      const w = gl.drawingBufferWidth, h = gl.drawingBufferHeight;
+      if (!gl || gl.isContextLost()) { st.error = 'Kein lebender WebGL-Kontext'; st.done = true; if (cbErr) throw cbErr; return; }
+      /* Zentraler Ausschnitt statt Vollpuffer: identische Aussagekraft,
+         ein Bruchteil der Rechenlast unter SwiftShader. */
+      const zw = 480, zh = 270;
+      const w = Math.min(gl.drawingBufferWidth, zw), h = Math.min(gl.drawingBufferHeight, zh);
+      const x = Math.floor((gl.drawingBufferWidth - w) / 2), y = Math.floor((gl.drawingBufferHeight - h) / 2);
       const px = new Uint8Array(w * h * 4);
-      gl.readPixels(0, 0, w, h, gl.RGBA, gl.UNSIGNED_BYTE, px);
+      gl.readPixels(x, y, w, h, gl.RGBA, gl.UNSIGNED_BYTE, px);
       let lum = 0, dark = 0;
       const bins = new Set();
       for (let i = 0; i < px.length; i += 4) {
@@ -55,39 +79,67 @@ const HOOK = () => {
         darkFraction: Math.round(dark / n * 1000) / 1000,
         colorBins: bins.size
       };
-      /* Zeilen wenden (readPixels-Origin ist unten links), dann skalieren */
+      /* Zeilen wenden (readPixels-Origin ist unten links) */
       const cv = document.createElement('canvas');
       cv.width = w; cv.height = h;
       const ctx = cv.getContext('2d');
       const img = ctx.createImageData(w, h);
       const row = w * 4;
-      for (let y = 0; y < h; y++) img.data.set(px.subarray(y * row, (y + 1) * row), (h - 1 - y) * row);
+      for (let yy = 0; yy < h; yy++) img.data.set(px.subarray(yy * row, (yy + 1) * row), (h - 1 - yy) * row);
       ctx.putImageData(img, 0, 0);
-      const zw = 640, zh = Math.max(1, Math.round(h * (zw / w)));
-      const small = document.createElement('canvas');
-      small.width = zw; small.height = zh;
-      small.getContext('2d').drawImage(cv, 0, 0, zw, zh);
-      st.dataUrl = small.toDataURL('image/png');
+      st.dataUrl = cv.toDataURL('image/png');
       st.stats = stats;
       st.done = true;
     } catch (e) { st.error = String((e && e.message) || e); st.done = true; }
+    if (cbErr) throw cbErr; // pageerror-Semantik des Spiels bewahren
   });
 };
 
-/* Aufnahme mit Wiederholung: falls ein Einzelbuffer gerade geleert war,
-   nochmals probieren; das beste Bild zaehlt. */
-async function capture(page, attempts = 8) {
-  let best = null;
+/* Diagnose aus der Seite ziehen: nur relevant, wenn eine Aufnahme nicht
+   fertiggestellt wird. landet im Fehlermeldungstext und damit im CI-LOG. */
+async function diagnose(page, label) {
+  return page.evaluate(lbl => {
+    const st = window.__ps99 || {};
+    const el = Array.from(document.querySelectorAll('body > div'))
+      .find(d => d.style.position === 'fixed' && d.style.left === '0px' && d.style.bottom === '0px');
+    let ctxInfo = 'n/a';
+    try {
+      const c = document.getElementById('game');
+      const gl = c && (c.getContext('webgl2') || c.getContext('webgl') || c.getContext('experimental-webgl'));
+      if (gl) ctxInfo = gl.isContextLost() ? 'verloren' : 'lebendig';
+    } catch (e) {}
+    return lbl + ': rAF-Delta=' + ((st.rafCount || 0) - (st.raf0 || 0)) +
+      ' | cbError=' + (st.cbError || 'keine') +
+      ' | hidden=' + document.hidden + ' | sichtbar=' + document.visibilityState +
+      ' | Kontext=' + ctxInfo +
+      ' | Statuszeile="' + (el ? el.textContent : 'nicht gefunden') + '"';
+  }, label);
+}
+
+/* Aufnahme mit Wiederholung: ein einzelner Versuch darf an traege
+   Runner-Bedingungen scheitern; die Diagnose des letzten Fehlversuchs
+   bleibt erhalten und wird erst nach Erschoepfung aller Versuche
+   mit dem Abbruch weitergereicht. */
+async function capture(page, attempts = 6) {
+  let best = null, lastDiag = 'kein Fehlversuch';
   for (let i = 0; i < attempts; i++) {
-    await page.evaluate(() => { const st = window.__ps99; st.done = false; st.error = null; st.wantShot = true; });
-    await page.waitForFunction(() => window.__ps99 && window.__ps99.done, null, { timeout: 10000 });
-    const r = await page.evaluate(() => ({ dataUrl: window.__ps99.dataUrl, stats: window.__ps99.stats, error: window.__ps99.error }));
+    await page.evaluate(() => { const st = window.__ps99; st.done = false; st.error = null; st.cbError = null; st.wantShot = true; st.raf0 = st.rafCount; });
+    try {
+      await page.waitForFunction(() => window.__ps99 && window.__ps99.done, null, { timeout: 15000, polling: 250 });
+    } catch (e) {
+      lastDiag = await diagnose(page, 'Versuch ' + (i + 1) + ' nicht fertiggestellt');
+      await page.waitForTimeout(500);
+      continue;
+    }
+    const r = await page.evaluate(() => ({ dataUrl: window.__ps99.dataUrl, stats: window.__ps99.stats, error: window.__ps99.error, cbError: window.__ps99.cbError }));
+    if (r.cbError) throw new Error('Spiel-Callback warf eine Exception: ' + r.cbError);
     if (r.error) throw new Error('Aufnahme fehlgeschlagen: ' + r.error);
     if (!r.stats) throw new Error('Aufnahme ohne Messwerte');
     if (!best || r.stats.colorBins > best.stats.colorBins) best = r;
     if (r.stats.colorBins > 40 && r.stats.meanLum > 6 && r.stats.darkFraction < 0.99) return r;
   }
-  return best;
+  if (best) return best;
+  throw new Error('Aufnahme nach ' + attempts + ' Versuchen nicht fertiggestellt. ' + lastDiag);
 }
 
 async function speichern(shot, name) {
