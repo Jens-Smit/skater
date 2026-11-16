@@ -34,9 +34,12 @@ jobs:
         id: tests
         continue-on-error: true
         run: |
-          npx playwright test > test-output.log 2>&1
-          echo "exit=$?" >> "$GITHUB_OUTPUT"
-          tail -n 50 test-output.log
+          set +e
+          echo "=== Testlauf begonnen: $(date -u '+%Y-%m-%d %H:%M:%S') UTC ==="
+          npx playwright test 2>&1 | tee "$GITHUB_WORKSPACE/test-output.log"
+          code=${PIPESTATUS[0]}
+          echo "exit=$code" >> "$GITHUB_OUTPUT"
+          echo "=== Testlauf beendet: $(date -u '+%Y-%m-%d %H:%M:%S') UTC, Exit-Code $code ==="
 
       - name: Test-Report als Artefakt hochladen
         if: always()
@@ -52,24 +55,25 @@ jobs:
       - name: Protokoll als CI-LOG.md ins Repository committen
         if: always() && github.event_name != 'pull_request'
         run: |
+          LOG="$GITHUB_WORKSPACE/test-output.log"
           {
             echo "# E2E-Testlauf"
             echo
             echo "- Commit: ${GITHUB_SHA:0:7}"
             echo "- Lauf: ${GITHUB_RUN_NUMBER} (ID ${GITHUB_RUN_ID})"
             echo "- Zeit (UTC): $(date -u '+%Y-%m-%d %H:%M:%S')"
-            echo "- Ergebnis: ${{ steps.tests.outputs.exit == '0' && 'ERFOLGREICH' || 'FEHLGESCHLAGEN' }}"
+            echo "- Ergebnis: ${{ steps.tests.outputs.exit == '0' && 'ERFOLGREICH' || 'FEHLGESCHLAGEN' }} (Exit-Code: ${{ steps.tests.outputs.exit }})"
             echo
-            echo "## Playwright-Ausgabe (letzte 300 Zeilen)"
+            echo "## Playwright-Ausgabe"
             echo
             echo '```'
-            tail -n 300 test-output.log 2>/dev/null || echo 'Kein Log vorhanden'
+            if [ -f "$LOG" ]; then tail -n 400 "$LOG"; else echo "Log fehlt unter $LOG. Verzeichnisinhalt:"; ls -la "$GITHUB_WORKSPACE"; fi
             echo '```'
           } > CI-LOG.md
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add CI-LOG.md
-          git diff --cached --quiet || (git commit -m "CI: Protokoll Lauf #${GITHUB_RUN_NUMBER}" && git push)
+          ( git diff --cached --quiet || (git commit -m "CI: Protokoll Lauf #${GITHUB_RUN_NUMBER}" && git push) ) || echo "Protokoll-Push nicht moeglich"
 
       - name: Lauf bei Testfehler als Fehlschlag markieren
         if: steps.tests.outputs.exit != '0'
