@@ -3,9 +3,12 @@ name: E2E-Tests
 on:
   push:
     branches: [main]
-    paths-ignore: ['**.glb']
+    paths-ignore: ['**.glb', 'CI-LOG.md']
   pull_request:
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   e2e:
@@ -21,19 +24,53 @@ jobs:
         with:
           node-version: 20
 
-      - name: Abhängigkeiten installieren
+      - name: Abhaengigkeiten installieren
         run: npm install --no-audit --no-fund
 
       - name: Playwright Chromium installieren
         run: npx playwright install --with-deps chromium
 
-      - name: E2E-Tests ausführen
-        run: npx playwright test
+      - name: E2E-Tests ausfuehren
+        id: tests
+        continue-on-error: true
+        run: |
+          npx playwright test > test-output.log 2>&1
+          echo "exit=$?" >> "$GITHUB_OUTPUT"
+          tail -n 50 test-output.log
 
       - name: Test-Report als Artefakt hochladen
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report
-          path: playwright-report/
+          path: |
+            playwright-report/
+            test-output.log
           retention-days: 14
+          if-no-files-found: ignore
+
+      - name: Protokoll als CI-LOG.md ins Repository committen
+        if: always() && github.event_name != 'pull_request'
+        run: |
+          {
+            echo "# E2E-Testlauf"
+            echo
+            echo "- Commit: ${GITHUB_SHA:0:7}"
+            echo "- Lauf: ${GITHUB_RUN_NUMBER} (ID ${GITHUB_RUN_ID})"
+            echo "- Zeit (UTC): $(date -u '+%Y-%m-%d %H:%M:%S')"
+            echo "- Ergebnis: ${{ steps.tests.outputs.exit == '0' && 'ERFOLGREICH' || 'FEHLGESCHLAGEN' }}"
+            echo
+            echo "## Playwright-Ausgabe (letzte 300 Zeilen)"
+            echo
+            echo '```'
+            tail -n 300 test-output.log 2>/dev/null || echo 'Kein Log vorhanden'
+            echo '```'
+          } > CI-LOG.md
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add CI-LOG.md
+          git diff --cached --quiet || (git commit -m "CI: Protokoll Lauf #${GITHUB_RUN_NUMBER}" && git push)
+
+      - name: Lauf bei Testfehler als Fehlschlag markieren
+        if: steps.tests.outputs.exit != '0'
+        run: exit 1

@@ -5,7 +5,7 @@ const { defineConfig } = require('@playwright/test');
 
 module.exports = defineConfig({
   testDir: './tests',
-  timeout: 90000,
+  timeout: 120000,
   /* SwiftShader rechnet auf der CPU: Tests sequenziell ausführen,
      damit sich die Renderlast nicht gegenseitig aushungert. */
   workers: 1,

@@ -13,6 +13,8 @@ Beide Dateien sind autark: three.js ist eingebettet, es werden keine externen Re
 
 Die Tests laufen mit Playwright in GitHub Actions (headless Chromium, WebGL über SwiftShader) automatisch bei jedem Push auf `main`. Workflow: `.github/workflows/e2e.yml`, Testfälle: `tests/`.
 
+Nach jedem Lauf committet die CI das Protokoll als `CI-LOG.md` ins Repository: Ergebnis und die letzten 300 Zeilen der Playwright-Ausgabe. Der vollständige HTML-Report mit Screenshots liegt als Artefakt `playwright-report` beim jeweiligen Lauf.
+
 Lokal ausführen:
 
     npm install
@@ -23,7 +25,8 @@ Getestet wird:
 
 - Laden beider Seiten ohne unbehandelte JS-Fehler
 - Startmenü mit initialisiertem WebGL (Start-Button wird erst nach dem 3D-Laden aktiv)
-- Session-Start: HUD sichtbar, FPS und Draw-Calls über null
+- Karte lädt und ist sichtbar: die Szene rendert mit messbarem Bildinhalt, kein schwarzer Bildschirm
+- Session-Start: HUD sichtbar, Draw-Calls über null
 - Fahrt mit Tastatur: Kamera folgt dem Skater
 - Map Builder im Spiel: öffnen und schließen, danach rendert das Hauptspiel weiter (WebGL-Kontext-Fix)
 - Eigenständiger Builder: Renderer aktiv, Demo-Karte aufgebaut

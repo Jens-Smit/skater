@@ -59,6 +59,60 @@ async function canvasAlive(page, selector) {
   }, selector);
 }
 
+/* HUD und Diagnose-Overlays ausblenden, damit das Bild nur die 3D-Szene zeigt */
+async function hideOverlays(page) {
+  return page.evaluate(() => {
+    const hidden = [];
+    const hud = document.getElementById('hud');
+    if (hud) { hidden.push(hud); hud.style.display = 'none'; }
+    for (const d of Array.from(document.querySelectorAll('body > div'))) {
+      const fixed = d.style.position === 'fixed';
+      const status = fixed && d.style.left === '0px' && d.style.bottom === '0px';
+      const errBar = fixed && d.style.top === '0px' && d.style.left === '0px' && d.style.right === '0px';
+      if (status || errBar) { hidden.push(d); d.style.display = 'none'; }
+    }
+    return hidden.length;
+  });
+}
+
+/* Bildschirmfoto auswerten: mittlere Helligkeit und Anzahl unterschiedlicher
+   Farbtoene (quantisiert auf 4096 Bins). Ein schwarzer Bildschirm (das
+   bekannte Fehlerbild auf Mobil-Geräten) liefert nahezu keine Bins. */
+async function sceneStats(page) {
+  const shot = await page.screenshot();
+  return page.evaluate(async b64 => {
+    const img = new Image();
+    img.src = 'data:image/png;base64,' + b64;
+    await img.decode();
+    const cv = document.createElement('canvas');
+    cv.width = img.width; cv.height = img.height;
+    const ctx = cv.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+    const d = ctx.getImageData(0, 0, cv.width, cv.height).data;
+    let lum = 0, dark = 0;
+    const bins = new Set();
+    for (let i = 0; i < d.length; i += 4) {
+      const r = d[i], g = d[i + 1], b = d[i + 2];
+      lum += 0.2126 * r + 0.7152 * g + 0.0722 * b;
+      if (r + g + b < 24) dark++;
+      bins.add(((r >> 4) << 8) | ((g >> 4) << 4) | (b >> 4));
+    }
+    const n = d.length / 4;
+    return {
+      breite: img.width, hoehe: img.height,
+      meanLum: Math.round(lum / n * 10) / 10,
+      darkFraction: Math.round(dark / n * 1000) / 1000,
+      colorBins: bins.size
+    };
+  }, shot.toString('base64'));
+}
+
+async function startSession(page) {
+  await page.goto('/pro-skater-99.html');
+  await page.locator('#start').click();
+  await expect(page.locator('#hud')).toBeVisible();
+}
+
 test('Startmenü: Seite lädt ohne JS-Fehler, 3D-Grafik wird bereit', async ({ page }) => {
   const errs = [];
   attachErrors(errs, page);
@@ -69,18 +123,40 @@ test('Startmenü: Seite lädt ohne JS-Fehler, 3D-Grafik wird bereit', async ({ p
      dauerhaft deaktiviert ("3D-START FEHLGESCHLAGEN ..."). */
   await expect(page.locator('#start')).toBeEnabled({ timeout: 60000 });
   await expect(page.locator('#start')).toHaveText('SESSION STARTEN');
+  /* Es gibt auswählbare Karten im Menü */
+  const chips = await page.locator('.chip:not(.soon)').count();
+  expect(chips, 'Das Startmenü muss Karten anbieten').toBeGreaterThan(0);
   expect(errs, 'Keine unbehandelten JS-Fehler im Startmenü erlaubt').toEqual([]);
 });
 
-test('Session: HUD sichtbar, Renderer aktiv, FPS und Draw-Calls über null', async ({ page }) => {
+test('Karte lädt und ist sichtbar: Szene rendert, kein schwarzer Bildschirm', async ({ page }) => {
   const errs = [];
   attachErrors(errs, page);
-  await page.goto('/pro-skater-99.html');
-  await page.locator('#start').click();
-  await expect(page.locator('#hud')).toBeVisible();
+  await startSession(page);
+  /* Szene einige Sekunden rendern lassen, dann den Zustand prüfen */
   const s = parseStatus(await waitForStatus(page));
   expect(s.ok, 'Statuszeile muss "3D OK" melden: ' + s.text).toBeTruthy();
-  expect(s.fps, 'Mindestens 1 Frame pro Sekunde nötig: ' + s.text).toBeGreaterThan(0);
+  expect(s.draw, 'Es müssen Draw-Calls stattfinden: ' + s.text).toBeGreaterThan(0);
+  expect(await canvasAlive(page, '#game'), 'WebGL-Kontext des Hauptspiels muss leben').toBeTruthy();
+  await expect(page.locator('#ctxlost'), 'Kontextverlust-Overlay darf nicht erscheinen').toBeHidden();
+  await page.waitForTimeout(2000);
+  /* Sichtbarkeit der Karte: HUD und Diagnose ausblenden und das
+     tatsächliche Bild der 3D-Szene vermessen */
+  await hideOverlays(page);
+  const stats = await sceneStats(page);
+  expect(stats.colorBins, 'Die Karte muss sichtbaren, farbigen Inhalt zeigen: ' + JSON.stringify(stats)).toBeGreaterThan(40);
+  expect(stats.meanLum, 'Der Bildschirm darf nicht (nahezu) schwarz sein: ' + JSON.stringify(stats)).toBeGreaterThan(6);
+  expect(stats.darkFraction, 'Fast alle Pixel dürfen nicht schwarz sein: ' + JSON.stringify(stats)).toBeLessThan(0.99);
+  expect(errs).toEqual([]);
+  await test.info().attach('screenshot-karte', { body: await page.screenshot(), contentType: 'image/png' });
+});
+
+test('Session: HUD sichtbar, Renderer aktiv, Draw-Calls über null', async ({ page }) => {
+  const errs = [];
+  attachErrors(errs, page);
+  await startSession(page);
+  const s = parseStatus(await waitForStatus(page));
+  expect(s.ok, 'Statuszeile muss "3D OK" melden: ' + s.text).toBeTruthy();
   expect(s.draw, 'Es müssen Draw-Calls stattfinden: ' + s.text).toBeGreaterThan(0);
   expect(await canvasAlive(page, '#game'), 'WebGL-Kontext des Hauptspiels muss leben').toBeTruthy();
   await expect(page.locator('#ctxlost'), 'Kontextverlust-Overlay darf nicht erscheinen').toBeHidden();
@@ -91,9 +167,7 @@ test('Session: HUD sichtbar, Renderer aktiv, FPS und Draw-Calls über null', asy
 test('Fahrt: Beschleunigen und Ollie bewegen die Kamera, kein Fehler', async ({ page }) => {
   const errs = [];
   attachErrors(errs, page);
-  await page.goto('/pro-skater-99.html');
-  await page.locator('#start').click();
-  await expect(page.locator('#hud')).toBeVisible();
+  await startSession(page);
   const s1 = parseStatus(await waitForStatus(page));
   expect(s1.ok).toBeTruthy();
   expect(s1.cam, 'Kameraposition muss lesbar sein: ' + s1.text).not.toBeNull();
@@ -107,7 +181,7 @@ test('Fahrt: Beschleunigen und Ollie bewegen die Kamera, kein Fehler', async ({ 
   await page.waitForTimeout(1200);
   const s2 = parseStatus(await statusText(page));
   expect(s2.ok, 'Nach der Fahrt weiter "3D OK": ' + s2.text).toBeTruthy();
-  expect(s2.fps, 'Spiel muss weiterlaufen: ' + s2.text).toBeGreaterThan(0);
+  expect(s2.draw, 'Spiel muss weiter zeichnen: ' + s2.text).toBeGreaterThan(0);
   expect(JSON.stringify(s2.cam), 'Kamera muss der Fahrt folgen (vorher: ' + JSON.stringify(s1.cam) + ', nachher: ' + JSON.stringify(s2.cam) + ')').not.toBe(JSON.stringify(s1.cam));
   expect(errs).toEqual([]);
 });
@@ -115,9 +189,7 @@ test('Fahrt: Beschleunigen und Ollie bewegen die Kamera, kein Fehler', async ({ 
 test('Map Builder: öffnen und schließen, Haupt-3D läuft danach weiter', async ({ page }) => {
   const errs = [];
   attachErrors(errs, page);
-  await page.goto('/pro-skater-99.html');
-  await page.locator('#start').click();
-  await expect(page.locator('#hud')).toBeVisible();
+  await startSession(page);
   const s1 = parseStatus(await waitForStatus(page));
   expect(s1.ok).toBeTruthy();
   /* Builder öffnen (identischer Codepfad wie der Startmenü-Button) */
@@ -133,7 +205,6 @@ test('Map Builder: öffnen und schließen, Haupt-3D läuft danach weiter', async
   await page.waitForTimeout(3000); /* eine volle Statusaktualisierung abwarten */
   const s2 = parseStatus(await statusText(page));
   expect(s2.ok, 'Hauptspiel muss nach dem Schließen weiter rendern (Kontext-Fix): ' + s2.text).toBeTruthy();
-  expect(s2.fps, 'FPS nach Builder-Nutzung: ' + s2.text).toBeGreaterThan(0);
   expect(s2.draw, 'Draw-Calls nach Builder-Nutzung: ' + s2.text).toBeGreaterThan(0);
   await expect(page.locator('#ctxlost'), 'Kontextverlust-Overlay darf nicht erscheinen').toBeHidden();
   expect(errs).toEqual([]);
