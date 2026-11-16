@@ -1,8 +1,8 @@
 # E2E-Testlauf
 
-- Commit: 7c67350
-- Lauf: 6 (ID 43937186653)
-- Zeit (UTC): 2026-11-16 19:16:40
+- Commit: 08c66d7
+- Lauf: 7 (ID 43940238158)
+- Zeit (UTC): 2026-11-16 19:35:51
 - npm install: success
 - Playwright-Installation: success
 - Testlauf: success (Exit-Code: 0)
@@ -21,29 +21,29 @@ added 3 packages in 2s
 ```
 Installing dependencies...
 Switching to root user to install dependencies...
-Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [152 B]
-Hit:2 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble InRelease
-Get:5 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
-Get:3 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
-Get:6 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [702 kB]
-Get:7 http://security.ubuntu.com/ubuntu noble-security InRelease [126 kB]
-Get:4 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
-Get:15 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [772 kB]
-Get:8 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1450 kB]
-Get:9 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [315 kB]
-Get:10 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1713 kB]
-Get:11 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [345 kB]
-Get:12 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1883 kB]
-Get:13 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [430 kB]
-Get:14 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [14.6 kB]
-Get:16 http://security.ubuntu.com/ubuntu noble-security/main amd64 Packages [1195 kB]
-Get:17 http://security.ubuntu.com/ubuntu noble-security/main Translation-en [238 kB]
-Get:18 http://security.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1229 kB]
-Get:19 http://security.ubuntu.com/ubuntu noble-security/universe Translation-en [248 kB]
-Get:20 http://security.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1788 kB]
-Get:21 http://security.ubuntu.com/ubuntu noble-security/restricted Translation-en [411 kB]
-Get:22 http://security.ubuntu.com/ubuntu noble-security/multiverse Translation-en [12.7 kB]
-Fetched 13.1 MB in 3s (4193 kB/s)
+Get:1 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+Get:2 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+Hit:3 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+Get:4 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+Get:5 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+Get:6 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [772 kB]
+Get:8 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [702 kB]
+Get:9 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1450 kB]
+Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [315 kB]
+Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1713 kB]
+Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [345 kB]
+Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1883 kB]
+Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [430 kB]
+Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [14.6 kB]
+Get:16 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1195 kB]
+Get:17 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [238 kB]
+Get:18 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1229 kB]
+Get:19 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [248 kB]
+Get:20 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1788 kB]
+Get:21 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [411 kB]
+Get:22 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse Translation-en [12.7 kB]
+Fetched 13.1 MB in 1s (9100 kB/s)
 Reading package lists...
 Reading package lists...
 Building dependency tree...
@@ -106,22 +106,22 @@ The following NEW packages will be installed:
   fonts-freefont-ttf fonts-ipafont-gothic fonts-tlwg-loma-otf fonts-unifont
   fonts-wqy-zenhei xfonts-cyrillic xfonts-encodings xfonts-scalable
   xfonts-utils
-0 upgraded, 9 newly installed, 0 to remove and 24 not upgraded.
+0 upgraded, 9 newly installed, 0 to remove and 21 not upgraded.
 Need to get 21.1 MB of archives.
 After this operation, 79.5 MB of additional disk space will be used.
-Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [152 B]
-Get:2 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-ipafont-gothic all 00303-21ubuntu1 [3513 kB]
-Get:3 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 fonts-freefont-ttf all 20211204+svn4273-2 [5641 kB]
-Get:4 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-tlwg-loma-otf all 1:0.7.3-1 [107 kB]
-Get:5 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-unifont all 1:15.1.01-1build1 [2993 kB]
-Get:6 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-wqy-zenhei all 0.9.45-8 [7472 kB]
-Get:7 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-encodings all 1:1.0.5-0ubuntu2 [578 kB]
-Get:8 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-utils amd64 1:7.7+6build3 [94.4 kB]
-Get:9 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 xfonts-cyrillic all 1:1.0.5+nmu1 [384 kB]
-Get:10 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-scalable all 1:1.0.3-1.3 [304 kB]
-Fetched 21.1 MB in 2s (9364 kB/s)
+Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+Get:2 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-ipafont-gothic all 00303-21ubuntu1 [3513 kB]
+Get:3 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 fonts-freefont-ttf all 20211204+svn4273-2 [5641 kB]
+Get:4 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-tlwg-loma-otf all 1:0.7.3-1 [107 kB]
+Get:5 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-unifont all 1:15.1.01-1build1 [2993 kB]
+Get:6 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-wqy-zenhei all 0.9.45-8 [7472 kB]
+Get:7 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-encodings all 1:1.0.5-0ubuntu2 [578 kB]
+Get:8 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-utils amd64 1:7.7+6build3 [94.4 kB]
+Get:9 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 xfonts-cyrillic all 1:1.0.5+nmu1 [384 kB]
+Get:10 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-scalable all 1:1.0.3-1.3 [304 kB]
+Fetched 21.1 MB in 3s (6190 kB/s)
 Selecting previously unselected package fonts-ipafont-gothic.
-(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 216380 files and directories currently installed.)
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 216752 files and directories currently installed.)
 Preparing to unpack .../0-fonts-ipafont-gothic_00303-21ubuntu1_all.deb ...
 Unpacking fonts-ipafont-gothic (00303-21ubuntu1) ...
 Selecting previously unselected package fonts-freefont-ttf.
@@ -215,24 +215,53 @@ Chromium Headless Shell 133.0.6943.16 (playwright build v1155) downloaded to /ho
 ### test-output.log
 
 ```
-[WebServer] 127.0.0.1 - - [16/Nov/2026 19:15:22] "GET / HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 19:32:33] "GET / HTTP/1.1" 200 -
 
-Running 6 tests using 1 worker
+Running 12 tests using 1 worker
 
-[WebServer] 127.0.0.1 - - [16/Nov/2026 19:15:23] "GET /pro-skater-99.html HTTP/1.1" 200 -
-  ✓  1 [chromium] › tests/game.spec.js:68:1 › Startmenü: Seite lädt ohne JS-Fehler, 3D-Grafik wird bereit (4.3s)
-[WebServer] 127.0.0.1 - - [16/Nov/2026 19:15:29] "GET /pro-skater-99.html HTTP/1.1" 200 -
-  ✓  2 [chromium] › tests/game.spec.js:84:1 › Karte lädt und ist sichtbar: Szene rendert, kein schwarzer Bildschirm (17.0s)
-[WebServer] 127.0.0.1 - - [16/Nov/2026 19:15:45] "GET /pro-skater-99.html HTTP/1.1" 200 -
-  ✓  3 [chromium] › tests/game.spec.js:148:1 › Session: HUD sichtbar, Renderer aktiv, Draw-Calls über null (11.3s)
-[WebServer] 127.0.0.1 - - [16/Nov/2026 19:15:58] "GET /pro-skater-99.html HTTP/1.1" 200 -
-  ✓  4 [chromium] › tests/game.spec.js:161:1 › Fahrt: Beschleunigen und Ollie bewegen die Kamera, kein Fehler (18.4s)
-[WebServer] 127.0.0.1 - - [16/Nov/2026 19:16:18] "GET /pro-skater-99.html HTTP/1.1" 200 -
-  ✓  5 [chromium] › tests/game.spec.js:183:1 › Map Builder: öffnen und schließen, Haupt-3D läuft danach weiter (19.8s)
-[WebServer] 127.0.0.1 - - [16/Nov/2026 19:16:36] "GET /mapbuilder.html HTTP/1.1" 200 -
-  ✓  6 [chromium] › tests/mapbuilder.spec.js:15:1 › Standalone-Builder: lädt, rendert und zeigt die Demo-Karte an (3.8s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 19:32:34] "GET /pro-skater-99.html HTTP/1.1" 200 -
+  ✓  1 [chromium] › tests/game.spec.js:68:1 › Startmenü: Seite lädt ohne JS-Fehler, 3D-Grafik wird bereit (6.4s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 19:32:43] "GET /pro-skater-99.html HTTP/1.1" 200 -
+  ✓  2 [chromium] › tests/game.spec.js:84:1 › Karte lädt und ist sichtbar: Szene rendert, kein schwarzer Bildschirm (24.6s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 19:33:09] "GET /pro-skater-99.html HTTP/1.1" 200 -
+  ✓  3 [chromium] › tests/game.spec.js:148:1 › Session: HUD sichtbar, Renderer aktiv, Draw-Calls über null (17.0s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 19:33:27] "GET /pro-skater-99.html HTTP/1.1" 200 -
+  ✓  4 [chromium] › tests/game.spec.js:161:1 › Fahrt: Beschleunigen und Ollie bewegen die Kamera, kein Fehler (15.4s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 19:33:43] "GET /pro-skater-99.html HTTP/1.1" 200 -
+  ✓  5 [chromium] › tests/game.spec.js:183:1 › Map Builder: öffnen und schließen, Haupt-3D läuft danach weiter (26.9s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 19:34:10] "GET /mapbuilder.html HTTP/1.1" 200 -
+  ✓  6 [chromium] › tests/mapbuilder.spec.js:15:1 › Standalone-Builder: lädt, rendert und zeigt die Demo-Karte an (8.9s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 19:34:14] "GET /pro-skater-99.html HTTP/1.1" 200 -
+KARTEN-SCREENSHOT tutorial: {"datei":"ci-screenshots/tutorial.png","bytes":163874,"breite":1280,"hoehe":720,"meanLum":202.1,"darkFraction":0,"colorBins":296}
+  ✓  7 [chromium] › tests/screenshots.spec.js:126:3 › Karte tutorial laedt und ist sichtbar (Screenshot als Beleg) (14.9s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 19:34:32] "GET /pro-skater-99.html HTTP/1.1" 200 -
+KARTEN-SCREENSHOT warehouse: {"datei":"ci-screenshots/warehouse.png","bytes":158431,"breite":1280,"hoehe":720,"meanLum":220.2,"darkFraction":0,"colorBins":184}
+  ✓  8 [chromium] › tests/screenshots.spec.js:126:3 › Karte warehouse laedt und ist sichtbar (Screenshot als Beleg) (18.6s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 19:34:52] "GET /pro-skater-99.html HTTP/1.1" 200 -
+KARTEN-SCREENSHOT school: {"datei":"ci-screenshots/school.png","bytes":145156,"breite":1280,"hoehe":720,"meanLum":206.1,"darkFraction":0.002,"colorBins":481}
+  ✓  9 [chromium] › tests/screenshots.spec.js:126:3 › Karte school laedt und ist sichtbar (Screenshot als Beleg) (15.9s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 19:35:08] "GET /pro-skater-99.html HTTP/1.1" 200 -
+KARTEN-SCREENSHOT minipark: {"datei":"ci-screenshots/minipark.png","bytes":127211,"breite":1280,"hoehe":720,"meanLum":203.7,"darkFraction":0.001,"colorBins":331}
+  ✓  10 [chromium] › tests/screenshots.spec.js:126:3 › Karte minipark laedt und ist sichtbar (Screenshot als Beleg) (19.0s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 19:35:26] "GET /pro-skater-99.html HTTP/1.1" 200 -
+KARTEN-SCREENSHOT funpark: {"datei":"ci-screenshots/funpark.png","bytes":136738,"breite":1280,"hoehe":720,"meanLum":206.1,"darkFraction":0,"colorBins":375}
+  ✓  11 [chromium] › tests/screenshots.spec.js:126:3 › Karte funpark laedt und ist sichtbar (Screenshot als Beleg) (17.7s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 19:35:45] "GET /mapbuilder.html HTTP/1.1" 200 -
+KARTEN-SCREENSHOT builder-demo: {"datei":"ci-screenshots/builder-demo.png","bytes":48893,"breite":1280,"hoehe":720,"meanLum":84.4,"darkFraction":0,"colorBins":96}
+KARTEN-SCREENSHOTS: [{"datei":"ci-screenshots/tutorial.png","bytes":163874,"breite":1280,"hoehe":720,"meanLum":202.1,"darkFraction":0,"colorBins":296},{"datei":"ci-screenshots/warehouse.png","bytes":158431,"breite":1280,"hoehe":720,"meanLum":220.2,"darkFraction":0,"colorBins":184},{"datei":"ci-screenshots/school.png","bytes":145156,"breite":1280,"hoehe":720,"meanLum":206.1,"darkFraction":0.002,"colorBins":481},{"datei":"ci-screenshots/minipark.png","bytes":127211,"breite":1280,"hoehe":720,"meanLum":203.7,"darkFraction":0.001,"colorBins":331},{"datei":"ci-screenshots/funpark.png","bytes":136738,"breite":1280,"hoehe":720,"meanLum":206.1,"darkFraction":0,"colorBins":375},{"datei":"ci-screenshots/builder-demo.png","bytes":48893,"breite":1280,"hoehe":720,"meanLum":84.4,"darkFraction":0,"colorBins":96}]
+  ✓  12 [chromium] › tests/screenshots.spec.js:152:1 › Map-Builder-Demo-Karte laedt und ist sichtbar (Screenshot als Beleg) (8.9s)
 
-  Slow test file: [chromium] › tests/game.spec.js (1.2m)
+  Slow test file: [chromium] › tests/screenshots.spec.js (1.6m)
+  Slow test file: [chromium] › tests/game.spec.js (1.5m)
   Consider running tests from slow files in parallel, see https://playwright.dev/docs/test-parallel.
-  6 passed (1.3m)
+  12 passed (3.3m)
 ```
+
+## Karten-Screenshots
+
+- [builder-demo.png](ci-screenshots/builder-demo.png) (48893 Bytes)
+- [funpark.png](ci-screenshots/funpark.png) (136738 Bytes)
+- [minipark.png](ci-screenshots/minipark.png) (127211 Bytes)
+- [school.png](ci-screenshots/school.png) (145156 Bytes)
+- [tutorial.png](ci-screenshots/tutorial.png) (163874 Bytes)
+- [warehouse.png](ci-screenshots/warehouse.png) (158431 Bytes)
