@@ -905,8 +905,7 @@ function updatePropsInputsOnly(){
 /* ---------- Start ---------- */
 addEventListener('resize',()=>{
  if(!renderer)return;
- renderer.setSize(innerWidth,innerHeight);
- camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();
+ if(innerWidth>0&&innerHeight>0){renderer.setSize(innerWidth,innerHeight);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix()} /* Groesse 0 waehrend Android-Vollbild-Wechsel ignorieren */
 });
 addEventListener('beforeunload',()=>save(true));
 if(loadSaved()){history=[serialize()]}
