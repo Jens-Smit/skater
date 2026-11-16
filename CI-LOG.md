@@ -1,11 +1,11 @@
 # E2E-Testlauf
 
-- Commit: 75a0ee4
-- Lauf: 5 (ID 43936145781)
-- Zeit (UTC): 2026-11-16 19:10:54
+- Commit: 7c67350
+- Lauf: 6 (ID 43937186653)
+- Zeit (UTC): 2026-11-16 19:16:40
 - npm install: success
 - Playwright-Installation: success
-- Testlauf: success (Exit-Code: 1)
+- Testlauf: success (Exit-Code: 0)
 
 ## Ausgaben
 
@@ -21,29 +21,29 @@ added 3 packages in 2s
 ```
 Installing dependencies...
 Switching to root user to install dependencies...
-Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
-Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
-Get:6 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
-Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
-Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
-Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
-Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [702 kB]
-Get:8 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1450 kB]
-Get:9 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [315 kB]
-Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1713 kB]
-Get:22 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [772 kB]
-Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [345 kB]
-Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1883 kB]
-Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [430 kB]
-Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [14.6 kB]
-Get:15 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1195 kB]
-Get:16 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [238 kB]
-Get:17 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1229 kB]
-Get:18 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [248 kB]
-Get:19 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1788 kB]
-Get:20 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [411 kB]
-Get:21 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse Translation-en [12.7 kB]
-Fetched 13.1 MB in 1s (8816 kB/s)
+Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [152 B]
+Hit:2 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble InRelease
+Get:5 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+Get:3 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+Get:6 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [702 kB]
+Get:7 http://security.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+Get:4 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+Get:15 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [772 kB]
+Get:8 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1450 kB]
+Get:9 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [315 kB]
+Get:10 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1713 kB]
+Get:11 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [345 kB]
+Get:12 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1883 kB]
+Get:13 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [430 kB]
+Get:14 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [14.6 kB]
+Get:16 http://security.ubuntu.com/ubuntu noble-security/main amd64 Packages [1195 kB]
+Get:17 http://security.ubuntu.com/ubuntu noble-security/main Translation-en [238 kB]
+Get:18 http://security.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1229 kB]
+Get:19 http://security.ubuntu.com/ubuntu noble-security/universe Translation-en [248 kB]
+Get:20 http://security.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1788 kB]
+Get:21 http://security.ubuntu.com/ubuntu noble-security/restricted Translation-en [411 kB]
+Get:22 http://security.ubuntu.com/ubuntu noble-security/multiverse Translation-en [12.7 kB]
+Fetched 13.1 MB in 3s (4193 kB/s)
 Reading package lists...
 Reading package lists...
 Building dependency tree...
@@ -106,22 +106,22 @@ The following NEW packages will be installed:
   fonts-freefont-ttf fonts-ipafont-gothic fonts-tlwg-loma-otf fonts-unifont
   fonts-wqy-zenhei xfonts-cyrillic xfonts-encodings xfonts-scalable
   xfonts-utils
-0 upgraded, 9 newly installed, 0 to remove and 21 not upgraded.
+0 upgraded, 9 newly installed, 0 to remove and 24 not upgraded.
 Need to get 21.1 MB of archives.
 After this operation, 79.5 MB of additional disk space will be used.
-Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
-Get:2 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-ipafont-gothic all 00303-21ubuntu1 [3513 kB]
-Get:3 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 fonts-freefont-ttf all 20211204+svn4273-2 [5641 kB]
-Get:4 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-tlwg-loma-otf all 1:0.7.3-1 [107 kB]
-Get:5 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-unifont all 1:15.1.01-1build1 [2993 kB]
-Get:6 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-wqy-zenhei all 0.9.45-8 [7472 kB]
-Get:7 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-encodings all 1:1.0.5-0ubuntu2 [578 kB]
-Get:8 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-utils amd64 1:7.7+6build3 [94.4 kB]
-Get:9 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 xfonts-cyrillic all 1:1.0.5+nmu1 [384 kB]
-Get:10 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-scalable all 1:1.0.3-1.3 [304 kB]
-Fetched 21.1 MB in 1s (19.0 MB/s)
+Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [152 B]
+Get:2 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-ipafont-gothic all 00303-21ubuntu1 [3513 kB]
+Get:3 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 fonts-freefont-ttf all 20211204+svn4273-2 [5641 kB]
+Get:4 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-tlwg-loma-otf all 1:0.7.3-1 [107 kB]
+Get:5 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-unifont all 1:15.1.01-1build1 [2993 kB]
+Get:6 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-wqy-zenhei all 0.9.45-8 [7472 kB]
+Get:7 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-encodings all 1:1.0.5-0ubuntu2 [578 kB]
+Get:8 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-utils amd64 1:7.7+6build3 [94.4 kB]
+Get:9 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 xfonts-cyrillic all 1:1.0.5+nmu1 [384 kB]
+Get:10 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-scalable all 1:1.0.3-1.3 [304 kB]
+Fetched 21.1 MB in 2s (9364 kB/s)
 Selecting previously unselected package fonts-ipafont-gothic.
-(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 216752 files and directories currently installed.)
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 216380 files and directories currently installed.)
 Preparing to unpack .../0-fonts-ipafont-gothic_00303-21ubuntu1_all.deb ...
 Unpacking fonts-ipafont-gothic (00303-21ubuntu1) ...
 Selecting previously unselected package fonts-freefont-ttf.
@@ -215,71 +215,24 @@ Chromium Headless Shell 133.0.6943.16 (playwright build v1155) downloaded to /ho
 ### test-output.log
 
 ```
-[WebServer] 127.0.0.1 - - [16/Nov/2026 19:08:59] "GET / HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [16/Nov/2026 19:15:22] "GET / HTTP/1.1" 200 -
 
 Running 6 tests using 1 worker
 
-[WebServer] 127.0.0.1 - - [16/Nov/2026 19:09:00] "GET /pro-skater-99.html HTTP/1.1" 200 -
-  ✓  1 [chromium] › tests/game.spec.js:116:1 › Startmenü: Seite lädt ohne JS-Fehler, 3D-Grafik wird bereit (5.0s)
-[WebServer] 127.0.0.1 - - [16/Nov/2026 19:09:07] "GET /pro-skater-99.html HTTP/1.1" 200 -
-  ✘  2 [chromium] › tests/game.spec.js:132:1 › Karte lädt und ist sichtbar: Szene rendert, kein schwarzer Bildschirm (22.2s)
-[WebServer] 127.0.0.1 - - [16/Nov/2026 19:09:32] "GET /pro-skater-99.html HTTP/1.1" 200 -
-  ✘  3 [chromium] › tests/game.spec.js:132:1 › Karte lädt und ist sichtbar: Szene rendert, kein schwarzer Bildschirm (retry #1) (18.9s)
-[WebServer] 127.0.0.1 - - [16/Nov/2026 19:09:55] "GET /pro-skater-99.html HTTP/1.1" 200 -
-  ✓  4 [chromium] › tests/game.spec.js:154:1 › Session: HUD sichtbar, Renderer aktiv, Draw-Calls über null (11.3s)
-[WebServer] 127.0.0.1 - - [16/Nov/2026 19:10:10] "GET /pro-skater-99.html HTTP/1.1" 200 -
-  ✓  5 [chromium] › tests/game.spec.js:167:1 › Fahrt: Beschleunigen und Ollie bewegen die Kamera, kein Fehler (16.9s)
-[WebServer] 127.0.0.1 - - [16/Nov/2026 19:10:29] "GET /pro-skater-99.html HTTP/1.1" 200 -
-  ✓  6 [chromium] › tests/game.spec.js:189:1 › Map Builder: öffnen und schließen, Haupt-3D läuft danach weiter (22.8s)
-[WebServer] 127.0.0.1 - - [16/Nov/2026 19:10:49] "GET /mapbuilder.html HTTP/1.1" 200 -
-  ✓  7 [chromium] › tests/mapbuilder.spec.js:15:1 › Standalone-Builder: lädt, rendert und zeigt die Demo-Karte an (5.1s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 19:15:23] "GET /pro-skater-99.html HTTP/1.1" 200 -
+  ✓  1 [chromium] › tests/game.spec.js:68:1 › Startmenü: Seite lädt ohne JS-Fehler, 3D-Grafik wird bereit (4.3s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 19:15:29] "GET /pro-skater-99.html HTTP/1.1" 200 -
+  ✓  2 [chromium] › tests/game.spec.js:84:1 › Karte lädt und ist sichtbar: Szene rendert, kein schwarzer Bildschirm (17.0s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 19:15:45] "GET /pro-skater-99.html HTTP/1.1" 200 -
+  ✓  3 [chromium] › tests/game.spec.js:148:1 › Session: HUD sichtbar, Renderer aktiv, Draw-Calls über null (11.3s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 19:15:58] "GET /pro-skater-99.html HTTP/1.1" 200 -
+  ✓  4 [chromium] › tests/game.spec.js:161:1 › Fahrt: Beschleunigen und Ollie bewegen die Kamera, kein Fehler (18.4s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 19:16:18] "GET /pro-skater-99.html HTTP/1.1" 200 -
+  ✓  5 [chromium] › tests/game.spec.js:183:1 › Map Builder: öffnen und schließen, Haupt-3D läuft danach weiter (19.8s)
+[WebServer] 127.0.0.1 - - [16/Nov/2026 19:16:36] "GET /mapbuilder.html HTTP/1.1" 200 -
+  ✓  6 [chromium] › tests/mapbuilder.spec.js:15:1 › Standalone-Builder: lädt, rendert und zeigt die Demo-Karte an (3.8s)
 
-
-  1) [chromium] › tests/game.spec.js:132:1 › Karte lädt und ist sichtbar: Szene rendert, kein schwarzer Bildschirm 
-
-    Error: Die Karte muss sichtbaren, farbigen Inhalt zeigen: {"breite":1280,"hoehe":720,"meanLum":22.9,"darkFraction":0,"colorBins":1}
-
-    [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
-
-    Expected: > [32m40[39m
-    Received:   [31m1[39m
-
-      145 |   await hideOverlays(page);
-      146 |   const stats = await sceneStats(page);
-    > 147 |   expect(stats.colorBins, 'Die Karte muss sichtbaren, farbigen Inhalt zeigen: ' + JSON.stringify(stats)).toBeGreaterThan(40);
-          |                                                                                                          ^
-      148 |   expect(stats.meanLum, 'Der Bildschirm darf nicht (nahezu) schwarz sein: ' + JSON.stringify(stats)).toBeGreaterThan(6);
-      149 |   expect(stats.darkFraction, 'Fast alle Pixel dürfen nicht schwarz sein: ' + JSON.stringify(stats)).toBeLessThan(0.99);
-      150 |   expect(errs).toEqual([]);
-        at /home/runner/work/skater/skater/tests/game.spec.js:147:106
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    test-results/game-Karte-lädt-und-ist-si-f8812-t-kein-schwarzer-Bildschirm-chromium/test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
-
-    Error: Die Karte muss sichtbaren, farbigen Inhalt zeigen: {"breite":1280,"hoehe":720,"meanLum":22.9,"darkFraction":0,"colorBins":1}
-
-    [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
-
-    Expected: > [32m40[39m
-    Received:   [31m1[39m
-
-      145 |   await hideOverlays(page);
-      146 |   const stats = await sceneStats(page);
-    > 147 |   expect(stats.colorBins, 'Die Karte muss sichtbaren, farbigen Inhalt zeigen: ' + JSON.stringify(stats)).toBeGreaterThan(40);
-          |                                                                                                          ^
-      148 |   expect(stats.meanLum, 'Der Bildschirm darf nicht (nahezu) schwarz sein: ' + JSON.stringify(stats)).toBeGreaterThan(6);
-      149 |   expect(stats.darkFraction, 'Fast alle Pixel dürfen nicht schwarz sein: ' + JSON.stringify(stats)).toBeLessThan(0.99);
-      150 |   expect(errs).toEqual([]);
-        at /home/runner/work/skater/skater/tests/game.spec.js:147:106
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    test-results/game-Karte-lädt-und-ist-si-f8812-t-kein-schwarzer-Bildschirm-chromium-retry1/test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-  1 failed
-    [chromium] › tests/game.spec.js:132:1 › Karte lädt und ist sichtbar: Szene rendert, kein schwarzer Bildschirm 
-  5 passed (1.9m)
+  Slow test file: [chromium] › tests/game.spec.js (1.2m)
+  Consider running tests from slow files in parallel, see https://playwright.dev/docs/test-parallel.
+  6 passed (1.3m)
 ```
