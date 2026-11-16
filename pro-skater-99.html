@@ -3147,6 +3147,15 @@ function reset(){
 }
 function start(){
  if(!renderer)return;
+ /* Android (Samsung Browser & Co.): Beim Vollbild-/Orientierungswechsel meldet der
+    Browser zwischenzeitlich eine Fenstergroesse von 0 (Leinwand kollabierte auf 0x0
+    und der Bildschirm blieb schwarz). Die Leinwand wird deshalb nie auf 0 skaliert
+    (siehe resize-Handler) und ihre Groesse mehrfach nachsynchronisiert. */
+ const syncSize=()=>{try{const w=innerWidth,h=innerHeight;if(renderer&&camera&&w>0&&h>0){camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false)}}catch(e){}};
+ setTimeout(syncSize,350);setTimeout(syncSize,1000);setTimeout(syncSize,2500);
+ /* Vorschau-Renderer der Menuevorschauen waehrend der Session freigeben:
+    Mobil-Browser haben nur ein begrenztes WebGL-Kontextkontingent pro Tab. */
+ if(window.__pausePreviews){try{window.__pausePreviews()}catch(e){}}
  sound.init();sound.resume();
  if(isTouch&&tiltOn)enableTilt();
  // Querformat: Vollbild + Orientierung anfordern (best effort)
@@ -3229,7 +3238,7 @@ function init(){
    if(clock)clock.getDelta();
   },false);
   renderer.setPixelRatio(Math.min(devicePixelRatio,1.8));
-  renderer.setSize(innerWidth,innerHeight);
+  renderer.setSize(Math.max(innerWidth,1),Math.max(innerHeight,1),false); /* updateStyle=false: CSS-Groesse 100% bleibt aktiv, die Leinwand kann nie auf 0px kollabieren */
   renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
   renderer.outputEncoding=THREE.sRGBEncoding;
   renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.0;
@@ -3685,6 +3694,7 @@ $('resume').addEventListener('click',()=>{paused=false;$('pause').style.display=
 $('restart').addEventListener('click',()=>{reset();paused=false;ended=false;$('pause').style.display='none';$('pause').querySelector('h1').textContent='PAUSE';clock.getDelta()});
 $('tomenu').addEventListener('click',()=>{ // zurück ins Hauptmenü (End-of-Game-Screen)
  started=false;paused=false;ended=false;
+ if(window.__resumePreviews){try{window.__resumePreviews()}catch(e){}} // Menuevorschauen wieder aktivieren
  $('pause').style.display='none';
  $('menu').style.display='flex';
  $('hud').style.display='none';
@@ -3814,7 +3824,7 @@ document.querySelectorAll('[data-act]').forEach(b=>{
 })();
 addEventListener('contextmenu',e=>e.preventDefault());
 addEventListener('orientationchange',()=>{tilt.cal=true});
-addEventListener('resize',()=>{if(camera&&renderer){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)}
+addEventListener('resize',()=>{if(camera&&renderer&&innerWidth>0&&innerHeight>0){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight,false)} /* Groesse 0 waehrend Android-Vollbild-Wechsel ignorieren: CSS-100% haelt die Leinwand sichtbar */
  if(prevMapR){const mc=$('mapprev'),cc=$('charprev');if(mc&&cc){const mw=mc.clientWidth||224,mh=mc.clientHeight||138,cw=cc.clientWidth||224,chh=cc.clientHeight||138;
   prevMapR.setSize(mw,mh,false);prevMapCam.aspect=mw/mh;prevMapCam.updateProjectionMatrix();
   prevCharR.setSize(cw,chh,false);prevCharCam.aspect=cw/chh;prevCharCam.updateProjectionMatrix()}}});
@@ -4565,8 +4575,7 @@ function updatePropsInputsOnly(){
 /* ---------- Start ---------- */
 addEventListener('resize',()=>{
  if(!renderer)return;
- renderer.setSize(innerWidth,innerHeight);
- camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();
+ if(innerWidth>0&&innerHeight>0){renderer.setSize(innerWidth,innerHeight);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix()} /* Groesse 0 ignorieren */
 });
 addEventListener('beforeunload',()=>save(true));
 if(loadSaved()){history=[serialize()]}
@@ -4578,7 +4587,7 @@ $('help').querySelector('.close').addEventListener('click',()=>{$('help').style.
 $('lib').querySelector('.close').addEventListener('click',()=>{$('lib').style.display='none'});
 if(EMBED){ // eingebettet in der Spiel-HTML: Overlay über window.MB steuern (Startmenü-Button)
  const overlay=document.getElementById('mbroot'),menuEl=document.getElementById('menu');
- const sync=()=>{renderer.setSize(innerWidth,innerHeight);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix()};
+ const sync=()=>{if(innerWidth>0&&innerHeight>0){renderer.setSize(innerWidth,innerHeight);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix()}}; /* Groesse 0 ignorieren */
  window.MB={
   open(){
    if(open)return;open=true;
