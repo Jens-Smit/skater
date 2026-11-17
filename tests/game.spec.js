@@ -81,6 +81,46 @@ test('Startmenü: Seite lädt ohne JS-Fehler, 3D-Grafik wird bereit', async ({ p
   expect(errs, 'Keine unbehandelten JS-Fehler im Startmenü erlaubt').toEqual([]);
 });
 
+test('Layout: Spiel-Canvas ist im Dokument sichtbar platziert (Regression 0x0-Leinwand)', async ({ page }) => {
+  const errs = [];
+  attachErrors(errs, page);
+  await page.goto('/pro-skater-99.html');
+  await expect(page.locator('#menu')).toBeVisible();
+  /* Fehlerbild November 2026 (nur auf echten Geraeten sichtbar, WebGL-Puffer
+     zeichnet trotzdem): Das Spiel-Canvas lag im DOM INNERHALB des nie
+     geschlossenen Builder-Overlays #mbroot (display:none). Inline-Stil und
+     berechnete CSS-Werte waren korrekt, aber clientWidth/clientHeight und
+     getBoundingClientRect waren 0x0, der Bildschirm blieb schwarz.
+     Dieser Test prueft die Layout-Einbettung, nicht den Pufferinhalt,
+     damit genau diese Klasse von Fehler nie wieder unbemerkt bleibt. */
+  const layout = await page.evaluate(() => {
+    const c = document.getElementById('game');
+    if (!c) return null;
+    const r = c.getBoundingClientRect();
+    const chain = [];
+    let n = c.parentElement;
+    while (n && n !== document.body) {
+      chain.push(n.tagName + (n.id ? '#' + n.id : '') + ':' + getComputedStyle(n).display);
+      n = n.parentElement;
+    }
+    return {
+      parent: c.parentElement.tagName,
+      clientW: c.clientWidth,
+      clientH: c.clientHeight,
+      rectW: Math.round(r.width),
+      rectH: Math.round(r.height),
+      chain: chain.join(' <- ')
+    };
+  });
+  expect(layout, '#game muss existieren').not.toBeNull();
+  expect(layout.parent, '#game muss direkt im Body liegen, nicht in einem Overlay (Vorfahren: ' + (layout && layout.chain) + ')').toBe('BODY');
+  expect(layout.clientW, 'Leinwand muss im Layout eine Breite haben: ' + JSON.stringify(layout)).toBeGreaterThan(0);
+  expect(layout.clientH, 'Leinwand muss im Layout eine Hoehe haben: ' + JSON.stringify(layout)).toBeGreaterThan(0);
+  expect(layout.rectW, 'Sichtbarkeitsrechteck darf nicht leer sein: ' + JSON.stringify(layout)).toBeGreaterThan(0);
+  await expect(page.locator('#mbroot'), 'Builder-Overlay muss zu Beginn versteckt sein').toBeHidden();
+  expect(errs).toEqual([]);
+});
+
 test('Karte lädt und ist sichtbar: Szene rendert, kein schwarzer Bildschirm', async ({ page }) => {
   const errs = [];
   attachErrors(errs, page);
@@ -141,6 +181,13 @@ test('Karte lädt und ist sichtbar: Szene rendert, kein schwarzer Bildschirm', a
   expect(stats.colorBins, 'Die Karte muss sichtbaren, farbigen Inhalt zeigen (Beprobung des WebGL-Puffers, Mitte): ' + JSON.stringify(stats)).toBeGreaterThan(40);
   expect(stats.meanLum, 'Das gerenderte Bild darf nicht (nahezu) schwarz sein: ' + JSON.stringify(stats)).toBeGreaterThan(6);
   expect(stats.darkFraction, 'Fast alle Pixel dürfen nicht schwarz sein: ' + JSON.stringify(stats)).toBeLessThan(0.99);
+  /* Die Leinwand muss auch im Session-Layout sichtbar sein (nicht nur der Puffer) */
+  const layout = await page.evaluate(() => {
+    const c = document.getElementById('game');
+    return { w: c.clientWidth, h: c.clientHeight, r: Math.round(c.getBoundingClientRect().width) };
+  });
+  expect(layout.w, 'Leinwand im Session-Layout: ' + JSON.stringify(layout)).toBeGreaterThan(0);
+  expect(layout.r, 'Sichtbarkeitsrechteck in der Session: ' + JSON.stringify(layout)).toBeGreaterThan(0);
   expect(errs).toEqual([]);
   await test.info().attach('screenshot-karte', { body: await page.screenshot(), contentType: 'image/png' });
 });

@@ -227,6 +227,7 @@ body.touch #mobile{display:flex}body.touch #help{display:none}body.touch #pbtn{d
  <div id="mblibList"></div>
  <button class="close">Schließen</button>
 </div></div>
+</div><!-- /mbroot — WICHTIG: schließt das Builder-Overlay. Ohne diese Zeile läge #game (und alles Folgende) im DOM INNERHALB des versteckten Overlays (display:none): Das Spiel-Canvas wäre 0x0 und der Bildschirm schwarz, obwohl der Puffer rendert. -->
 <div id="ctxlost"><div class="card" style="text-align:center"><h1 style="font-size:28px">3D-KONTEXT VERLOREN</h1><p style="max-width:420px;margin:0 0 16px;color:#aab4bd">Der Browser hat die 3D-Ressourcen freigegeben (Speichermangel oder zu viele WebGL-Ansichten gleichzeitig). Bitte die Seite neu laden.</p><button id="ctxreload">SEITE NEU LADEN</button></div></div>
 <canvas id="game"></canvas>
 <script>
@@ -286,7 +287,7 @@ let diagF=0;
     st.textContent='FPS '+f+(lost?' | 3D-KONTEXT TOT':' | 3D OK')+' | Draw '+dr+' | Leinwand '+canvas.clientWidth+'x'+canvas.clientHeight+' (Puffer '+(gl?gl.drawingBufferWidth+'x'+gl.drawingBufferHeight:'-')+')'+' | Kamera '+(camera?camera.position.x.toFixed(1)+' '+camera.position.y.toFixed(1)+' '+camera.position.z.toFixed(1):'-');
     try{
      const cs=getComputedStyle(canvas),rc=canvas.getBoundingClientRect();
-     st2.textContent='Layout client '+canvas.clientWidth+'x'+canvas.clientHeight+' | rect '+Math.round(rc.width)+'x'+Math.round(rc.height)+' | CSS '+cs.display+' '+cs.position+' '+cs.width+'x'+cs.height+' | inline "'+(canvas.getAttribute('style')||'')+'" | Eltern '+(canvas.parentElement?canvas.parentElement.tagName:'-')+' | imDOM='+canvas.isConnected+' | Fenster '+innerWidth+'x'+innerHeight+' | dPR '+Math.round(devicePixelRatio*100)/100;
+     st2.textContent='Layout client '+canvas.clientWidth+'x'+canvas.clientHeight+' | rect '+Math.round(rc.width)+'x'+Math.round(rc.height)+' | CSS '+cs.display+' '+cs.position+' '+cs.width+'x'+cs.height+' | inline "'+(canvas.getAttribute('style')||'')+'" | Eltern '+(canvas.parentElement?(canvas.parentElement.tagName+(canvas.parentElement.id?'#'+canvas.parentElement.id:'')+'[display:'+getComputedStyle(canvas.parentElement).display+']'):'-')+' | imDOM='+canvas.isConnected+' | Fenster '+innerWidth+'x'+innerHeight+' | dPR '+Math.round(devicePixelRatio*100)/100;
     }catch(e2){}
    }catch(e){}
   },1000);
