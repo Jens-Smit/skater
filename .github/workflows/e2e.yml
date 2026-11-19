@@ -3,12 +3,12 @@ name: E2E-Tests
 on:
   push:
     branches: [main]
-    paths-ignore: ['**.glb', 'CI-LOG.md', 'ci-screenshots/**']
+    paths-ignore: ['**.glb', 'assets/**']
   pull_request:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   e2e:
@@ -57,45 +57,6 @@ jobs:
             test-output.log
           retention-days: 14
           if-no-files-found: ignore
-
-      - name: Protokoll und Karten-Screenshots ins Repository committen
-        if: always() && github.event_name != 'pull_request'
-        run: |
-          {
-            echo "# E2E-Testlauf"
-            echo
-            echo "- Commit: ${GITHUB_SHA:0:7}"
-            echo "- Lauf: ${GITHUB_RUN_NUMBER} (ID ${GITHUB_RUN_ID})"
-            echo "- Zeit (UTC): $(date -u '+%Y-%m-%d %H:%M:%S')"
-            echo "- npm install: ${{ steps.npm.outcome }}"
-            echo "- Playwright-Installation: ${{ steps.pw.outcome }}"
-            echo "- Testlauf: ${{ steps.tests.outcome }} (Exit-Code: ${{ steps.tests.outputs.exit || 'kein' }})"
-            echo
-            echo "## Ausgaben"
-            for f in npm-install.log pw-install.log test-output.log; do
-              echo
-              echo "### $f"
-              echo
-              echo '```'
-              if [ -f "$GITHUB_WORKSPACE/$f" ]; then tail -n 200 "$GITHUB_WORKSPACE/$f"; else echo "(nicht vorhanden)"; fi
-              echo '```'
-            done
-            echo
-            echo "## Karten-Screenshots"
-            echo
-            if [ -d "$GITHUB_WORKSPACE/ci-screenshots" ]; then
-              for p in "$GITHUB_WORKSPACE"/ci-screenshots/*.png; do
-                [ -f "$p" ] && echo "- [$(basename "$p")](ci-screenshots/$(basename "$p")) ($(stat -c%s "$p") Bytes)"
-              done
-            else
-              echo "(keine Screenshots vorhanden)"
-            fi
-          } > CI-LOG.md
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add CI-LOG.md
-          if [ -d ci-screenshots ]; then git add ci-screenshots; fi
-          ( git diff --cached --quiet || (git commit -m "CI: Protokoll und Karten-Screenshots Lauf #${GITHUB_RUN_NUMBER}" && git push) ) || echo "Protokoll-Push nicht moeglich"
 
       - name: Lauf bewerten
         if: always()
