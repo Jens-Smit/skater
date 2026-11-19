@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="de">
 <head>
@@ -26,7 +25,7 @@ body.touch #mobile{display:flex}body.touch #help{display:none}body.touch #pbtn{d
 .tcirc .b-ollie{bottom:0;left:74px;background:#1b986cee}
 .tcirc button:active{transform:scale(.94)}
 .chips{display:flex;gap:6px;flex-wrap:wrap;pointer-events:auto}
-#menu{padding:0;background:linear-gradient(160deg,#050d17fa,#0a2236fa)}#menu .card{max-width:none;width:100%;height:100%;max-height:100%;border:0;border-radius:0;box-shadow:none;background:linear-gradient(160deg,#0a1624fa,#0e2c42fa);display:flex;flex-direction:column;justify-content:center;overflow:auto}#menu .prevrow{flex:1 1 auto;align-items:stretch}#menu .pbox{flex:1 1 260px}#menu .pwrap{flex:1 1 auto;min-height:96px}
+#menu{padding:0;background:linear-gradient(160deg,#050d1766,#0a223633)}#menu .card{max-width:none;width:100%;height:100%;max-height:100%;border:0;border-radius:0;box-shadow:none;background:linear-gradient(160deg,#0a162455,#0e2c4222);display:flex;flex-direction:column;justify-content:center;overflow:auto}#menu .prevrow{flex:1 1 auto;align-items:stretch}#menu .pbox{flex:1 1 260px}#menu .pwrap{flex:1 1 auto;min-height:96px}
 .prevrow{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 14px;text-align:left}
 .pbox{flex:1 1 216px;min-width:200px;display:flex;flex-direction:column;gap:8px;background:#0b141de6;border:1px solid #2c4257;border-radius:12px;padding:10px}
 .ptitle{font-size:10px;letter-spacing:2px;font-weight:900;color:#69dce8}
@@ -62,7 +61,7 @@ body.touch #mobile{display:flex}body.touch #help{display:none}body.touch #pbtn{d
 #mbroot button:hover{background:#37414d}
 #mbroot button.primary{background:#31425a;border-color:#3f5b7d}
 #mbroot button.danger{background:#4a2a2a;border-color:#6b3a3a}
-#mbpalette{top:66px;left:8px;width:158px;display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:10px}
+#mbpalette{top:66px;left:8px;width:158px;max-height:calc(100vh - 96px);overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:10px}
 #mbpalette button{padding:8px 4px;font-size:12px;line-height:1.25}
 #mbpalette button.active{background:#31425a;border-color:#f5c542;color:#f5c542}
 #mbpalette h3{grid-column:1/-1;margin:0 0 2px;font-size:12px;color:#9aa4ad;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
@@ -101,7 +100,7 @@ body.touch #mobile{display:flex}body.touch #help{display:none}body.touch #pbtn{d
 #mbtoolbar{flex-wrap:nowrap;overflow-x:auto;gap:8px;padding:6px 8px}
 #mbtoolbar .grp{white-space:nowrap;flex:0 0 auto;padding-left:8px}
 #mbtoolbar input[type=number]{width:56px}
-#mbpalette{top:56px;left:4px;width:126px;gap:5px;padding:8px}
+#mbpalette{top:56px;left:4px;width:126px;max-height:calc(100vh - 130px);overflow-y:auto;gap:5px;padding:8px}
 #mbpalette button{padding:11px 3px;font-size:11px}
 #mbprops{top:auto;bottom:4px;right:4px;width:178px;max-height:62vh;overflow-y:auto}
 #mbstatus{display:none}
@@ -114,7 +113,7 @@ body.touch #mobile{display:flex}body.touch #help{display:none}body.touch #pbtn{d
  <div class="row">
   <div class="plate"><div class="muted">SESSION SCORE</div><div id="score" class="big">0</div><div class="muted">BEST <span id="best" class="gold">0</span></div></div>
   <div class="plate" style="text-align:center"><div class="muted">TIME LEFT</div><div id="timer" class="big">05:00</div></div>
-  <div class="plate right"><div class="muted">PRO SKATER 99</div><div class="gold" style="font-weight:900" id="mapname">TUTORIAL</div><div class="muted" id="zone">STREET COURSE</div></div>
+  <div class="plate right"><div class="muted">PRO SKATER 99</div><div class="gold" style="font-weight:900" id="mapname">PRO PARK</div><div class="muted" id="zone">STREET COURSE</div></div>
  </div>
  <div id="balance"><div id="balNeedle"></div></div>
  <button id="pbtn">II</button>
@@ -128,7 +127,7 @@ body.touch #mobile{display:flex}body.touch #help{display:none}body.touch #pbtn{d
 <div id="menu"><div class="card"><div class="eyebrow">THE UNDERGROUND SKATE SERIES</div><h1>PRO SKATER<br>99</h1><div class="eyebrow">WAREHOUSE SESSIONS — PRO</div>
 <div class="prevrow">
 <div class="pbox"><div class="ptitle">MAP-VORSCHAU</div><div class="pwrap"><canvas id="mapprev"></canvas></div>
-<div class="chips" style="justify-content:flex-start;margin:0"><button class="chip on" data-map="tutorial">TUTORIAL</button><button class="chip" data-map="warehouse">WAREHOUSE</button><button class="chip" data-map="school">SCHOOL</button><button class="chip" data-map="minipark">MINI PARK</button><button class="chip" data-map="funpark">FUN XXL</button></div>
+<div class="chips" style="justify-content:flex-start;margin:0"><button class="chip on" data-map="tutorial">PRO PARK</button><button class="chip" data-map="warehouse">WAREHOUSE</button><button class="chip" data-map="school">SCHOOL</button><button class="chip" data-map="minipark">MINI PARK</button><button class="chip" data-map="funpark">FUN XXL</button></div>
 <div class="pdesc" id="mapdesc"></div></div>
 <div class="pbox"><div class="ptitle">CHARAKTER-VORSCHAU</div><div class="pwrap"><canvas id="charprev"></canvas></div>
 <button id="char" class="secondary" style="width:100%">OUTFIT</button>
@@ -138,7 +137,7 @@ body.touch #mobile{display:flex}body.touch #help{display:none}body.touch #pbtn{d
 </div></div>
 <div id="settings" style="display:none"><div class="card"><div class="eyebrow">SESSION</div><h1 style="font-size:clamp(26px,5vw,44px)">EINSTELLUNGEN</h1>
 <div class="desc">Kippen steuert auf Mobilgeräten Lenkung und Tempo. Kalibrieren richtet die Nulllage des Geräts neu aus. Sound schaltet die Akustik der Session.</div>
-<div class="chips" style="justify-content:center;margin:14px 0"><button class="chip" data-role="tilt">KIPPEN</button><button class="chip" data-role="cal">KALIBRIEREN</button><button class="chip" data-role="snd">SOUND: AN</button></div>
+<div class="chips" style="justify-content:center;margin:14px 0"><button class="chip" data-role="tilt">KIPPEN</button><button class="chip" data-role="cal">KALIBRIEREN</button><button class="chip" data-role="tex">TEXTUREN: ONLINE</button><button class="chip" data-role="snd">SOUND: AN</button></div>
 <button id="setclose">ZURÜCK ZUM MENÜ</button></div></div>
 <div id="pause"><div class="card"><div class="eyebrow">SESSION</div><h1 style="font-size:48px">PAUSE</h1><div id="stats"></div><button id="resume">WEITER SKATEN</button> <button id="restart" class="secondary">NEUSTART</button> <button id="tomenu" class="secondary" style="display:none">ZURÜCK ZUM MENÜ</button></div></div>
 <div id="mbroot" style="display:none">
@@ -150,7 +149,9 @@ body.touch #mobile{display:flex}body.touch #help{display:none}body.touch #pbtn{d
   <input type="number" id="mbgw" min="20" max="300" step="5" value="120"> ×
   <input type="number" id="mbgd" min="20" max="300" step="5" value="90">
   <label>Boden</label>
-  <select id="mbgm"></select></span>
+  <select id="mbgm"></select>
+  <label>Himmel</label>
+  <select id="mbbg"></select></span>
  <span class="grp"><label>Raster</label>
   <select id="mbsnap"><option value="0">frei</option><option value="0.5">0,5 m</option><option value="1" selected>1 m</option><option value="2">2 m</option></select></span>
  <span class="grp"><label>Kartenname</label>
@@ -212,6 +213,16 @@ body.touch #mobile{display:flex}body.touch #help{display:none}body.touch #pbtn{d
  <li>Kurven-Rail: 90°-Bogen, grindbar, Breite = Bogenradius</li>
  <li>Bowl oval: Breite = X-Radius, Tiefe = Z-Radius (ungleich = oval)</li>
  <li>Bank, Zaun, Picknicktisch, Pyramide: Bank/Tisch grindbar, Zaun blockiert</li></ul>
+ <h4>Kenney-Kacheln (Mini Park / Fun XXL)</h4>
+ <ul><li>Die Kachel-Objekte nutzen dieselben 4x4-m-Kacheln wie die Original-Parks: Optik und Fahrphysik (Höhenfeld, Grind-Rails, blockierende Wände) stimmen exakt überein.</li>
+ <li>Rotation wird auf 90°-Schritte gerastert, Platzierung und Verschieben liegen im 4-m-Raster, damit die Kacheln lückenlos aneinandersetzen.</li>
+ <li>Halfpipe- und Wandkacheln: Häkchen „Pfosten/Wand" aktiviert die seitlichen Abschlusswände. Ohne Häkchen lassen sich durchgehende Reihen (Wände, Zäune) setzen.</li></ul>
+ <h4>Pool / Bowl aufziehen</h4>
+ <ul><li>Objekt „Pool/Bowl (aufziehen)" wählen und auf der Fläche ziehen: beliebiges Rechteck ab 8x8 m. Tippen ohne Ziehen erzeugt 12x12 m.</li>
+ <li>Das Becken wird automatisch in Ecken-, Wand- und Bodenkacheln zerlegt und 3,2 m versenkt: überall Drop-in, Coping grindbar, rechteckige Öffnung im Hallenboden.</li>
+ <li>Maße sind Vielfache von 4 m; Position, Maße und Drehung bleiben im 4-m-Kachelraster (90°-Schritte) — das hält die Physik lückenlos.</li></ul>
+ <h4>Materialien</h4>
+ <p>Das Material rechts gilt für alle Objekte — auch für Rampen, Quarter, Funbox, Halfpipe, Pyramide, Bowl und Pool, deren Schalung vorher fest auf Beton stand. Kenney-Kacheln behalten ihre Textur; dort steuert das Häkchen „Pfosten/Wand" die Abschlusswände.</p>
  <h4>Im Spiel spielen (Karten-Bibliothek)</h4>
  <p>Im Feld <b>Kartenname</b> einen Namen vergeben und <b>Speichern</b> drücken: Die Karte landet in der Bibliothek und erscheint im Spiel im <b>Startmenü als eigene Karte</b>. Über <b>Karten</b> lassen sich gespeicherte Karten laden oder löschen. Ohne Namen fordert Speichern zur Eingabe auf.</p>
  <h4>Speicherung der Arbeitskopie (keine Datenbank)</h4>
@@ -227,7 +238,7 @@ body.touch #mobile{display:flex}body.touch #help{display:none}body.touch #pbtn{d
  <div id="mblibList"></div>
  <button class="close">Schließen</button>
 </div></div>
-</div><!-- /mbroot — WICHTIG: schließt das Builder-Overlay. Ohne diese Zeile läge #game (und alles Folgende) im DOM INNERHALB des versteckten Overlays (display:none): Das Spiel-Canvas wäre 0x0 und der Bildschirm schwarz, obwohl der Puffer rendert. -->
+</div><!-- /#mbroot -->
 <div id="ctxlost"><div class="card" style="text-align:center"><h1 style="font-size:28px">3D-KONTEXT VERLOREN</h1><p style="max-width:420px;margin:0 0 16px;color:#aab4bd">Der Browser hat die 3D-Ressourcen freigegeben (Speichermangel oder zu viele WebGL-Ansichten gleichzeitig). Bitte die Seite neu laden.</p><button id="ctxreload">SEITE NEU LADEN</button></div></div>
 <canvas id="game"></canvas>
 <script>
@@ -240,11 +251,215 @@ body.touch #mobile{display:flex}body.touch #help{display:none}body.touch #pbtn{d
 
 </script>
 <script>
-/* ============================================================
-   PRO SKATER 99 — WAREHOUSE SESSIONS PRO
-   Großer Skatepark · Echtes Board-Modell · Neigungsphysik ·
-   Prozedurale Animationen · Verbesserte Sturz-Ragdoll-Physik
-   ============================================================ */
+/* SKT — Material-/Texturbibliothek (Spiel + Builder): triplanare 1/scale-m-Kacheln auf jeder Geometrie; PBR-Texturen (Poly Haven CC0) per CDN, sonst prozeduraler Fallback. Quellen: SKT.SRC.<material> ({d,n,r}-URLs nach Prioritaet), localStorage 'ps99_tex'='off' = nur Fallback. */
+(function(){
+'use strict';
+const T=window.THREE;
+if(!T){return}
+const SKT=window.SKT={};
+let ON=true;
+try{ON=localStorage.getItem('ps99_tex')!=='off'}catch(e){}
+SKT.online=ON;
+SKT.setOnline=function(v){try{localStorage.setItem('ps99_tex',v?'on':'off')}catch(e){}};
+const touch=(()=>{try{return matchMedia('(pointer:coarse)').matches}catch(e){return false}})();
+SKT.useNormals=!touch;
+
+const PH=(id)=>({d:`https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/${id}/${id}_diff_1k.jpg`,
+ n:`https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/${id}/${id}_nor_gl_1k.jpg`,
+ r:`https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/${id}/${id}_rough_1k.jpg`});
+const J3='https://cdn.jsdelivr.net/gh/mrdoob/three.js@r147/examples/textures/';
+/* Quellen je Material (Prioritaet von oben nach unten) */
+SKT.SRC={
+ beton:[PH('concrete_floor_02'),PH('concrete_floor_worn_001'),PH('concrete_wall_006')],
+ asphalt:[PH('asphalt_02'),PH('asphalt_04')],
+ holz:[PH('brown_planks_03'),PH('plywood'),{d:J3+'hardwood2_diffuse.jpg',r:J3+'hardwood2_roughness.jpg'}],
+ metall:[PH('metal_plate'),PH('corrugated_iron'),PH('metal_plate_02')],
+ ziegel:[PH('red_brick_03'),PH('brick_wall_02'),{d:J3+'brick_diffuse.jpg'}],
+ gras:[PH('forrest_ground_01'),PH('leafy_grass'),{d:J3+'terrain/grasslight-big.jpg'}]
+};
+/* Materialdefinitionen: tint = Farbe, die mit der Textur multipliziert wird,
+   sc = Kacheln pro Meter, r/m = Standard-Rauheit/-Metall, ns = Normalmap-Staerke */
+const DEF={
+ beton:   {tint:0xb0b4b4,r:.92,m:0,   sc:.22,ns:.7,k:'beton'},
+ asphalt: {tint:0xd0d4d8,r:.95,m:0,   sc:.25,ns:.8,k:'asphalt'},
+ holz:    {tint:0xffe6c8,r:.82,m:0,   sc:.35,ns:.6,k:'holz'},
+ metall:  {tint:0xffffff,r:.4, m:.85, sc:.5, ns:.5,k:'metall'},
+ metallRot:{tint:0xd04a3a,r:.45,m:.55,sc:.5, ns:.5,k:'metall'},
+ dunkel:  {tint:0x777c82,r:.92,m:.05, sc:.25,ns:.7,k:'asphalt'},
+ gruen:   {tint:0xc8e0b0,r:.96,m:0,   sc:.3, ns:.5,k:'gras'},
+ lip:     {tint:0xf5c542,r:.5, m:.3,  sc:.5, ns:.4,k:'metall'},
+ ziegel:  {tint:0xffffff,r:.9, m:0,   sc:.4, ns:.8,k:'ziegel'},
+ wand:    {tint:0x6a7d8c,r:.9, m:0,   sc:.18,ns:.6,k:'beton'},
+ gras:    {tint:0xffffff,r:.97,m:0,   sc:.25,ns:.5,k:'gras'}
+};
+SKT.DEF=DEF;
+
+/* ---------- prozedurale Fallback-Texturen (256 px, nahtlos genug fuer Triplanar) ---------- */
+const rnd=(()=>{let s=1234567;return()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296}})();
+function cv(S){const c=document.createElement('canvas');c.width=c.height=S;return c}
+function noiseFill(g,S,n,lo,hi,a,sz){for(let i=0;i<n;i++){const v=lo+rnd()*(hi-lo)|0;g.fillStyle=`rgba(${v},${v},${v},${rnd()*a})`;g.fillRect(rnd()*S,rnd()*S,sz,sz)}}
+function proc(k){
+ const S=256,c=cv(S),g=c.getContext('2d');
+ if(k==='beton'){
+  g.fillStyle='#8c908e';g.fillRect(0,0,S,S);
+  noiseFill(g,S,9000,60,200,.25,2);
+  for(let i=0;i<14;i++){const x=rnd()*S,y=rnd()*S,r=14+rnd()*40;const st=g.createRadialGradient(x,y,1,x,y,r);st.addColorStop(0,'rgba(60,60,58,.16)');st.addColorStop(1,'rgba(60,60,58,0)');g.fillStyle=st;g.fillRect(x-r,y-r,2*r,2*r)}
+ }else if(k==='asphalt'){
+  g.fillStyle='#4b4e52';g.fillRect(0,0,S,S);
+  noiseFill(g,S,16000,20,170,.5,1.5);
+ }else if(k==='holz'){
+  g.fillStyle='#a47b4f';g.fillRect(0,0,S,S);
+  for(let y=0;y<S;y+=2){g.strokeStyle=`rgba(${70+rnd()*40|0},${46+rnd()*26|0},26,${.08+rnd()*.2})`;g.lineWidth=1+rnd();g.beginPath();g.moveTo(0,y);g.bezierCurveTo(S*.3,y+rnd()*3-1.5,S*.6,y+rnd()*3-1.5,S,y);g.stroke()}
+  g.strokeStyle='rgba(40,24,10,.65)';g.lineWidth=2;for(let y=0;y<S;y+=64){g.beginPath();g.moveTo(0,y+1);g.lineTo(S,y+1);g.stroke()}
+ }else if(k==='metall'){
+  g.fillStyle='#9aa2a8';g.fillRect(0,0,S,S);
+  for(let i=0;i<500;i++){const x=rnd()*S;g.fillStyle=rnd()>.5?'rgba(255,255,255,.10)':'rgba(40,50,60,.12)';g.fillRect(x,0,1+rnd()*1.5,S)}
+ }else if(k==='ziegel'){
+  g.fillStyle='#5e3a2e';g.fillRect(0,0,S,S);
+  for(let y=0;y<S;y+=16){const off=(y/16)%2?16:0;for(let x=-32;x<S;x+=32){const v=.8+rnd()*.35;g.fillStyle=`rgb(${176*v|0},${88*v|0},${64*v|0})`;g.fillRect(x+off+1,y+1,30,14)}}
+ }else{ // gras
+  g.fillStyle='#4f8040';g.fillRect(0,0,S,S);
+  for(let i=0;i<9000;i++){const v=rnd();g.fillStyle=`rgba(${46+v*54|0},${110+v*70|0},${34+v*40|0},${.25+rnd()*.4})`;g.fillRect(rnd()*S,rnd()*S,1.5,2.5)}
+ }
+ const t=new T.CanvasTexture(c);t.wrapS=t.wrapT=T.RepeatWrapping;t.anisotropy=4;return t;
+}
+const dummy=(()=>{const t=new T.DataTexture(new Uint8Array([128,128,255,255]),1,1,T.RGBAFormat);t.needsUpdate=true;return t})();
+const dummyR=(()=>{const t=new T.DataTexture(new Uint8Array([200,200,200,255]),1,1,T.RGBAFormat);t.needsUpdate=true;return t})();
+
+/* ---------- Laden: je Texturart (k) einmal, Kandidaten der Reihe nach ---------- */
+const SETS={}; // k -> {tex:{value},nor:{value},rgh:{value},hasN:{value},hasR:{value},started,state}
+function getSet(k){
+ if(SETS[k])return SETS[k];
+ const s=SETS[k]={tex:{value:proc(k)},nor:{value:dummy},rgh:{value:dummyR},hasN:{value:0},hasR:{value:0},started:false,state:'fallback'};
+ return s;
+}
+function loadTex(url,cb,fail){
+ const ld=new T.TextureLoader();ld.setCrossOrigin('anonymous');
+ let done=false;
+ const to=setTimeout(()=>{if(!done){done=true;fail&&fail()}},25000);
+ ld.load(url,t=>{if(done){t.dispose();return}done=true;clearTimeout(to);t.wrapS=t.wrapT=T.RepeatWrapping;t.anisotropy=8;cb(t)},undefined,()=>{if(done)return;done=true;clearTimeout(to);fail&&fail()});
+}
+function startLoad(k){
+ const s=getSet(k);
+ if(s.started||!SKT.online||!SKT.SRC[k])return;
+ s.started=true;
+ const list=SKT.SRC[k];let i=0;
+ const next=()=>{
+  if(i>=list.length){s.state='fallback';return}
+  const c=list[i++];
+  loadTex(c.d,t=>{
+   s.tex.value=t;s.state='online';
+   if(SKT.useNormals&&c.n)loadTex(c.n,n=>{s.nor.value=n;s.hasN.value=1},null);
+   if(c.r)loadTex(c.r,r=>{s.rgh.value=r;s.hasR.value=1},null);
+  },next);
+ };
+ next();
+}
+SKT.status=()=>{const o={};for(const k in SETS)o[k]=SETS[k].state;return o};
+
+/* ---------- Shader-Patch (Triplanar + Normal/Rauheit) ---------- */
+const GLSL_HELP=`
+varying vec3 vTP;varying vec3 vTN;
+uniform sampler2D uTex;uniform sampler2D uNor;uniform sampler2D uRgh;
+uniform float uSc;uniform float uNS;uniform float uHasN;uniform float uHasR;
+`;
+function patch(m,set,def){
+ m.onBeforeCompile=(sh,rd)=>{
+  sh.uniforms.uTex=set.tex;sh.uniforms.uNor=set.nor;sh.uniforms.uRgh=set.rgh;
+  sh.uniforms.uHasN=set.hasN;sh.uniforms.uHasR=set.hasR;
+  sh.uniforms.uSc={value:def.sc};sh.uniforms.uNS={value:def.ns};
+  const srgb=rd&&rd.outputEncoding===T.sRGBEncoding;
+  sh.vertexShader=sh.vertexShader
+   .replace('#include <common>','#include <common>\nvarying vec3 vTP;varying vec3 vTN;')
+   .replace('#include <begin_vertex>','#include <begin_vertex>\nvTP=(modelMatrix*vec4(transformed,1.0)).xyz;vTN=normalize(mat3(modelMatrix)*objectNormal);');
+  sh.fragmentShader=sh.fragmentShader
+   .replace('#include <common>','#include <common>\n'+GLSL_HELP)
+   .replace('#include <map_fragment>',`
+    vec3 tN=normalize(vTN);vec3 tw=pow(abs(tN),vec3(4.0));tw/=(tw.x+tw.y+tw.z+1e-5);
+    vec3 tp=vTP*uSc;vec2 uvx=tp.zy;vec2 uvy=tp.xz;vec2 uvz=tp.xy;
+    vec3 tc=texture2D(uTex,uvx).rgb*tw.x+texture2D(uTex,uvy).rgb*tw.y+texture2D(uTex,uvz).rgb*tw.z;
+    ${srgb?'tc=pow(tc,vec3(2.2));':''}
+    tc*=0.86+0.28*texture2D(uTex,(tp.xz+tp.yy*0.5)*0.113+0.31).g; // Anti-Kachelung
+    diffuseColor.rgb*=tc;`)
+   .replace('#include <roughnessmap_fragment>',`#include <roughnessmap_fragment>
+    if(uHasR>0.5){float rr=texture2D(uRgh,uvx).g*tw.x+texture2D(uRgh,uvy).g*tw.y+texture2D(uRgh,uvz).g*tw.z;roughnessFactor=clamp(mix(roughnessFactor,rr,0.55),0.05,1.0);}`)
+   .replace('#include <normal_fragment_maps>',`#include <normal_fragment_maps>
+    if(uHasN>0.5){
+     vec3 nx=texture2D(uNor,uvx).xyz*2.0-1.0;vec3 ny=texture2D(uNor,uvy).xyz*2.0-1.0;vec3 nz=texture2D(uNor,uvz).xyz*2.0-1.0;
+     vec3 pw=vec3(0.0,nx.y,nx.x)*tw.x+vec3(ny.x,0.0,ny.y)*tw.y+vec3(nz.x,nz.y,0.0)*tw.z;
+     normal=normalize(normal+uNS*(viewMatrix*vec4(pw,0.0)).xyz);
+    }`);
+ };
+ m.customProgramCacheKey=()=>'skt2';
+}
+
+/* SKT.mat(name,opt): frisches Material (teilt Texturen/Uniforms) — opt:{r,m,side,color,tile} */
+SKT.has=n=>!!DEF[n];
+SKT.mat=function(name,opt){
+ opt=opt||{};
+ const def=DEF[name]||DEF.beton;
+ const set=getSet(def.k);
+ const d2=opt.tile?Object.assign({},def,{sc:def.sc*opt.tile}):def;
+ const m=new T.MeshStandardMaterial({color:opt.color!==undefined?opt.color:def.tint,roughness:opt.r!==undefined?opt.r:def.r,metalness:opt.m!==undefined?opt.m:def.m,side:opt.side||T.FrontSide});
+ patch(m,set,d2);
+ startLoad(def.k);
+ return m;
+};
+
+/* ---------- Hintergruende (Cubemaps) ---------- */
+const CUBE=J3+'cube/';
+const FACES6=['px','nx','py','ny','pz','nz'];
+SKT.BG={
+ none:  {n:'Einfarbig',faces:null},
+ park:  {n:'Park (Tag)',dir:CUBE+'Park2/',f:['posx','negx','posy','negy','posz','negz'],ext:'.jpg',fog:0xa9c4d8},
+ bruecke:{n:'Brücke / Stadt',dir:CUBE+'Bridge2/',f:['posx','negx','posy','negy','posz','negz'],ext:'.jpg',fog:0xb4bfc8},
+ schloss:{n:'Schloss / Himmel',dir:CUBE+'SwedishRoyalCastle/',f:['px','nx','py','ny','pz','nz'],ext:'.jpg',fog:0x9fb6c8},
+ himmel:{n:'Sonniger Himmel',dir:CUBE+'skyboxsun25deg/',f:['px','nx','py','ny','pz','nz'],ext:'.jpg',fog:0xa8cbe6},
+ nacht: {n:'Nachthimmel',dir:CUBE+'MilkyWay/',f:['dark-s_px','dark-s_nx','dark-s_py','dark-s_ny','dark-s_pz','dark-s_nz'],ext:'.jpg',fog:0x10141c}
+};
+const BGC={};
+/* SKT.bg(name,scene,cb): Himmelskuppel, folgt Kamera; SKT.SKYZOOM>1 zeigt mehr Panorama (Himmel wirkt kleiner), gespiegelt statt gewrappt = ohne Naht. */
+SKT.SKYZOOM=1.9;SKT.SKYLIFT=0.12;
+SKT.clearBg=function(scene){
+ const u=scene.userData=scene.userData||{};u.bgWant=null;
+ if(u.sky){scene.remove(u.sky);u.sky=null}
+};
+function makeSky(cube){
+ const g=new T.SphereGeometry(1,32,16);
+ const m=new T.ShaderMaterial({
+  uniforms:{uCube:{value:cube},uZ:{value:SKT.SKYZOOM},uLift:{value:SKT.SKYLIFT},uB:{value:0.82}},
+  vertexShader:'varying vec3 vD;void main(){vD=position;vec4 p=projectionMatrix*vec4(mat3(viewMatrix)*position,1.0);gl_Position=p.xyww;}',
+  fragmentShader:`uniform samplerCube uCube;uniform float uZ;uniform float uLift;uniform float uB;varying vec3 vD;
+   float tri(float x){x=mod(x,4.0);return x<2.0?x-1.0:3.0-x;}
+   void main(){
+    vec3 d=normalize(vD);
+    float az=atan(d.z,d.x);float el=asin(clamp(d.y,-1.0,1.0));
+    float a2=tri(az/3.14159265*uZ+1.0)*3.14159265;           // gespiegelt
+    float e2=1.5707963*tanh(((el+uLift)*uZ)/1.5707963);                  // Horizont etwas nach unten schieben
+    vec3 s=vec3(cos(e2)*cos(a2),sin(e2),cos(e2)*sin(a2));
+    gl_FragColor=vec4(textureCube(uCube,s).rgb*uB,1.0);
+   }`,
+  side:T.BackSide,depthWrite:false,depthTest:false,fog:false,toneMapped:false
+ });
+ const mesh=new T.Mesh(g,m);mesh.frustumCulled=false;mesh.renderOrder=-1000;mesh.name='SKT_SKY';
+ return mesh;
+}
+SKT.bg=function(name,scene,cb){
+ const d=SKT.BG[name];
+ if(!d||!d.f||!SKT.online)return false;
+ const u=scene.userData=scene.userData||{};u.bgWant=name;
+ const apply=t=>{if(u.bgWant!==name)return;if(u.sky)scene.remove(u.sky);u.sky=makeSky(t);scene.add(u.sky);if(cb)cb(d)};
+ if(BGC[name]){if(BGC[name]!=='loading'&&BGC[name]!=='fail')apply(BGC[name]);return true}
+ BGC[name]='loading';
+ const ld=new T.CubeTextureLoader();ld.setCrossOrigin('anonymous');
+ let ok=false;const to=setTimeout(()=>{if(!ok)BGC[name]='fail'},30000);
+ ld.load(d.f.map(f=>d.dir+f+d.ext),t=>{ok=true;clearTimeout(to);BGC[name]=t;apply(t)},undefined,()=>{BGC[name]='fail'});
+ return true;
+};
+})();
+</script>
+<script>
+/* PRO SKATER 99 — WAREHOUSE SESSIONS PRO: Skatepark, Board-Modell, Neigungsphysik, Prozeduralanimation, Ragdoll-Sturz. */
 (()=>{ 'use strict';
 const canvas=document.getElementById('game'),$=id=>document.getElementById(id);
 const isTouch=matchMedia('(pointer:coarse)').matches;
@@ -272,9 +487,7 @@ let diagF=0;
   const st=document.createElement('div');
   st.style.cssText='position:fixed;left:0;bottom:0;z-index:9999;background:#000000b8;color:#8fe8ff;font:10px/1.35 monospace;padding:2px 6px;pointer-events:none;white-space:nowrap;overflow:hidden;max-width:100vw';
   host.appendChild(st);
-  /* Detail-Diagnose (Zeile darueber, gold): erklaert, WARUM die Leinwand eine Groesse hat
-     oder warum nicht: Layout-Masse, berechnete CSS-Werte, Inline-Stil, DOM-Anbindung,
-     Fenster- und Pixeldichte. Bei Problemen genuegt ein Screenshot dieser Zeile. */
+  /* Goldene Detail-Diagnose (Zeile darueber): Layout-Masse, CSS-Werte, Inline-Stil, DOM, Fenster, Pixeldichte. */
   const st2=document.createElement('div');
   st2.style.cssText='position:fixed;left:0;bottom:24px;z-index:9999;background:#000000b8;color:#ffd34e;font:10px/1.4 monospace;padding:2px 6px;pointer-events:none;white-space:pre-wrap;word-break:break-all;max-width:100vw';
   host.appendChild(st2);
@@ -287,7 +500,8 @@ let diagF=0;
     st.textContent='FPS '+f+(lost?' | 3D-KONTEXT TOT':' | 3D OK')+' | Draw '+dr+' | Leinwand '+canvas.clientWidth+'x'+canvas.clientHeight+' (Puffer '+(gl?gl.drawingBufferWidth+'x'+gl.drawingBufferHeight:'-')+')'+' | Kamera '+(camera?camera.position.x.toFixed(1)+' '+camera.position.y.toFixed(1)+' '+camera.position.z.toFixed(1):'-');
     try{
      const cs=getComputedStyle(canvas),rc=canvas.getBoundingClientRect();
-     st2.textContent='Layout client '+canvas.clientWidth+'x'+canvas.clientHeight+' | rect '+Math.round(rc.width)+'x'+Math.round(rc.height)+' | CSS '+cs.display+' '+cs.position+' '+cs.width+'x'+cs.height+' | inline "'+(canvas.getAttribute('style')||'')+'" | Eltern '+(canvas.parentElement?(canvas.parentElement.tagName+(canvas.parentElement.id?'#'+canvas.parentElement.id:'')+'[display:'+getComputedStyle(canvas.parentElement).display+']'):'-')+' | imDOM='+canvas.isConnected+' | Fenster '+innerWidth+'x'+innerHeight+' | dPR '+Math.round(devicePixelRatio*100)/100;
+     st2.style.display=(canvas.clientWidth&&canvas.clientHeight)?'none':'block';
+     st2.textContent='Layout client '+canvas.clientWidth+'x'+canvas.clientHeight+' | rect '+Math.round(rc.width)+'x'+Math.round(rc.height)+' | CSS '+cs.display+' '+cs.position+' '+cs.width+'x'+cs.height+' | inline "'+(canvas.getAttribute('style')||'')+'" | Eltern '+(canvas.parentElement?canvas.parentElement.tagName:'-')+' | imDOM='+canvas.isConnected+' | Fenster '+innerWidth+'x'+innerHeight+' | dPR '+Math.round(devicePixelRatio*100)/100;
     }catch(e2){}
    }catch(e){}
   },1000);
@@ -299,7 +513,7 @@ let score=0,best=0,time=300,combo=0,tricks={},trickCount=0;
 let flipA=0,flipT=0,spinA=0,spinT=0,landT=0;
 let grind=null,grindCd=0;
 let vertSpd=0,vertOut=false; // Vert-Air: Anfahrts-Tempo (Landung ohne Speed-Verlust) + Vorwärts-Ausfahrts-Flag
-let pushT=0,pushCd=0,steerS=0,turnBack=false,deflectT=0,lastSurf=0,shakeT=0,zoneNow='';let manual=0,airMan=0,joyUPrev=false,joyDPrev=false;let autoPopCd=0;
+let pushT=0,pushCd=0,steerS=0,turnBack=false,deflectT=0,lastSurf=0,shakeT=0,zoneNow='';let manual=0,airMan=0,joyUPrev=false,joyDPrev=false;let autoPopCd=0,autoTurn=false,ollieBuf=0;
 let bail={on:false,t:0,phase:'',vel:V(0,0,0),spinX:0,spinZ:0,seed:0};
 let boardFree=null;
 let tiltOn=isTouch,soundOn=true;
@@ -370,6 +584,7 @@ function enableTilt(){
 function listenTilt(){if(!tilt.listening){addEventListener('deviceorientation',onOrient);tilt.listening=true}tilt.cal=true}
 function updateMobileUI(){
  document.querySelectorAll('[data-role=tilt]').forEach(b=>{b.textContent=tiltOn?(tilt.has?'KIPPEN: AN':'KIPPEN: KEIN SIGNAL'):'KIPPEN: AUS';b.classList.toggle('on',tiltOn&&tilt.has)});
+document.querySelectorAll('[data-role=tex]').forEach(b=>{b.textContent='TEXTUREN: '+(SKT.online?'ONLINE':'AUS (OFFLINE)');b.classList.toggle('on',SKT.online)});
  document.querySelectorAll('[data-role=snd]').forEach(b=>{b.textContent='SOUND: '+(soundOn?'AN':'AUS');b.classList.toggle('on',soundOn)});
  const pd=$('pad');if(pd)pd.style.display='none';
  const jr=$('joyRing');if(jr)jr.style.display=(tiltOn&&tilt.has)?'none':'block';
@@ -483,7 +698,9 @@ function deckTex(theme){
  const t=new THREE.CanvasTexture(c);t.anisotropy=8;return t;
 }
 const T={};
+const SKM={concrete:'beton',wood:'holz',metal:'metall',brick:'ziegel',wall:'wand',grass:'gras'};
 function M(kind,rx=1,ry=1,rough=.92,metal=0){
+ if(window.SKT&&SKT.online&&SKM[kind])return SKT.mat(SKM[kind],{r:rough,m:metal});
  if(!T[kind])T[kind]=tex(kind);
  const t=T[kind].clone();t.needsUpdate=true;t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(rx,ry);
  return new THREE.MeshStandardMaterial({map:t,roughness:rough,metalness:metal});
@@ -504,11 +721,7 @@ const MINI={on:false,cells:{}};   // Kachel-Park (Kenney): Zellen-LUTs
 const GLBH={on:false,x0:0,z0:0,s:1,nx:2,nz:2,h:null}; // GLB-Parks: Kollisions-Hoehenfeld (je Karte aus GLBDEFS)
 let GLBGRP=null;const GLBC={};      // geladene GLB-Szenen je Karte (ueberleben den Map-Wechsel)
 const GBU=['https://cdn.jsdelivr.net/gh/Jens-Smit/skater@main/','https://raw.githubusercontent.com/Jens-Smit/skater/main/','https://raw.githack.com/Jens-Smit/skater/main/'];
-/* GLBDEFS je Karte: f=GLB-Datei, p=Position, sc=Scale, fd=[x0,z0,s,nx,nz,y0,y1,deck]
-   (Hoehenfeld, Deck wird zu Welt-0), b=uint8-Codes delta+deflate+base64,
-   we=Welt-Halbmasse, ww=Wandmasse, ha=HALL, fo=Nebel, li=Licht, zr=Zone-Rechteck,
-   zn=Zonenname, sp=Spawn, wh=Wandhoehe, u=CDN-Reihenfolge (Indices in GBU),
-   st=GLTF-Ladezustand (0 idle,1 laeuft,2 fertig) */
+/* GLBDEFS je Karte: f=GLB, p=Position, sc=Scale, fd=[x0,z0,s,nx,nz,y0,y1,deck] (Hoehenfeld, Deck->Welt-0), b=uint8 delta+deflate+base64, we=Welt-Halbmasse, ww=Wandmasse, ha=HALL, fo=Nebel, li=Licht, zr=Zone-Rechteck, zn=Zonenname, sp=Spawn, wh=Wandhoehe, u=GBU-CDN-Indices, st=Ladezustand (0/1/2) */
 const GLBDEFS={
 };
 const NPCS=[];                    // Statisten (Kenney-Charaktere)
@@ -614,14 +827,14 @@ function solid(x,z,yFeet){
  for(const b of BOXES){if(b.pipeDeck&&yFeet<b.h-.25)continue;if(Math.abs(x-b.x)<=b.w/2+.12&&Math.abs(z-b.z)<=b.d/2+.12&&b.h>yFeet+.5)return true}
  for(const b of RBOXES){ // CUSTOM: gedrehte Blöcke, gleiche Regel wie BOXES
   const dx=x-b.x,dz=z-b.z,c=Math.cos(b.rot),s=Math.sin(b.rot);
-  if(Math.abs(dx*c-dz*s)<=b.w/2+.12&&Math.abs(dx*s+dz*c)<=b.d/2+.12&&b.y+b.h>yFeet+.5)return true;
+  if(Math.abs(dx*c-dz*s)<=b.w/2+.12&&Math.abs(dx*s+dz*c)<=b.d/2+.12&&b.y+b.h>yFeet+(b.thr||.5))return true;
  }
  for(const q of QUARTERS){
   const dx=x-q.x,dz=z-q.z;
   const lz=dx*q.dirX+dz*q.dirZ,lx=dx*q.perpX+dz*q.perpZ;
   // Rückwand + Coping-Kante: blockiert bis über die Wandhöhe, damit der Skater
   // nicht über das Coping in die Wand hinter der Rampe hineinfliegt (Clipping).
-  if(Math.abs(lx)<=q.w/2+.12&&lz>q.D-.12&&lz<q.D+.92&&yFeet<q.H+1)return true;
+  if(!q.open&&Math.abs(lx)<=q.w/2+.12&&lz>q.D-.12&&lz<q.D+.92&&yFeet<q.H+1)return true;
  }
  // Deko-Körper (Pfeiler, Lautsprecher, Banner-Poste): solide, kein Durchfahren
  for(const b of WALLS)if(Math.abs(x-b.x)<=b.w/2+.12&&Math.abs(z-b.z)<=b.d/2+.12&&yFeet<b.h)return true;
@@ -733,9 +946,10 @@ function addRamp(x,z,w,len,h,rot,metal){ // linearer Kicker/Bank
  const lip=cylXZ(g,.06,w+.3,metal?mat(0xe8ecef,.28,.85):mat(0xf5c542,.5,.4),0,h+.02,len/2-.06,10);
  lip.rotation.z=Math.PI/2;
 }
-function addQuarter(x,z,w,D,H,dirX,dirZ){
- const perpX=-dirZ,perpZ=dirX;
- QUARTERS.push({x,z,w,D,H,dirX,dirZ,perpX,perpZ});
+function addQuarter(x,z,w,D,H,dirX,dirZ,opt){
+ const perpX=-dirZ,perpZ=dirX,op=opt||{};
+ QUARTERS.push({x,z,w,D,H,dirX,dirZ,perpX,perpZ,open:!!op.open});
+ if(op.novis){RAILS.push({ax:x+dirX*D-perpX*w/2,ay:H+.14,az:z+dirZ*D-perpZ*w/2,bx:x+dirX*D+perpX*w/2,by:H+.14,bz:z+dirZ*D+perpZ*w/2,ledge:true});return}
  const pts=[];const N=18;
  for(let k=0;k<=N;k++){const t=k/N;pts.push(new THREE.Vector2(t*D,H*(1-Math.sqrt(Math.max(0,1-t*t)))))}
  pts.push(new THREE.Vector2(D,H));
@@ -788,10 +1002,7 @@ function addRail(ax,ay,az,bx,by,bz,opts){
   if(py-gh>.35){const post=cylXZ(PARK,.055,py-gh,mat(0x55606a,.6,.5),px,gh+(py-gh)/2,pz,8);SOLIDPTS.push({x:px,z:pz})}
  }
 }
-/* ---- GRIND-LINIE: Katalog-Kette aus rail-low / rail-high (4 m, direkt aneinander),
-       90°-Ecke als rail-curve plus ein weiteres Segment; Deck = befahrbare Höhen-Ebene.
-       side 0 = Ecke am fernen Linienende (Fahrtrichtung links), side 1 = Ecke am nahen
-       Ende (Fahrtrichtung rechts) — Parallelpaare biegen so auseinander statt ineinander. ---- */
+/* GRIND-LINIE: Kette aus rail-low/high (4 m) mit rail-curve-90°-Ecke; Deck = befahrbare Ebene; side 0 = Ecke am fernen, side 1 = am nahen Ende (Parallelpaare biegen auseinander). */
 function grindLine(cx,cz,ang,n,seg,gap,y,deck,side){
  const high=y>1.4;                        // Ebene 2 (rail-high 1,72 m) / Ebene 1 (rail-low 1,0 m)
  const ry=high?1.72:1.0,dh=ry-.06;
@@ -863,8 +1074,8 @@ function buildPipe(){
  geo.setAttribute('position',new THREE.Float32BufferAttribute(verts,3));
  geo.setAttribute('uv',new THREE.Float32BufferAttribute(uvs,2));
  geo.setIndex(inds);geo.computeVertexNormals();
- const surf=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({map:tex('wood'),roughness:.82,side:THREE.DoubleSide}));
- surf.material.map.repeat.set(5,7);surf.receiveShadow=true;surf.castShadow=true;PARK.add(surf);
+ const surf=new THREE.Mesh(geo,((window.SKT&&SKT.online)?SKT.mat('holz',{r:.82,side:THREE.DoubleSide}):new THREE.MeshStandardMaterial({map:tex('wood'),roughness:.82,side:THREE.DoubleSide})));
+ if(surf.material.map)surf.material.map.repeat.set(5,7);surf.receiveShadow=true;surf.castShadow=true;PARK.add(surf);
  const frame=mat(0x47535d,.85),cop=mat(0xe8ecef,.22,.85);
  for(const sx of [-1,1]){
   box(PARK,.5,.7,LEN+1,frame,sx*(R+.22),R-.32,(z0+z1)/2);
@@ -882,6 +1093,7 @@ function buildPipe(){
 /* ---------- Karten & Park-Verwaltung ---------- */
 const LR={hemi:null,sun:null,pts:[]};
 function setLight(hSky,hGnd,hI,sCol,sI,sx,sy,sz,ptI){
+ hI*=.7;sI*=.58; // v19: Parks waren zu hell
  if(LR.hemi){LR.hemi.color.set(hSky);LR.hemi.groundColor.set(hGnd);LR.hemi.intensity=hI}
  if(LR.sun){LR.sun.color.set(sCol);LR.sun.intensity=sI;LR.sun.position.set(sx,sy,sz)}
  for(const p of LR.pts)p.intensity=ptI;
@@ -913,6 +1125,7 @@ function buildPark(){
  MINI.cells={};MINI.on=false;NPCS.length=0;GLBH.on=false;
  // HALL auf Karten-Standard zuruecksetzen
  HALL.x=79;HALL.zN=-57.5;HALL.zS=56;
+ if(window.SKT)SKT.clearBg(scene);
  if(mapId==='warehouse')buildWarehouse();
  else if(mapId==='school')buildSchool();
  else if(mapId==='minipark')buildMiniPark();
@@ -921,22 +1134,10 @@ function buildPark(){
  else if(mapId.startsWith('custom:'))buildCustomMap(CUSTOMMAPS[mapId.slice(7)]||'');
  else buildTutorial();
  for(const gk in GLBC)GLBC[gk].visible=(gk===mapId);
+ if(window.SKT&&MAPBG[mapId])SKT.bg(MAPBG[mapId],scene);
 }
-/* ---------- GLB-PARKS: 4 GLB-Importe aus dem GitHub-Repo Jens-Smit/skater ----------
-   Das Originalmodell wird per THREE.GLTFLoader direkt geladen (CDN mit Fallback):
-   originale Meshes, Texturen (12 eingebettete JPEGs) und Materialien, beleuchtet
-   ueber Szenen-Licht und Schatten. Manuell hinzugefuegte Requisiten sind entfernt
-   (Gras, Betonplatten, Walkways, Randmauern, Rails, Statisten) -- uebrig bleiben
-   nur Skater, Board und die importierte Park-Szene im DOPPELTEN Massstab:
-   GLBGRP-Scale 2x, Kollisionsfeld x0/z0/s passend vergroessert. Der Charakter
-   ist damit halb so gross relativ zum Park, wie vom Spieler gewuenscht.
-   - GLBDEFS[map].b: Hoehenfeld je Karte (uint8, delta+deflate) aus der
-     GLB-Geometrie, NUR fuer die Kollision (Zell-Ecken, unbedeckte = Deck 0).
-   - Trick-Mechanik: Lip-Linien des Hoehenfelds werden per Marching Squares zur
-     Laufzeit als LEDGE-Grind-Segmente registriert (Coping, Kanten, Inseln); der lokale
-     Gradient ermoeglicht Vert-Abspruenge (Halfpipe-Jumps) an jeder Steilwand.
-     Bowl-Verhalten: Ohne W bleibt der Skater im Becken (Rim-Klemme, Airs nach
-     oben), mit W gehalten traegt der Schwung uebers Coping (Ausfahrt). */
+const MAPBG={tutorial:'bruecke',warehouse:'bruecke',school:'park',minipark:'himmel',funpark:'park'};
+/* GLB-PARKS: 4 GLB-Importe (Jens-Smit/skater), GLTFLoader mit CDN-Fallback. GLBDEFS[map].b: Hoehenfeld (uint8 delta+deflate) nur Kollision, Skala wie GLBGRP 2x; MS-Lip-Linien -> LEDGE-Grinds, Feld-Gradient -> Vert-Abspruenge (ohne W Rim-Klemme, mit W Ausfahrt, wie Bowl). */
 function buildGlbPark(){
  PIPE.z0=1;PIPE.z1=0;MINI.cells={};MINI.on=false;
  const D=GLBDEFS[mapId];
@@ -1056,66 +1257,16 @@ function addFence(x,z,len,alongX){
   else box(PARK,.16,3.1,.16,postM,x,1.55,z+t);
  }
 }
-/* ---- MAP 1: TUTORIAL (klassische Warehouse-Halle mit Halfpipe) ---- */
+/* ---- MAP 1: PRO PARK — Builder-Karte "Mini Pro Park" via buildCustomMap ---- */
+const TUTORIAL_MAP='{"v":1,"g":{"w":30,"d":50,"m":"dunkel","bg":"bruecke"},"o":[{"t":"box","x":0,"z":-22,"w":30,"d":6,"h":2,"m":"beton"},{"t":"rail","x":0,"z":-19,"y":2,"w":20,"h":0.7,"m":"metall","p":1},{"t":"zaun","x":-14.8,"z":-22,"y":2,"r":90,"w":5.8,"h":2.5,"m":"metall","p":1},{"t":"zaun","x":14.8,"z":-22,"y":2,"r":90,"w":5.8,"h":2.5,"m":"metall"},{"t":"zaun","x":0,"z":-25,"y":2,"r":180,"w":29.8,"h":2.5,"m":"metall","p":1},{"t":"zaun","x":-14.8,"z":-16,"r":90,"w":5.8,"h":3.5,"m":"metall","p":1},{"t":"ramp","x":-12.2,"z":-16.5,"w":5,"d":5,"h":2,"m":"holz"},{"t":"ramp","x":12.3,"z":-16.5,"w":5,"d":5,"h":2,"m":"holz"},{"t":"zaun","x":14.8,"z":-16.2,"r":90,"w":5.8,"h":3.5,"m":"metall"},{"t":"halfpipe","x":0,"z":-12.2,"w":10,"d":2.5,"h":3.2,"m":"holz"},{"t":"ramp","x":0,"z":-20.6,"y":2,"r":180,"w":10,"d":3,"h":1.3,"m":"holz"},{"t":"quarter","x":0,"z":22,"w":30,"d":6,"h":4.2,"m":"beton"},{"t":"zaun","x":15,"z":6,"r":90,"w":38,"h":6,"m":"metall","p":1},{"t":"zaun","x":-15,"z":6,"r":90,"w":38,"h":6,"m":"metall","p":1},{"t":"funbox","x":-12,"z":-6,"w":6,"d":6,"h":1,"m":"beton"},{"t":"funbox","x":-12,"z":8,"w":6,"d":6,"h":1,"m":"beton"},{"t":"funbox","x":0,"z":9,"w":10,"d":8,"h":1,"m":"beton"},{"t":"quarter","x":0,"z":-2,"r":180,"w":10,"d":6,"h":3.2,"m":"beton"},{"t":"bowl","x":10,"z":1,"w":4,"d":4,"h":3.4,"m":"beton"},{"t":"ramp","x":10,"z":9,"w":4,"d":5,"h":1.6,"m":"holz"},{"t":"rail","x":-12,"z":8,"y":1,"r":90,"w":3,"h":0.7,"m":"metall","p":1},{"t":"rail","x":-12,"z":-6,"y":1,"r":90,"w":3,"h":0.7,"m":"metall","p":1},{"t":"rail","x":-3,"z":9,"y":1,"r":90,"w":4,"h":0.7,"m":"metall","p":1},{"t":"rail","x":3,"z":9,"y":1,"r":90,"w":4,"h":0.7,"m":"metall","p":1},{"t":"rail","x":9,"z":-7,"r":90,"w":4,"h":0.7,"m":"metall","p":1},{"t":"rail","x":12,"z":-9.5,"r":90,"w":9,"h":0.7,"m":"metall","p":1},{"t":"rail","x":12,"z":-16.5,"y":1,"r":90,"w":5.5,"h":0.7,"m":"metall","p":1},{"t":"bank","x":7,"z":-21,"y":2,"w":3,"d":1.1,"h":0.45,"m":"holz"},{"t":"bank","x":-7,"z":-21,"y":2,"w":3,"d":1.1,"h":0.45,"m":"holz"}]}';
+let tutorialBuilding=false;
 function buildTutorial(){
- // Halfpipe reicht bis knapp an die Nordwand (Wandinnenseite z=-57.9, Spielfläche bis -57.5):
- // kein toter Bodenstreifen hinter der Pipe mehr, das Pipe-Ende läuft in die Wand über.
- PIPE.z0=-57.8;PIPE.z1=-46.2;PIPE.R=9; // Flow Hall: Pipe-Zentrum z=-52, eng an der Nordwand
- setLight(0xd8edff,0x42484e,.72,0xfff2d5,2.1,-30,55,20,40);
- buildShell(0x6e8a98,null);
- buildPipe();                                            // Halfpipe (0,-38)
- addQuarter(36,-50,16,6.5,5.5,0,-1);                     // Quarter NE
- addQuarter(-72,-16,16,6.5,5.5,-1,0);                    // Quarter SW
- addQuarter(72,36,16,6.5,5.5,1,0);                       // Quarter SE
- addQuarter(-41,0,14,6,4.5,-1,0);                        // Mini-Ramp West
- addQuarter(-33,0,14,6,4.5,1,0);                         // Mini-Ramp Ost
- // SPINE in der Mini-Ramp-Mitte: Rueckenkante grindbar, Ollie-Transfer auf beiden Seiten
- box(PARK,1.6,.8,12,M('concrete',1.2,6,.95),-37,.4,0);
- BOXES.push({x:-37,z:0,w:1.6,d:12,h:.8});
- addRail(-37,.86,-6, -37,.86,6,{});
- addFunbox(0,18,10,8,1.25,.3);                          // Plaza-Funbox auf der Street-Achse
- addFunbox(52,-34,16,14,2.2,.45);                        // Big Bank NE
- addRamp(-12,12,4,20,2.0,Math.PI/2,false);              // Achsen-Bank West, Lippe bei x=-2
- addRamp(12,12,4,20,2.0,-Math.PI/2,false);              // Achsen-Bank Ost, Lippe bei x=+2: 4-m-Gap
- addDeck(50,15,-1);                                      // Ost-Deck: Treppe + Handrail nach Westen
- addRail(-14,.68,2, 14,.68,2,{});                        // Flat Rail Center
- addRail(0,1.45,15.7, 0,1.45,20.3,{});                  // Funbox-Rail auf der Achse
- addLedge(-28,34,9,1.2);
- addLedge(30,-12,1.2,9);
- // Kenney-Akzente (Mini Skate, CC0): Palette + Manual-Plank am Plaza-Rand
- kPlace('pallet',-48,10,0);
- kPlace('plank',-52,2,Math.PI/2);
- // Grind-Doppel-Linie (Ebene 1 + Ebene 2): langer Grind mit Rail-Transfer, eng getaktet
- grindLine(-8,36,0,4,6,1.1,.68,2.6,0);
- grindLine(-4.4,36,0,4,6,1.1,1.5,2.6,1);
- basePlate(0x3f4a4f);
- addNPC(-6,20,2.4,'g');addNPC(20,-2,-1.2,'b');
- // Manual Pads
- for(const p of [[0,6,6,3],[-40,18,6,3],[34,-6,3,6]]){
-  BOXES.push({x:p[0],z:p[1],w:p[2],d:p[3],h:.42});
-  box(PARK,p[2],.42,p[3],M('concrete',1.4,1,.95),p[0],.21,p[1]);
-  box(PARK,p[2]+.06,.07,p[3]+.06,mat(0xd6dde1,.35,.7),p[0],.45,p[1]);
- }
- // Banner & Details — Banner hängen an der Nordwand (z=-57.8) statt frei davor;
- // die mittleren sitzen bei x=±30, damit sie die Zugangsbänke der Halfpipe nicht schneiden.
- for(const x of [-63,-30,30,63]){
-  const g=new THREE.Group();g.position.set(x,10,-57.8);PARK.add(g);
-  box(g,10,3,.12,mat(x%2?0x1b3a4d:0x33231b,.9),0,0,0);
-  const st=box(g,9.2,.4,.14,mat(0xf5c542,.7),0,.8,.05);st.rotation.z=-.06;
- }
- for(const p of [[63,40],[-63,40],[63,-46],[-63,-46]]){
-  box(PARK,1.3,15.4,1.3,mat(0x5a6772,.75,.35),p[0],7.7,p[1]);
-  WALLS.push({x:p[0],z:p[1],w:1.3,d:1.3,h:15.4});
- }
- box(PARK,2.6,4.6,2.6,mat(0x22282e,.9),-77,2.3,50);        // Lautsprecher
- box(PARK,2.6,4.6,2.6,mat(0x22282e,.9),-74.6,2.3,50);
- box(PARK,2.6,.5,2.8,mat(0x39434b,.8),-75.8,4.9,50);
- WALLS.push({x:-77,z:50,w:2.6,d:2.6,h:4.6},{x:-74.6,z:50,w:2.6,d:2.6,h:4.6});
+ if(tutorialBuilding)return; // Rekursionsschutz (Fallback bei ungültiger JSON)
+ tutorialBuilding=true;
+ try{buildCustomMap(TUTORIAL_MAP)}finally{tutorialBuilding=false}
 }
-/* ---- MAP 2: WAREHOUSE — THPS1-Klassiker (Albany NY): Start-Mezzanin mit Doppelschräge,
-   zentrale Halfpipe mit Secret Room über dem Pipe-Ende, Monster-Grind-Rail über der
-   Back-Wall-Quarter, ausgebranntes Taxi mit Kickern, Ollie-Channel, Kicker-Ecke,
-   Fasslager mit Rolltor. ---- */
+/* ---- MAP 2: WAREHOUSE — THPS1-Klassiker: Mezzzanin, Halfpipe mit Secret Room, Monster-Rail,
+   Taxi mit Kickern, Ollie-Channel, Fasslager. ---- */
 function buildWarehouse(){
  PIPE.z0=-7;PIPE.z1=16;PIPE.R=6.5;
  setLight(0xe6eeff,0x3a4048,.78,0xffe8c0,2.05,-30,55,20,40);
@@ -1219,9 +1370,7 @@ function buildWarehouse(){
  }
  addNPC(-30,10,1.2,'b');addNPC(20,24,-.8,'g');addNPC(52,-10,2.4,'b');
 }
-/* ---- MAP 3: SCHOOL — THPS1-Schoolyard (Miami): zwei versenkte Pools mit Rail dazwischen,
-   Halfpipe zwischen Poolbereich und Playground, Gymnasium mit Korb-Quarter und Roofline,
-   Handicap-Steps mit Kicker-Gap, Start-Rail von der Markise, Suicidal-Mural. ---- */
+/* MAP 3: SCHOOL — THPS1-Schoolyard (Miami): 2 versenkte Pools mit Rail, Halfpipe zum Playground, Gymnasium mit Korb-Quarter & Roofline, Handicap-Steps mit Kicker-Gap, Start-Rail von der Markise, Suicidal-Mural. */
 function buildSchool(){
  PIPE.z0=-40;PIPE.z1=-8;PIPE.R=4.6;
  scene.background=new THREE.Color(0xa9cdf2);scene.fog=new THREE.Fog(0xa9cdf2,110,230);
@@ -1385,9 +1534,7 @@ function buildSchool(){
  basePlate(0x50584c);
 }
 /* ---- MAP 6: MINI PARK (Kenney "Mini Skate"-Modelle, CC0, kenney.nl) ---- */
-/* Die Kachel-Modelle (4x4 m im Spiel) werden aus eingebackenen, quantisierten
-   GLB-Daten dekodiert; die Physik nutzt pro Kabeltyp eine 17x17-Höhen-LUT,
-   die aus derselben Geometrie gerastert wurde — Optik und Kollision passen exakt. */
+/* Kachel-Modelle (4x4 m) aus quantisierten GLB-Daten; Physik je Kacheltyp: 17x17-Hoehen-LUT aus derselben Geometrie gerastert. */
 const KEN={geo:{},mat:null};KDATA.lut['bowl-side-low']=KDATA.lut['half-pipe-low'];
 KDATA.lut['pool-floor']=new Array(289).fill(0); // flacher Beckenboden (versenkt: -3,2 m)
 function kenneyGeo(t){
@@ -1418,6 +1565,7 @@ function kenneyMat(){
  KEN.mat=new THREE.MeshStandardMaterial({map:t,roughness:.85,metalness:0,color:t?0xffffff:0xb8a378});
  return KEN.mat;
 }
+window.__kenney={KDATA,kenneyGeo,kenneyMat}; /* Map Builder (gleiche Seite): dieselben Kachelmodelle + Kacheldaten */
 function kTile(t,cx,cz,rot,yoff=0){ /* sichtbares Kenney-Modell (Kachel 4x4 m) */
  const m=new THREE.Mesh(kenneyGeo(t),kenneyMat());
  m.position.set(cx,yoff,cz);m.rotation.y=rot;m.scale.setScalar(KDATA.S);
@@ -1592,8 +1740,8 @@ function buildMiniPark(){
 
  // 2. ECHTE MINI-RAMP / HALFPIPE (Nordost: zwei gegenüberliegende Steilwände für hin-und-her Lines)
  for(const x of [16,20,24,28,32,36]){
-  kPlace('half-pipe',x,-48,0,x!==16&&x!==36);
-  kPlace('half-pipe',x,-28,Math.PI,x!==16&&x!==36);
+  kPlace('half-pipe',x,-46,0,x!==16&&x!==36);
+  kPlace('half-pipe',x,-36,Math.PI,x!==16&&x!==36); // 6-m-Flachstück wie eine echte Mini-Ramp
  }
  // Verbindungspodest / Spine-Übergang zwischen Bowl und Mini-Ramp
  for(const x of [-28,-24,-20,-16,-12]){
@@ -1663,7 +1811,7 @@ function buildMiniPark(){
  grindLine(-12.4,16,0,3,4,0,1.5,2.6,1);
  basePlate(0x46523f);
  kPlace('obstacle-middle',-32,24,0);kPlace('obstacle-middle',8,20,0);
- kPlace('obstacle-end',28,-32,0);            // Kicker-Bank vor der Mini-Ramp
+ kPlace('obstacle-end',28,-26,0);            // Kicker-Bank vor der Mini-Ramp (ausserhalb des Pipe-Flachstuecks)
  kPlace('rail-curve',-20,16,Math.PI/2);kPlace('rail-curve',28,8,-Math.PI/2);
  kPlace('pallet',-56,20,0);
  /* Pooleck-Aussen + Deck-Podeste entfernt: versenktes Becken hat Coping auf Bodenniveau, Drop-in von allen Seiten */
@@ -1674,14 +1822,7 @@ function buildMiniPark(){
  BOXES.push({x:0,z:-54,w:144,d:1.4,h:7});
  BOXES.push({x:0,z:50,w:144,d:1.4,h:5});
 }
-/* ============================================================
-   FUN SKATEPARK XXL (mapId 'funpark', Kenney "Mini Skate"-Modelle,
-   CC0, kenney.nl): kompletter Outdoor-Park
-   nach dem Flow-Prinzip — durchgehende Return-Walls rundum,
-   Pool-Bowl & Mini-Ramp als Transition-Ecke im Norden, Street-Plaza
-   als Ost-West-Hauptachse in der Mitte, Tech-Zone im Suedden,
-   Grueninseln mit grindbarer Betoneinfassung, Tribune, Baeume, Zaun.
-   ============================================================ */
+/* FUN SKATEPARK XXL (mapId 'funpark', Kenney "Mini Skate" CC0): Outdoor-Park im Flow-Prinzip; Return-Walls rundum, Pool-Bowl & Mini-Ramp im Norden, Street-Plaza als Ost-West-Achse, Tech-Zone im Suedden, Grueninseln mit grindbarer Einfassung, Tribune, Baeume, Zaun. */
 function fpManualPad(x,z,w,d){ /* flaches Manual-Podest 0,35 m: nie blockierend */
  BOXES.push({x,z,w,d,h:.35});
  const p=box(PARK,w,.35,d,M('concrete',26,20,.9),x,.175,z);
@@ -1756,7 +1897,7 @@ function buildFunPark(){
  // 3. MINI-RAMP (Nord-Mitte: zwei gegenueberliegende Steilwaende, hin-und-her)
  for(const x of [-8,-4,0,4,8,12,16,20,24]){
   kPlace('half-pipe',x,-48,0,x!==-8&&x!==24);
-  kPlace('half-pipe',x,-28,Math.PI,x!==-8&&x!==24);
+  kPlace('half-pipe',x,-38,Math.PI,x!==-8&&x!==24); // 6-m-Flachstück
  }
 
  // 4. SPINE zwischen Bowl und Mini-Ramp: beidseitig befahrbares 1,2-m-Podest
@@ -2225,7 +2366,7 @@ function doBail(){
  bail.spinZ=(Math.random()*4+2)*(Math.random()<.5?-1:1);
  bail.vel.set(vel.x*.4,Math.max(vertical*.3,2.5),vel.z*.4);
  if(grind)grind=null;
- vertSpd=0;vertOut=false;
+ vertSpd=0;vertOut=false;autoTurn=false;ollieBuf=0;
  air=true;vertical=0;combo=0;tricks={};
  // Skateboard löst sich und fliegt weg
  scene.attach(board);
@@ -2236,7 +2377,21 @@ function doBail(){
 }
 function land(){
  const vPrev=vertical;
- const ok=Math.abs(flipT-flipA)<.9&&Math.abs(spinT-spinA)<.9;
+ let ok=Math.abs(flipT-flipA)<.9&&Math.abs(spinT-spinA)<.9;
+ // Landeflaeche: Neigung unter dem Skater (Transition/Rampe) und Schraeg-Check.
+ // Zu schraeg (Board quer zur Fahrtrichtung, ca. >57°) = Sturz. In Transitions zaehlt nur
+ // die eigene, nicht zu Ende gedrehte Luft-Rotation (Wand-Spiegelung soll nie bestrafen).
+ const gSx=(heightAt(pos.x+.3,pos.z)-heightAt(pos.x-.3,pos.z))/.6,gSz=(heightAt(pos.x,pos.z+.3)-heightAt(pos.x,pos.z-.3))/.6;
+ const onSlope=Math.hypot(gSx,gSz)>.5;
+ let sideways=false;
+ {
+  const spd0=Math.hypot(vel.x,vel.z);
+  if(ok&&spd0>4.5&&!autoTurn){
+   const d0=Math.abs(angDiff(heading,Math.atan2(vel.x,-vel.z))),dd=Math.min(d0,Math.PI-d0);
+   sideways=onSlope?(dd>1.1&&Math.abs(airSpin)>.5):dd>1.0;
+  }
+  if(sideways)ok=false;
+ }
  air=false;vertical=0;manual=0;manT=0;airLean=0;
  // Landung sauber ausrichten: Der Schwung (vel) bestimmt die Fahrtrichtung.
  // Steht der Körper danach in etwa in Fahrtrichtung → normal weiterfahren;
@@ -2267,12 +2422,36 @@ function land(){
      break;
     }
    }
-   if((inPipe||inBowl||inEllG)&&vertSpd>1){
+   let inQ=null; // Quarter-Transition: Landung behält das Tempo wie im Pool
+   for(const q of QUARTERS){
+    const qx=pos.x-q.x,qz=pos.z-q.z;
+    const ql=qx*q.dirX+qz*q.dirZ,qo=qx*q.perpX+qz*q.perpZ;
+    if(ql>=0&&ql<=q.D&&Math.abs(qo)<=q.w/2+.3){inQ=q;break}
+   }
+   if((inPipe||inBowl||inEllG||inQ)&&vertSpd>1){
     const want=vertSpd*.85,spdNow=Math.hypot(vel.x,vel.z);
     if(spdNow>.35){const k=Math.max(1,want/spdNow);vel.x*=k;vel.z*=k}
     else if(inPipe)vel.x=-Math.sign(pos.x||1)*want; // senkrecht auf der Wand gelandet: Tempo zurück in die Pipe
     else if(inBowl){for(const b of BOWLS){if(Math.hypot(pos.x-b.x,pos.z-b.z)<b.R-.05){const rl=Math.hypot(pos.x-b.x,pos.z-b.z)||1;vel.x=(b.x-pos.x)/rl*want;vel.z=(b.z-pos.z)/rl*want;break}}}
     else if(inEllG){vel.x=inEllG[0]*want;vel.z=inEllG[1]*want} // senkrecht in der ovalen Wand: Tempo zurück ins Becken
+    else if(inQ){vel.x=-inQ.dirX*want;vel.z=-inQ.dirZ*want} // senkrecht in der Quarter-Wand: Tempo zurück in den Park
+   }
+  }
+  // LANDE-BOOST: Quarters wie Transitionen (+16 %), Flaeche kleiner Schub, Cap 18.
+  if(vPrev<-3){
+   let slopeQ=onSlope;
+   if(!slopeQ&&QUARTERS.length){
+    for(const q of QUARTERS){
+     const qx=pos.x-q.x,qz=pos.z-q.z;
+     const ql=qx*q.dirX+qz*q.dirZ,qo=qx*q.perpX+qz*q.perpZ;
+     if(ql>=0&&ql<=q.D&&Math.abs(qo)<=q.w/2+.3){slopeQ=true;break}
+    }
+   }
+   const sp=Math.hypot(vel.x,vel.z);
+   if(sp>1&&sp<18){
+    const nsp=Math.min(18,sp*(slopeQ?1.16:1.06)+(airTime>.45?.9:.4)),k=nsp/sp;
+    vel.x*=k;vel.z*=k;
+    sound.blip(420,720,.08,'sine',.07);
    }
   }
   const hard=vPrev<-12;
@@ -2292,8 +2471,8 @@ function land(){
    }
    airMan=0;
   }
- }else doBail();
- flipA=flipT=spinA=spinT=0;airTime=0;airSpin=0;vertSpd=0;vertOut=false;
+ }else{doBail();if(sideways)showFinal('ZU SCHRÄG GELANDET!',0)}
+ flipA=flipT=spinA=spinT=0;airTime=0;airSpin=0;vertSpd=0;vertOut=false;autoTurn=false;
 }
 
 /* ---------- Sturz-Physik: Flug → Rutschen → Aufstehen ---------- */
@@ -2521,7 +2700,7 @@ function updateZone(){
   else if(pos.x>Z[0])z='EAST WALK';
   else z='WEST WALK';
  }
- else if(mapId.startsWith('custom:')){z=mapId.slice(7).toUpperCase();
+ else if(mapId.startsWith('custom:')||mapId==='tutorial'){z=(mapId==='tutorial'?(MAPNAME.tutorial||mapId):mapId.slice(7)).toUpperCase();
   if(pos.y-.17<-.15)z='POOL';
   else if(pos.y>2.5)z='DECK';
  }
@@ -2546,12 +2725,108 @@ function updateTrickText(){
 }
 
 /* ---------- Gemeinsame Visuals pro Frame ---------- */
+/* ---- CC0-CHARAKTER: Quaternius Universal Mannequin + UAL1-Clips (CC0). Loader und
+   GLB lazy per CDN (je 2 Fallbacks); offline bleibt der stilisierte Skater aktiv. ---- */
+let ccRoot=null,ccMix=null,ccAct={},ccCur='',ccInitOn=false,ccLI=0,ryTry=false,
+    ryRoot=null,ryMix=null,ryAct={},ryCur='';
+const RY_U=GBU.map(u=>u+'assets/remy/');
+function ccEnsure(cb){ /* GLTFLoader lazy per CDN (2 Fallbacks), dann cb() */
+ if(window.THREE&&window.THREE.GLTFLoader)cb();
+ else if(ccLI<CC_LD.length){const s=document.createElement('script');s.src=CC_LD[ccLI++];
+  s.onload=()=>ccEnsure(cb);s.onerror=()=>ccEnsure(cb);document.head.appendChild(s)}
+}
+function ccInit(){ /* Fallback: UAL CC0-Mannequin (21 MB GLB) */
+ if(ccInitOn)return;ccInitOn=true;
+ ccEnsure(()=>{let j=0;const ld=new THREE.GLTFLoader();
+  (function gx(){if(j<CC_GL.length)ld.load(CC_GL[j++],g=>ccBuild(g),undefined,gx)})();
+ });
+}
+function ryB64(t){const b=atob(t),u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u}
+function ryInit(){ /* Mixamo-"Remy": glTF in Textfragmente, im Browser (Base64) zusammengesetzt */
+ if(ryTry||!window.THREE)return;ryTry=true;
+ ccEnsure(async()=>{
+  for(const b of RY_U){try{
+   const j=JSON.parse(await(await fetch(b+'remy.gltf.json')).text());
+   for(const bf of j.buffers)bf.uri=URL.createObjectURL(new Blob([ryB64(await(await fetch(b+bf.uri)).text())],{type:'application/octet-stream'}));
+   for(const im of j.images)im.uri=URL.createObjectURL(new Blob([ryB64(await(await fetch(b+im.uri)).text())],{type:'image/png'}));
+   new THREE.GLTFLoader().parse(JSON.stringify(j),'',g=>ryBuild(g),e=>{});
+   return
+  }catch(e){}}
+  ccInit() /* Remy nicht ladbar -> CC0-Mannequin -> sonst stilisiert */
+ });
+}
+function ryBuild(g){
+ try{
+  ryRoot=g.scene||g.scenes[0];
+  ryRoot.rotation.y=-.3;          /* Bau-Yaw PI steckt im Modell; Stance leicht oeffnen */
+  ryRoot.traverse(o=>{if(o.isMesh)o.castShadow=true});
+  rag.add(ryRoot);                /* in rag: Sturz-Taumeln (Bail) wirkt mit */
+  if(typeof charRoot!=='undefined')charRoot.visible=false;
+  ryMix=new THREE.AnimationMixer(ryRoot);
+  for(const k of ['ride','ride2','jump','fall']){const c=g.animations&&g.animations.find(a=>a.name===k);
+   if(!c)continue;const ac=ryMix.clipAction(c);
+   if(k==='fall'){ac.setLoop(THREE.LoopOnce);ac.clampWhenFinished=true}
+   ryAct[k]=ac}
+  rySet('ride',1);ryMix.update(.4);
+  if(typeof refreshCharClone==='function')try{refreshCharClone()}catch(e){}
+ }catch(e){ryRoot=null;ryMix=null;ccInit()}
+}
+function rySet(k,ts){
+ const a=ryAct[k];if(!a)return;a.timeScale=ts;
+ if(ryCur===k)return;
+ const p=ryAct[ryCur];if(p)p.fadeOut(.2);
+ a.reset().fadeIn(.2).play();ryCur=k;
+}
+function ryUpdate(dt){
+ if(!ryMix){ccUpdate(dt);return}   /* ohne Remy: Mannequin-Logik als Fallback */
+ let k='ride',ts=Math.max(.75,Math.min(Math.abs(fwd)/4,1.45));
+ if(bail.on)k='fall';
+ else if(air)k='jump';
+ rySet(k,ts);ryMix.update(dt);
+}
+function ccBuild(g){
+ try{
+  ccRoot=g.scene||g.scenes[0];
+  ccRoot.rotation.y=Math.PI-.3; // Stance leicht geoeffnet zur Fahrtrichtung
+  ccRoot.scale.setScalar(.92);   // 1,83 m Bind-Pose auf Spielfigur-Groesse
+  ccRoot.traverse(o=>{if(o.isMesh)o.castShadow=true});
+  rag.add(ccRoot);               // in rag: Sturz-Taumeln (Bail) wirkt mit
+  if(typeof charRoot!=='undefined')charRoot.visible=false;
+  ccMix=new THREE.AnimationMixer(ccRoot);
+  const N={idle:'Idle_Loop',walk:'Walk_Loop',jog:'Jog_Fwd_Loop',sprint:'Sprint_Loop',jump:'Jump_Loop',land:'Jump_Land',crouch:'Crouch_Idle_Loop',hit:'Hit_Chest'};
+  for(const k in N){const c=g.animations&&g.animations.find(a=>a.name===N[k]);if(!c)continue;
+   const ac=ccMix.clipAction(c);
+   if(k==='land'||k==='hit'){ac.setLoop(THREE.LoopOnce);ac.clampWhenFinished=true}
+   ccAct[k]=ac}
+  ccSet('idle',1);ccMix.update(.4);
+  if(typeof refreshCharClone==='function')try{refreshCharClone()}catch(e){}
+ }catch(e){ccRoot=null;ccMix=null}
+}
+function ccSet(k,ts){
+ const a=ccAct[k];if(!a)return;a.timeScale=ts;
+ if(ccCur===k)return;
+ const p=ccAct[ccCur];if(p)p.fadeOut(.2);
+ a.reset().fadeIn(.2).play();ccCur=k;
+}
+function ccUpdate(dt){
+ if(!ccMix)return;
+ let k='idle',ts=1;const s=Math.abs(fwd);
+ if(bail.on)k='hit';
+ else if(air)k='jump';
+ else if(grind)k='crouch';
+ else if(landT>.2)k='land';
+ else if(s>9.5){k='sprint';ts=Math.min(s/6.5,1.6)}
+ else if(s>4){k='jog';ts=s/3.6}
+ else if(s>.5){k='walk';ts=Math.max(.55,Math.min(s/1.4,1.5))}
+ ccSet(k,ts);ccMix.update(dt);
+}
 function postUpdateVisuals(dt){
  skater.position.copy(pos);
  orientSkater(dt,false);
  updateBoardVisual(dt);
  if(boardFree)updateBoardFree(dt);
  updatePose(dt);
+ ryUpdate(dt);
  camFollow(dt,false);
  updateParticles(dt);
  updateTrickText();
@@ -2594,7 +2869,7 @@ function vertAutoPop(vAuto,ux,uz,outSpd){
  vel.x=ux*rSpd-uz*tSpd;vel.z=uz*rSpd+ux*tSpd;
  vertical=vAuto;air=true;airTime=0;airSpin=0;airMan=0;manual=0;
  vertSpd=Math.max(vertSpd,outSpd);vertOut=fwHHold();
- autoPopCd=.9;
+ autoPopCd=.55;autoTurn=true; // Lip-Turn: Skater dreht sich in der Luft in die Fahrtrichtung
  sound.ollie();spawnDust(pos.x,pos.y-.15,pos.z,3);
  return true;
 }
@@ -2607,6 +2882,11 @@ function update(dt){
  pushCd-=dt;pushT=Math.max(0,pushT-dt);grindCd-=dt;finalT-=dt;deflectT-=dt;autoPopCd-=dt;
  zoneT-=dt;if(zoneT<=0){zoneT=.5;updateZone()}
  if(bail.on){updateBail(dt);postUpdateVisuals(dt);return}
+ // OLLIE-BUFFER: Wird Ollie kurz VOR der Landung gedrückt, springt der Skater sofort beim
+ // Aufsetzen ab (kein verschluckter Tastendruck, Lines laufen flüssiger).
+ ollieBuf-=dt;
+ if(air&&!grind&&press.ollie&&airTime>.06)ollieBuf=.14;
+ if(!air&&!grind&&ollieBuf>0&&!press.ollie){press.ollie=true;ollieBuf=0}
 
  const inp=readInput();
  const steer=inp.steer,thr=inp.thr;
@@ -2659,7 +2939,9 @@ function update(dt){
    const cur=Math.max(Math.hypot(vel.x,vel.z),6.5);
    // Sprungrichtung = beim Ollie GEHALTENE Richtung (vor/zurück + seitlich, Steuerring oder WASD);
    // nichts gehalten: Sprung geradeaus entlang des Rails weiter
-   let jx=fx*fi+rx*si,jz=fz*fi+rz*si;
+   // Rein seitlich gedrückt: 45 % Rail-Schwung bleiben erhalten, der Sprung wirkt flüssig statt abgehackt
+   const fk=fi+(Math.abs(fi)<.35&&Math.abs(si)>.25?.45:0);
+   let jx=fx*fk+rx*si,jz=fz*fk+rz*si;
    const jl=Math.hypot(jx,jz);
    if(jl>.25){jx/=jl;jz/=jl}else{jx=fx;jz=fz}
    pos.y+=.18;pos.x+=rx*si*.25;pos.z+=rz*si*.25;
@@ -2746,9 +3028,14 @@ function update(dt){
      const out=Math.abs(vel.x);
      if(vel.x*Math.sign(pos.x)>0){ // bergauf gefahren: Schwung in Höhe umsetzen
       const vMin=hx>1.2?Math.sqrt(29*Math.max(.5,PIPE.R+1.2-(pos.y-.17))):8;
-      vertical=clamp(out*hx*.92+3.2,vMin,14+PIPE.R*1.2);
+      vertical=clamp(out*hx*.92+3.2,Math.max(vMin,9),20); // gleiche Air-Höhe wie beim Pool
       vel.x=Math.sign(vel.x)*Math.max(out,fwH?4.5:1.2); // MIT Vorwärts: Ausfahrts-Schwung übers Coping (Air out)
       vertSpd=Math.max(vertSpd,out);vertOut=fwH;
+     }else if(fwH&&heightAt(pos.x,pos.z)>PIPE.R*.5){ // ZU SPÄT, aber MIT Vorwärts: trotzdem raus aus der Pipe (Air out)
+      const vOutMin=Math.sqrt(29*Math.max(.5,PIPE.R+1.2-(pos.y-.17)));
+      vertical=Math.max(vertical,vOutMin);
+      vel.x=Math.sign(pos.x)*5.2;
+      vertSpd=Math.max(vertSpd,5.2);vertOut=true;
      }else{ // ZU SPÄT: flüssiger Auto-Absprung mit 30 % des normalen Vert-Sprungs
       vertical=Math.max(vertical,Math.max(3.5,.3*Math.sqrt(29*Math.max(.5,PIPE.R+1.2-(pos.y-.17)))));
      }
@@ -2809,20 +3096,21 @@ function update(dt){
      }
     }
    }
-   // Quarterpipe-Steilwand: Vert-Absprung wie Pipe/Bowl (THPS-typische QP-Airs)
+   // Quarter: Absprung wie Bowl/Pool — Gradient hx entlang der Wand, aktiviert früh.
    for(const q of QUARTERS){
     const lx=pos.x-q.x,lz0=pos.z-q.z;
     const l=lx*q.dirX+lz0*q.dirZ,lo=lx*q.perpX+lz0*q.perpZ;
-    if(l<0||l>q.D||Math.abs(lo)>q.w/2+.3)continue;
-    const tt=l/q.D;
-    if(tt<.55)continue; // nur die obere Transition
-    const slope=q.H*tt/(Math.sqrt(Math.max(1e-4,1-tt*tt))*q.D);
-    if(slope<.6)continue;
-    const out=vel.x*q.dirX+vel.z*q.dirZ;
-    if(out>0){ // bergauf gefahren: Schwung in Höhe umsetzen
-     vertical=clamp(out*Math.min(slope,4)*.92+3.2,8,18);
-     if(fwH){vel.x=q.dirX*Math.max(out,3.5);vel.z=q.dirZ*Math.max(out,3.5)} // MIT Vorwärts: Air trägt über das Coping
-     vertSpd=Math.max(vertSpd,out);
+    if(l<0||l>q.D+.3||Math.abs(lo)>q.w/2+.3)continue;
+    const hx=Math.min(Math.abs((heightAt(pos.x+q.dirX*.2,pos.z+q.dirZ*.2)-heightAt(pos.x-q.dirX*.2,pos.z-q.dirZ*.2))/.4),4);
+    if(hx>.3){ // wie Bowl: ab merkbarer Steigung
+     const out=vel.x*q.dirX+vel.z*q.dirZ;
+     if(out>0){ // bergauf: Schwung in Höhe umsetzen — GENAU wie beim Pool
+      vertical=clamp(out*Math.min(hx,4)*.92+3.2,9,20);
+      vel.x=q.dirX*Math.max(out,fwH?4.5:1.2);vel.z=q.dirZ*Math.max(out,fwH?4.5:1.2); // MIT Vorwärts: Air out
+      vertSpd=Math.max(vertSpd,out);vertOut=fwH;
+     }else{ // ZU SPÄT: Auto-Absprung 30 %, wie beim Pool
+      vertical=Math.max(vertical,Math.max(3.5,.3*Math.sqrt(29*Math.max(.5,q.H+1.2-(pos.y-.17)))));
+     }
     }
     break;
    }
@@ -2886,9 +3174,10 @@ function update(dt){
    }
    const dec=Math.exp(-4*dt);latx*=dec;latz*=dec;
    vel.x=f.x*fwd+latx;vel.z=f.z*fwd+latz;
-   // Hangabtrieb über die Flächennormale (Halfpipe, Quarters, Rampen, Banks)
+   // Hangabtrieb über die Flächennormale; BERGAB (22) stärker als bergauf (14).
    const nrm=normalAt(pos.x,pos.z);
-   vel.x+=nrm.x*14*dt;vel.z+=nrm.z*14*dt;
+   const slAcc=(vel.x*nrm.x+vel.z*nrm.z)>0?22:14; // hangab → stärker
+   vel.x+=nrm.x*slAcc*dt;vel.z+=nrm.z*slAcc*dt;
    // Pumpen in der Halfpipe: bergab wird pro Durchlauf zusätzlicher Schwung aufgebaut
    if(onPipe&&Math.abs(pos.x)>1.2&&vel.x*Math.sign(pos.x)<0&&Math.hypot(vel.x,vel.z)>3.5)
     vel.x-=Math.sign(pos.x)*8.5*dt;
@@ -2898,6 +3187,16 @@ function update(dt){
     const dx=pos.x-b.x,dz=pos.z-b.z,r=Math.hypot(dx,dz);
     if(r<b.R-.05&&r>1.2&&Math.hypot(vel.x,vel.z)>1.5&&vel.x*dx+vel.z*dz<0){
      const il=8.5*dt/r;vel.x-=dx*il;vel.z-=dz*il;
+    }
+   }
+   // Pumpen an der Quarter: bergab durch die Transition Schwung aufbauen (wie Bowl)
+   for(const q of QUARTERS){
+    const dxq=pos.x-q.x,dzq=pos.z-q.z;
+    const lq=dxq*q.dirX+dzq*q.dirZ,loq=dxq*q.perpX+dzq*q.perpZ;
+    if(lq<0||lq>q.D||Math.abs(loq)>q.w/2)continue;
+    if((heightAt(pos.x+q.dirX*.25,pos.z+q.dirZ*.25)-heightAt(pos.x-q.dirX*.25,pos.z-q.dirZ*.25))/.5>.6
+     &&Math.hypot(vel.x,vel.z)>1.5&&vel.x*q.dirX+vel.z*q.dirZ<0){
+     vel.x-=q.dirX*8.5*dt;vel.z-=q.dirZ*8.5*dt;
     }
    }
    // KEIN automatischer Absprung an Lip/Coping: der Skater verweilt in der Neigung,
@@ -2937,6 +3236,12 @@ function update(dt){
   // Drehung in der Luft nur über A/D: Der Körper rotiert, der Schwung (vel) behält
   // seine Richtung — bei 180° wird rückwärts (Fakie) gelandet, ohne Tempo-Verlust.
   heading+=steerS*dt*4.6;airSpin+=steerS*dt*4.6;
+  // Lip-Turn nach Auto-Ollie: Körper dreht weich in die Fahrtrichtung, Landung vorwärts statt rückwärts.
+  // Eigenes Lenken (A/D) übernimmt sofort die Kontrolle.
+  if(autoTurn){
+   if(Math.abs(steerS)>.3)autoTurn=false;
+   else if(vertical<2){const sp=Math.hypot(vel.x,vel.z);if(sp>1.5)heading+=angDiff(heading,Math.atan2(vel.x,-vel.z))*(1-Math.exp(-10*dt))}
+  }
   // Grab-Tricks: 5 Varianten nach gehaltener Richtung
   if(held.grab){
    const gd=trickDir();
@@ -2959,13 +3264,37 @@ function update(dt){
    const ux=Math.sign(pos.x)||1,vOut=vel.x*ux,hNow=heightAt(pos.x,pos.z);
    if(vOut>0&&hNow>PIPE.R*.62){
     if(air){if(vertical<0)vel.x-=2*vOut*ux}
-    else if(vOut<2.2){ // Stall an der Lippe (zu spät oder ohne Ollie): flüssiger Auto-Absprung (30 %)
-     if(!vertAutoPop(Math.max(3.5,.3*Math.sqrt(29*Math.max(.5,PIPE.R+1.2-(pos.y-.17)))),ux,0,vOut)){vel.x-=1.15*vOut*ux;pos.x=px0;pos.z=pz0}
+    else{ // An der Lippe: IMMER flüssiger Auto-Ollie (30 % des Vert-Sprungs, mit Tempo etwas höher)
+     const hxA=Math.min(Math.abs((heightAt(pos.x+.2,pos.z)-heightAt(pos.x-.2,pos.z))/.4),4);
+     const vMinA=Math.sqrt(29*Math.max(.5,PIPE.R+1.2-(pos.y-.17)));
+     if(!vertAutoPop(Math.max(3.5,.3*Math.max(vMinA,vOut*hxA*.92+3.2)),ux,0,vOut)){vel.x-=1.15*vOut*ux;pos.x=px0;pos.z=pz0}
     }
-    else{vel.x-=1.15*vOut*ux;pos.x=px0;pos.z=pz0}
    }
   }
-  const yF=pos.y-.17;
+  // QUARTER-LIPPE: Rim-Klemme wie beim Bowl (Carve, Auto-Ollie, Schwung-Spiegel).
+  if(!fwH&&!vertOut&&QUARTERS.length){
+   for(const q of QUARTERS){
+    const dxq=pos.x-q.x,dzq=pos.z-q.z;
+    const lq=dxq*q.dirX+dzq*q.dirZ,loq=dxq*q.perpX+dzq*q.perpZ;
+    if(Math.abs(loq)>q.w/2||lq>q.D+.6)continue;
+    const lq0=(px0-q.x)*q.dirX+(pz0-q.z)*q.dirZ,vq=vel.x*q.dirX+vel.z*q.dirZ;
+    if(vq<=0)continue;
+    if(air){ // wie Bowl-Rim: kein Drift über das Coping
+     if(lq>q.D-.15&&pos.y-.17>q.H-.35){
+      if(vertical<0){vel.x-=2*vq*q.dirX;vel.z-=2*vq*q.dirZ} // fallend: spiegeln, volles Tempo
+      else{vel.x-=vq*q.dirX;vel.z-=vq*q.dirZ} // steigend: an der Wand hochgleiten
+     }
+    }else if(lq0<q.D&&lq>q.D-.1&&pos.y-.17>q.H-.3){ // wie Bowl: Auto-Pop oder an der Kante halten
+     if(!vertAutoPop(Math.max(3.5,.3*Math.sqrt(29*Math.max(.5,q.H+1.2-(pos.y-.17)))),q.dirX,q.dirZ,vq)){
+      const k=(q.D-.05)/lq;pos.x=q.x+dxq*k;pos.z=q.z+dzq*k;
+     }
+    }
+    break;
+   }
+  }
+  // Kollisionshöhe der Füße: am Boden die exakte Bodenhöhe (nicht die Sehnen-Anhebung), damit Stufen
+  // von unten sperren (Treppe), von oben aber ohne Stolpern befahrbar sind.
+  const yF=air?pos.y-.17:Math.min(pos.y-.17,lastSurf+.02);
   let hitN=0;
   const tx=pos.x+vel.x*dt;
   if(solid(tx,pos.z,yF)){const sx=Math.sign(vel.x)||1;hitN=Math.max(hitN,Math.abs(vel.x));vel.x=-sx*Math.max(Math.abs(vel.x)*.25,1.6)}
@@ -3009,7 +3338,7 @@ function update(dt){
     else{vel.x-=vOut*ux;vel.z-=vOut*uz} // steigend: an der Wand nach oben gleiten
    }
   }else if(r0<b.R&&r>b.R-.08){ // war über dem Becken: am Rand halten, nicht rausrollen
-   if(vOut>0&&vOut<2.2&&Math.abs(pos.y-.17)<.25&&vertAutoPop(Math.max(3.5,.3*Math.sqrt(29*Math.max(.5,1.4-(pos.y-.17)))),ux,uz,vOut)){
+   if(vOut>0&&Math.abs(pos.y-.17)<.25&&vertAutoPop(Math.max(3.5,.3*Math.sqrt(29*Math.max(.5,1.4-(pos.y-.17)))),ux,uz,vOut)){
     // langsam an der Lippe: flüssiger Auto-Absprung (30 %) ist erfolgt
    }else{
     const k=(b.R-.08)/Math.max(r,b.R-.081);pos.x=b.x+dx*k;pos.z=b.z+dz*k;
@@ -3038,7 +3367,7 @@ function update(dt){
     else{vel.x-=vOut*ux;vel.z-=vOut*uz} // steigend: an der Wand nach oben gleiten
    }
   }else if(u0<1&&u>.992){ // war über dem Becken: am Rand halten, nicht rausrollen
-   if(vOut>0&&vOut<2.2&&Math.abs(pos.y-.17)<.25&&vertAutoPop(Math.max(3.5,.3*Math.sqrt(29*Math.max(.5,1.4-(pos.y-.17)))),ux,uz,vOut)){
+   if(vOut>0&&Math.abs(pos.y-.17)<.25&&vertAutoPop(Math.max(3.5,.3*Math.sqrt(29*Math.max(.5,1.4-(pos.y-.17)))),ux,uz,vOut)){
     // langsam an der Lippe: flüssiger Auto-Absprung (30 %) ist erfolgt
    }else if(u>=1){
     const k=.995/u,nlx=lx*k,nlz=lz*k;
@@ -3069,14 +3398,11 @@ function update(dt){
        if(vertical<0){vel.x-=2*vOut*ux;vel.z-=2*vOut*uz}
        else{vel.x-=vOut*ux;vel.z-=vOut*uz}
       }else if(mc.sunk?hNow>-.5:hNow>2.35){
-       if(vOut<2.2){ // Stall an der Lippe (zu spät oder ohne Ollie): flüssiger Auto-Absprung (30 %)
+       {  // An der Lippe: IMMER flüssiger Auto-Ollie (30 %)
         if(!vertAutoPop(Math.max(3.5,.3*(mc.sunk?Math.sqrt(29*Math.max(.5,1.4-hNow)):Math.sqrt(29*Math.max(.5,3.2+1.2-hNow)))),ux,uz,vOut)){
          pos.x=px0;pos.z=pz0;
          vel.x-=1.15*vOut*ux;vel.z-=1.15*vOut*uz;
         }
-       }else{
-        pos.x=px0;pos.z=pz0;
-        vel.x-=1.15*vOut*ux;vel.z-=1.15*vOut*uz;
        }
       }
      }
@@ -3099,7 +3425,10 @@ function update(dt){
    if(air){ // steigend: an der Wand nach oben gleiten; fallend: zurueckprallen
     if(vertical<0){vel.x-=1.25*vOut*ux;vel.z-=1.25*vOut*uz}
     else{vel.x-=vOut*ux;vel.z-=vOut*uz}
-   }else if(vOut>0){vel.x-=1.15*vOut*ux;vel.z-=1.15*vOut*uz}
+   }else if(vOut>0){
+    // Lip: flüssiger Auto-Ollie (30 %), sonst Rückprall
+    if(!vertAutoPop(Math.max(3.5,.3*Math.sqrt(29*1.4)),ux,uz,vOut)){vel.x-=1.15*vOut*ux;vel.z-=1.15*vOut*uz}
+   }
   }
  }
 
@@ -3138,9 +3467,9 @@ function endRun(){
  sound.loop(0,0);
 }
 function reset(){
- pos.set(0,.17,24);if(GLBDEFS[mapId]){const SP=GLBDEFS[mapId].sp;pos.set(SP[0],SP[1],SP[2])}if(mapId.startsWith('custom:')&&CSPAWN)pos.set(CSPAWN.x,.17,CSPAWN.z);vel.set(0,0,-4);heading=0;fwd=4;vertical=0;air=false;airSpin=0;
+ pos.set(0,.17,24);if(GLBDEFS[mapId]){const SP=GLBDEFS[mapId].sp;pos.set(SP[0],SP[1],SP[2])}if(CSPAWN)pos.set(CSPAWN.x,.17,CSPAWN.z);vel.set(0,0,-4);heading=0;fwd=4;vertical=0;air=false;airSpin=0;
  grind=null;grindCd=0;pushT=0;pushCd=0;turnBack=false;deflectT=0;steerS=0;manual=0;
- manBal=0;manT=0;manRel=0;airLean=0;boardLift=0;wPrev=false;sPrev=false;wEdge=-9;sEdge=-9;airMan=0;joyUPrev=false;joyDPrev=false;vertSpd=0;vertOut=false;
+ manBal=0;manT=0;manRel=0;airLean=0;boardLift=0;wPrev=false;sPrev=false;wEdge=-9;sEdge=-9;airMan=0;joyUPrev=false;joyDPrev=false;vertSpd=0;vertOut=false;autoTurn=false;ollieBuf=0;
  shakeT=0;landT=0;boardP=0;lastSurf=heightAt(pos.x,pos.z);
  score=0;time=300;combo=0;tricks={};trickCount=0;flipA=flipT=spinA=spinT=0;airTime=0;
  finalT=0;lastHTML='';zoneNow='';zoneT=0;
@@ -3158,10 +3487,8 @@ function reset(){
 }
 function start(){
  if(!renderer)return;
- /* Android (Samsung Browser & Co.): Beim Vollbild-/Orientierungswechsel meldet der
-    Browser zwischenzeitlich eine Fenstergroesse von 0 (Leinwand kollabierte auf 0x0
-    und der Bildschirm blieb schwarz). Die Leinwand wird deshalb nie auf 0 skaliert
-    (siehe resize-Handler) und ihre Groesse mehrfach nachsynchronisiert. */
+ /* Android: gemeldete Fenstergroesse 0 beim Vollbild-/Orientierungswechsel nie
+    uebernehmen; Groesse mehrfach nachsynchronisiert (siehe auch resize-Handler). */
  const syncSize=()=>{try{const w=innerWidth,h=innerHeight;if(renderer&&camera&&w>0&&h>0){camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h)}}catch(e){}}; // Fenstergroesse + Inline-Px-Stil (siehe init)
  setTimeout(syncSize,350);setTimeout(syncSize,1000);setTimeout(syncSize,2500);
  /* Vorschau-Renderer der Menuevorschauen waehrend der Session freigeben:
@@ -3213,9 +3540,9 @@ function frame(){
    camera.lookAt(pos.x-rx*.34,pos.y+.82,pos.z-rz*.34);
    skater.rotation.y+=dt*.35;
   }else{
-   const sw=Math.sin(clock.elapsedTime*.4)*.3;
-   camera.position.set(pos.x+Math.sin(sw)*2.3,pos.y+1.0,pos.z-Math.cos(sw)*2.3);
-   camera.lookAt(pos.x+.85,pos.y+.72,pos.z);
+   const sw=clock.elapsedTime*.12;
+   camera.position.set(pos.x+Math.sin(sw)*12,pos.y+4.8,pos.z-Math.cos(sw)*12);
+   camera.lookAt(pos.x,pos.y+.8,pos.z);
   }
  }
  if(renderer)renderer.render(scene,camera);
@@ -3226,7 +3553,9 @@ function frame(){
   const pvt=clock.elapsedTime,pa=pvt*.1;
   prevMapCam.position.set(Math.sin(pa)*70,64,Math.cos(pa)*70);
   prevMapCam.lookAt(0,0,0);
+  const _sk=scene.userData&&scene.userData.sky;if(_sk)_sk.visible=false; // Himmelskuppel nicht in der Draufsicht
   prevMapR.render(scene,prevMapCam);
+  if(_sk)_sk.visible=true;
   if(prevClone)prevClone.rotation.y=pvt*.5;
   prevCharCam.position.set(0,1.02,2.5);
   prevCharCam.lookAt(0,.78,0);
@@ -3249,7 +3578,7 @@ function init(){
    if(clock)clock.getDelta();
   },false);
   renderer.setPixelRatio(Math.min(devicePixelRatio,1.8));
-  renderer.setSize(Math.max(innerWidth,1),Math.max(innerHeight,1)); /* Fenstergroesse ALS INLINE-PX-STIL: Die CSS-Prozentkette kollabierte auf Samsung Browser (Leinwand 0x0, schwarzer Bildschirm), Inline-Pixelstile sind auf jedem Browser stabil. Bewaehrt im Standalone-Map-Builder. Guards verhindern 0. */
+  renderer.setSize(Math.max(innerWidth,1),Math.max(innerHeight,1)); /* Fenstergroesse als Inline-Px-Stil (CSS-Prozentkette kollabierte auf Samsung Browser, 0x0); Guards verhindern 0. */
   renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
   renderer.outputEncoding=THREE.sRGBEncoding;
   renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.0;
@@ -3269,6 +3598,7 @@ function init(){
   frame();
   $('start').disabled=false;$('start').style.opacity='1';$('start').textContent='SESSION STARTEN';
   setOutfit(0);
+  ryInit();
   initPreviews();
   const md0=$('mapdesc');if(md0)md0.textContent=MAPDESC[mapId]||'';
  }catch(e){
@@ -3279,22 +3609,15 @@ function init(){
 }
 
 /* ---------- Startbildschirm: Live-Vorschauen (Map + Charakter) ---------- */
-/* ============================================================
-   CUSTOM-KARTEN AUS DEM MAP BUILDER
-   Der Map Builder (Startmenü-Button MAP BUILDER) speichert benannte
-   Karten in localStorage (ps99mb_maps). Jede Karte erscheint hier
-   als eigener Chip im Startmenü (custom:NAME) und wird beim Start in
-   die Spielwelt übersetzt: Builder-Objekte werden auf die Spielprimitive
-   abgebildet (QUARTERS, RAMPS, BOWLS/ELLIPSES, RAILS, RBOXES, WALLS) —
-   Halfpipes, Quarterpipes und Pools fahren sich damit genau wie die
-   Objekte der Original-Karten (Vert-Ollie, Carve-Airs, Grinds, Ausfahrt
-   mit Vorwärts-Geste). Ovale Bowls erhalten die volle Pool-Physik.
-   ============================================================ */
+/* ---------- CUSTOM-KARTEN AUS DEM MAP BUILDER ---------- Objekte werden auf die Spielprimitive abgebildet; Halfpipes, Quarters und Pools fahren sich wie Original-Objekte, ovale Bowls mit voller Pool-Physik. */
 const CBDG=Math.PI/180;
-const CBMATS={beton:[0x8a8f8f,.9,0],holz:[0xa07845,.8,0],metall:[0xb8bcc2,.35,.85],metallRot:[0xc23b2e,.4,.6],dunkel:[0x3a3f45,.9,.05],gruen:[0x4e7a3a,.95,0],lip:[0xf5c542,.5,.3]};
+const CBMATS={beton:[0x8a8f8f,.9,0],holz:[0xa07845,.8,0],metall:[0xb8bcc2,.35,.85],metallRot:[0xc23b2e,.4,.6],dunkel:[0x3a3f45,.9,.05],gruen:[0x4e7a3a,.95,0],lip:[0xf5c542,.5,.3],asphalt:[0x4b4e52,.95,0],ziegel:[0x9a4f3a,.9,0],gras:[0x4f8040,.97,0]};
 let CBT={};
-function cbMat(n){const k=CBMATS[n]?n:'beton';if(!CBT[k])CBT[k]=mat(CBMATS[k][0],CBMATS[k][1],CBMATS[k][2]);return CBT[k]}
+function cbMat(n){const k=CBMATS[n]?n:'beton';if(!CBT[k])CBT[k]=(window.SKT&&SKT.online&&SKT.has(k))?SKT.mat(k):mat(CBMATS[k][0],CBMATS[k][1],CBMATS[k][2]);return CBT[k]}
 const CBDS=new THREE.MeshStandardMaterial({color:0x8a8f8f,roughness:.95,metalness:0,side:THREE.DoubleSide});
+/* Materialwahl: Rampen, Quarter, Funbox, Halfpipe, Pyramide, Bowl/Pool nutzen das Objekt-Material als gecachte DoubleSide-Variante. */
+const CBDSM={};
+function cbDsm(n){const k=CBMATS[n]?n:'beton';if(!CBDSM[k])CBDSM[k]=(window.SKT&&SKT.online&&SKT.has(k))?SKT.mat(k,{side:THREE.DoubleSide}):new THREE.MeshStandardMaterial({color:CBMATS[k][0],roughness:CBMATS[k][1],metalness:CBMATS[k][2],side:THREE.DoubleSide});return CBDSM[k]}
 
 function cbBox(w,h,d,m){
  const mm=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),cbMat(m));
@@ -3313,26 +3636,70 @@ function cbWedge(w,d,h){
  g.computeVertexNormals();
  return g;
 }
-function cbQuarter(o){
- const g=new THREE.Group(),seg=22,P=[];
- const z0=-o.dd/2;
- for(let i=0;i<seg;i++){
-  const a0=i/seg*Math.PI/2,a1=(i+1)/seg*Math.PI/2;
-  const za=o.dd*(1-Math.cos(a0)),ya=o.h*Math.sin(a0);
-  const zb=o.dd*(1-Math.cos(a1)),yb=o.h*Math.sin(a1);
-  const x0=-o.w/2,x1=o.w/2;
-  P.push(x0,ya,z0,x1,ya,z0,x1,yb,z0+zb, x0,ya,z0,x1,yb,z0+zb,x0,yb,z0+zb);
+
+/* ---- Profil-Geometrie EXAKT wie die Physik (heightAt): y = H*(1-sqrt(1-t^2)), t = z/D ---- */
+function qGeo(w,D,H,z0){
+ const N=26,P=[],hw=w/2,Y=t=>H*(1-Math.sqrt(Math.max(0,1-t*t)));
+ for(let i=0;i<N;i++){
+  const t0=i/N,t1=(i+1)/N,za=z0+D*t0,zb=z0+D*t1,ya=Y(t0),yb=Y(t1);
+  P.push(-hw,ya,za,hw,ya,za,hw,yb,zb, -hw,ya,za,hw,yb,zb,-hw,yb,zb);          // Fahrflaeche
+  P.push(-hw,ya,za,-hw,yb,zb,-hw,0,z0+D, hw,ya,za,hw,0,z0+D,hw,yb,zb);        // Seitenflaechen (Faecher)
  }
- P.push(-o.w/2,0,z0, -o.w/2,o.h,z0+o.dd, -o.w/2,0,z0+o.dd);
- P.push(o.w/2,0,z0, o.w/2,0,z0+o.dd, o.w/2,o.h,z0+o.dd);
- const geo=new THREE.BufferGeometry();
- geo.setAttribute('position',new THREE.Float32BufferAttribute(P,3));
- geo.computeVertexNormals();
- const shell=new THREE.Mesh(geo,CBDS);shell.castShadow=shell.receiveShadow=true;
- g.add(shell);
+ P.push(-hw,0,z0+D,hw,0,z0+D,hw,H,z0+D, -hw,0,z0+D,hw,H,z0+D,-hw,H,z0+D);      // Rueckwand
+ const g=new THREE.BufferGeometry();
+ g.setAttribute('position',new THREE.Float32BufferAttribute(P,3));g.computeVertexNormals();return g;
+}
+function cbQuarter(o){
+ const g=new THREE.Group(),z0=-o.dd/2;
+ const shell=new THREE.Mesh(qGeo(o.w,o.dd,o.h,z0),cbDsm(o.m));shell.castShadow=shell.receiveShadow=true;g.add(shell);
  const cop=new THREE.Mesh(new THREE.CylinderGeometry(.09,.09,o.w,10),cbMat('metall'));
- cop.rotation.z=Math.PI/2;cop.position.set(0,o.h,z0+o.dd);cop.castShadow=true;
- g.add(cop);
+ cop.rotation.z=Math.PI/2;cop.position.set(0,o.h,z0+o.dd);cop.castShadow=true;g.add(cop);
+ return g;
+}
+/* Halfpipe: Flachstueck (dd) + zwei Transitionen (Radius = Hoehe) + Coping + befahrbare Decks + Stirnwaende */
+function cbHalfpipe(o){
+ const g=new THREE.Group(),R=o.h,f=Math.max(0,o.dd),Zt=f/2+R,DW=2.4;
+ if(f>0){const fl=cbBox(o.w,.04,f,o.m);fl.position.y=-.008;g.add(fl)}
+ for(const sd of [-1,1]){
+  const sh=new THREE.Mesh(qGeo(o.w,R,R,0),cbDsm(o.m));sh.castShadow=sh.receiveShadow=true;
+  sh.position.z=sd*f/2;if(sd<0)sh.rotation.y=Math.PI;g.add(sh);
+  const cop=new THREE.Mesh(new THREE.CylinderGeometry(.09,.09,o.w,10),cbMat('metall'));
+  cop.rotation.z=Math.PI/2;cop.position.set(0,R,sd*Zt);cop.castShadow=true;g.add(cop);
+  const deck=cbBox(o.w,R,DW,o.m);deck.position.set(0,R/2,sd*(Zt+DW/2));g.add(deck);
+  const trim=cbBox(o.w+.06,.06,DW+.06,'dunkel');trim.position.set(0,R+.01,sd*(Zt+DW/2));g.add(trim);
+ }
+ const sp=new THREE.Shape(),N=22,Y=t=>R*(1-Math.sqrt(Math.max(0,1-t*t)));
+ sp.moveTo(-Zt,0);sp.lineTo(-Zt,R);
+ for(let i=N-1;i>=0;i--){const t=i/N;sp.lineTo(-f/2-R*t,Y(t))}
+ sp.lineTo(f/2,0);
+ for(let i=1;i<=N;i++){const t=i/N;sp.lineTo(f/2+R*t,Y(t))}
+ sp.lineTo(Zt,0);sp.closePath();
+ const eg=new THREE.ExtrudeGeometry(sp,{depth:.12,bevelEnabled:false});
+ for(const sx of [-1,1]){
+  const ge=eg.clone();ge.translate(0,0,sx>0?o.w/2:-o.w/2-.12);
+  const m=new THREE.Mesh(ge,cbMat(o.m));m.rotation.y=Math.PI/2;m.castShadow=m.receiveShadow=true;g.add(m);
+ }
+ return g;
+}
+/* Treppe: Stufenzahl aus der Hoehe (ca. 0,18 m je Stufe), oben bei -Z, optional Handlauf */
+function cbStairs(o){
+ const g=new THREE.Group(),n=Math.max(2,Math.min(16,Math.round(o.h/.18))),run=o.dd/n;
+ for(let i=0;i<n;i++){
+  const hh=o.h*(n-i)/n,zc=-o.dd/2+run*(i+.5);
+  const b=cbBox(o.w,hh,run,o.m);b.position.set(0,hh/2,zc);g.add(b);
+  const nose=cbBox(o.w+.03,.035,.08,'metall');nose.position.set(0,hh,zc+run/2-.04);g.add(nose);
+ }
+ if(o.p){
+  const x0=-o.w/2-.22,zA=-o.dd/2-.3,zB=o.dd/2+.3,yR=z=>o.h*(o.dd/2-z)/o.dd+.9;
+  const A=new THREE.Vector3(x0,yR(zA),zA),B=new THREE.Vector3(x0,yR(zB),zB);
+  const dir=B.clone().sub(A),len=dir.length();dir.normalize();
+  const bar=new THREE.Mesh(new THREE.CylinderGeometry(.045,.045,len,10),cbMat('metall'));
+  bar.position.copy(A).add(B).multiplyScalar(.5);bar.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),dir);bar.castShadow=true;g.add(bar);
+  const np=Math.max(2,Math.round((zB-zA)/1.8)+1);
+  for(let i=0;i<np;i++){const z=zA+(zB-zA)*i/(np-1),y=yR(z);
+   const post=new THREE.Mesh(new THREE.CylinderGeometry(.04,.04,y,8),cbMat('metall'));
+   post.position.set(x0,y/2,z);post.castShadow=true;g.add(post);}
+ }
  return g;
 }
 function cbFunbox(o){
@@ -3340,7 +3707,7 @@ function cbFunbox(o){
  shape.moveTo(-o.dd/2,0);shape.lineTo(-pd,o.h);shape.lineTo(pd,o.h);shape.lineTo(o.dd/2,0);shape.closePath();
  const geo=new THREE.ExtrudeGeometry(shape,{depth:o.w,bevelEnabled:false});
  geo.translate(0,0,-o.w/2);
- const m=new THREE.Mesh(geo,CBDS);m.castShadow=m.receiveShadow=true;
+ const m=new THREE.Mesh(geo,cbDsm(o.m));m.castShadow=m.receiveShadow=true;
  const g=new THREE.Group();g.add(m);
  g.rotation.y=Math.PI/2; // Profil in Z, Breite in X
  return g;
@@ -3350,7 +3717,7 @@ function cbBuildInner(o){
  if(o.t==='plane'){
   const b=cbBox(o.w,Math.max(o.h,.2),o.dd,o.m);b.position.y=o.h/2;g.add(b);
  }else if(o.t==='ramp'){
-  const m=new THREE.Mesh(cbWedge(o.w,o.dd,o.h),CBDS);m.castShadow=m.receiveShadow=true;g.add(m);
+  const m=new THREE.Mesh(cbWedge(o.w,o.dd,o.h),cbDsm(o.m));m.castShadow=m.receiveShadow=true;g.add(m);
   const lip=new THREE.Mesh(new THREE.CylinderGeometry(.06,.06,o.w,8),cbMat('lip'));
   lip.rotation.z=Math.PI/2;lip.position.set(0,o.h,-o.dd/2);lip.castShadow=true;g.add(lip);
  }else if(o.t==='quarter'){
@@ -3371,7 +3738,7 @@ function cbBuildInner(o){
   const N=18;
   for(let k=0;k<=N;k++){const ax=W*k/N;
    pts.push(new THREE.Vector2(fl+ax,-Math.sqrt(Math.max(.0004,W*W-ax*ax))))} // Wand bis Coping
-  const wall=new THREE.Mesh(new THREE.LatheGeometry(pts,48),CBDS);
+  const wall=new THREE.Mesh(new THREE.LatheGeometry(pts,48),cbDsm(o.m));
   wall.castShadow=wall.receiveShadow=true;bg.add(wall);
   const rim=new THREE.Mesh(new THREE.TorusGeometry(r,.1,10,48),cbMat('metall'));
   rim.rotation.x=Math.PI/2;rim.position.y=0;rim.castShadow=true;bg.add(rim);
@@ -3388,27 +3755,9 @@ function cbBuildInner(o){
    post.position.set(o.w+o.w*Math.cos(a),o.h/2,o.w*Math.sin(a));post.castShadow=true;g.add(post);
   }}
  }else if(o.t==='halfpipe'){
-  const R=o.h,seg=20,P=[];
-  for(const side of [-1,1]){ // beide Wände: U-Profil von der Mitte (y=0) zum Coping (y=R)
-   for(let i=0;i<seg;i++){
-    const a0=i/seg*(Math.PI/2),a1=(i+1)/seg*(Math.PI/2);
-    const z0=side*R*Math.sin(a0),y0=R*(1-Math.cos(a0));
-    const z1=side*R*Math.sin(a1),y1=R*(1-Math.cos(a1));
-    const x0=-o.w/2,x1=o.w/2;
-    P.push(x0,y0,z0,x1,y0,z0,x1,y1,z1, x0,y0,z0,x1,y1,z1,x0,y1,z1);
-   }
-  }
-  const geo=new THREE.BufferGeometry();
-  geo.setAttribute('position',new THREE.Float32BufferAttribute(P,3));
-  geo.computeVertexNormals();
-  const shell=new THREE.Mesh(geo,CBDS);shell.castShadow=shell.receiveShadow=true;g.add(shell);
-  for(const side of [-1,1]){
-   const cop=new THREE.Mesh(new THREE.CylinderGeometry(.09,.09,o.w,10),cbMat('metall'));
-   cop.rotation.z=Math.PI/2;cop.position.set(0,R,side*R);cop.castShadow=true;g.add(cop);
-   const deck=cbBox(1.2,.14,R+.6,o.m);deck.position.set(side*(R+.6),R+.07,0);g.add(deck); // Seitendeck
-  }
-  const end1=cbBox(.1,R,R,o.m);end1.position.set(-o.w/2-.05,R/2,0);g.add(end1);
-  const end2=cbBox(.1,R,R,o.m);end2.position.set(o.w/2+.05,R/2,0);g.add(end2);
+  g.add(cbHalfpipe(o));
+ }else if(o.t==='stairs'){
+  g.add(cbStairs(o));
  }else if(o.t==='bank'){
   const seat=cbBox(o.w,.09,o.dd,o.m);seat.position.y=o.h-.045;g.add(seat);
   const back=cbBox(o.w,o.h*.6,.09,o.m);back.position.set(0,o.h*.6,-o.dd/2+.05);g.add(back);
@@ -3444,7 +3793,7 @@ function cbBuildInner(o){
    {px:+o.w/4,pz:0,rot: Math.PI/2, w:dd, d:o.w/2}
   ];
   for(const df of defs){
-   const m=new THREE.Mesh(cbWedge(df.w,df.d,o.h),CBDS);
+   const m=new THREE.Mesh(cbWedge(df.w,df.d,o.h),cbDsm(o.m));
    m.rotation.y=df.rot;m.position.set(df.px,0,df.pz);
    m.castShadow=m.receiveShadow=true;g.add(m);
   }
@@ -3479,6 +3828,33 @@ function cbGroup(o){
  g.add(cbBuildInner(o));
  return g;
 }
+/* ---------- Kenney-Kacheln aus Mini Park / Fun XXL als Builder-Objekte ---------- */
+const KTILE={kramp:'ramp',ksmooth:'slope-smooth',khalf:'half-pipe',khalflow:'half-pipe-low',
+ ksteps:'steps',kbox:'obstacle-box',kboxgrind:'obstacle-box-grind',kmid:'obstacle-middle',
+ kend:'obstacle-end',kdeck:'structure-platform',kbowlside:'bowl-side',kbowlcorner:'bowl-corner-inner',
+ kbowldeck:'bowl-platform',krail:'rail-low',krailhigh:'rail-high',krailslope:'rail-slope',
+ krailcurve:'rail-curve',kbench:'bench',kpallet:'pallet',kplank:'plank',kfence:'fence'};
+/* Pool/Bowl-Rechteck (4-m-Raster) in Kenney-Kacheln zerlegen — exakt wie die versenkten
+   Pool-Becken im Mini Park und Fun XXL: 4 Ecken, Wandkacheln, flacher Beckenboden. */
+function poolTiles(w,dd){
+ const T=[],hw=w/2,hd=dd/2;
+ T.push({t:'bowl-corner-inner',lx:-hw+2,lz:-hd+2,rot:0});
+ T.push({t:'bowl-corner-inner',lx:-hw+2,lz:hd-2,rot:Math.PI/2});
+ T.push({t:'bowl-corner-inner',lx:hw-2,lz:hd-2,rot:Math.PI});
+ T.push({t:'bowl-corner-inner',lx:hw-2,lz:-hd+2,rot:-Math.PI/2});
+ for(let x=-hw+6;x<=hw-6+0.001;x+=4){
+  T.push({t:'bowl-side',lx:x,lz:-hd+2,rot:0});
+  T.push({t:'bowl-side',lx:x,lz:hd-2,rot:Math.PI});
+ }
+ for(let z=-hd+6;z<=hd-6+0.001;z+=4){
+  T.push({t:'bowl-side',lx:-hw+2,lz:z,rot:Math.PI/2});
+  T.push({t:'bowl-side',lx:hw-2,lz:z,rot:-Math.PI/2});
+ }
+ for(let x=-hw+6;x<=hw-6+0.001;x+=4)
+  for(let z=-hd+6;z<=hd-6+0.001;z+=4)
+   T.push({t:'pool-floor',lx:x,lz:z,rot:0});
+ return T;
+}
 /* ---------- Builder-Objekt in Spielprimitive übersetzen ---------- */
 function customObj(raw){
  const o={t:raw.t,x:+raw.x||0,z:+raw.z||0,y:+raw.y||0,r:+raw.r||0,
@@ -3486,6 +3862,59 @@ function customObj(raw){
   a:+raw.a||0,b:+raw.b||0,m:raw.m||'beton',p:raw.p?1:0};
  const th=o.r*CBDG,c=Math.cos(th),s=Math.sin(th);
  const W=(lx,lz)=>[o.x+lx*c+lz*s,o.z-lx*s+lz*c]; // lokal (x,z) → Welt
+ const rotQ=Math.round(th/(Math.PI/2))*(Math.PI/2); // Kachel-Physik: 90°-Raster
+ if(KTILE[o.t]){ // Kenney-Kachel: Optik + Wände + Rails + LUT-Höhenfeld über kPlace/kSlope
+  if(o.t==='ksmooth')kSlope(o.x,o.z,rotQ);
+  else kPlace(KTILE[o.t],o.x,o.z,rotQ,!o.p);
+  return;
+ }
+ if(o.t==='pool'){ // manuell aufgezogenes Becken: versenkt, überall Drop-in, Coping grindbar
+  const w=Math.max(8,Math.round(o.w/4)*4),dd=Math.max(8,Math.round(o.dd/4)*4);
+  const par=(Math.round(rotQ/(Math.PI/2))%2+2)%2===1; // 90°/270°: Achsen getauscht
+  const sw=par?dd:w,sd=par?w:dd;             // Ausdehnung in Weltachsen
+  const x1=Math.round((o.x+sw/2-2)/4)*4+2,z1=Math.round((o.z+sd/2-2)/4)*4+2;
+  const px=x1-sw/2,pz=z1-sd/2;               // Becken außen aufs 4-m-Kachelraster legen
+  const c2=Math.cos(rotQ),s2=Math.sin(rotQ);
+  for(const tl of poolTiles(w,dd)){
+   kPlace(tl.t,px+tl.lx*c2+tl.lz*s2,pz-tl.lx*s2+tl.lz*c2,rotQ+tl.rot,true,true);
+  }
+  const pw=Math.max(w-8,4),pd=Math.max(dd-8,4);
+  const pg=new THREE.PlaneGeometry(pw,pd);pg.rotateX(-Math.PI/2);
+  const fl=new THREE.Mesh(pg,cbMat(o.m));
+  fl.position.set(px,-3.19,pz);fl.rotation.y=rotQ;fl.receiveShadow=true;PARK.add(fl);
+  return;
+ }
+ if(o.t==='lampe'){ // Lichtmast (Fun XXL): Mast in gewähltem Material, Kopf dunkel
+  cylXZ(PARK,.13,o.h,cbMat(o.m),o.x,o.h/2,o.z,8);
+  box(PARK,1.1,.28,.5,mat(0x2e3238,.5),o.x,o.h-.05,o.z);
+  SOLIDPTS.push({x:o.x,z:o.z});
+  return;
+ }
+ if(o.t==='muell'){ // Mülleimer (Fun XXL): blockiert
+  cylXZ(PARK,o.w/2,o.h,cbMat(o.m),o.x,o.h/2,o.z,10);
+  SOLIDPTS.push({x:o.x,z:o.z});
+  return;
+ }
+ if(o.t==='planter'){ // Pflanzinsel (Fun XXL): Betonrahmen grindbar + Grünfläche
+  const cm=cbMat(o.m),w=o.w,dd=Math.max(1,o.dd),tk=.26;
+  RBOXES.push({x:o.x,z:o.z,rot:th,w:o.w,d:Math.max(.2,o.dd),h:o.h,y:o.y});
+  box(PARK,w,o.h,tk,cm,o.x,o.y+o.h/2,o.z-dd/2+tk/2);
+  box(PARK,w,o.h,tk,cm,o.x,o.y+o.h/2,o.z+dd/2-tk/2);
+  box(PARK,tk,o.h,dd,cm,o.x-w/2+tk/2,o.y+o.h/2,o.z);
+  box(PARK,tk,o.h,dd,cm,o.x+w/2-tk/2,o.y+o.h/2,o.z);
+  const gr=new THREE.Mesh(new THREE.BoxGeometry(w-2*tk,.12,dd-2*tk),mat(0x4e7a3a,.95));
+  gr.position.set(o.x,o.y+o.h,o.z);gr.receiveShadow=true;PARK.add(gr);
+  for(const b of [[-w/4,-dd/4],[w/4,dd/4]]){
+   const bu=new THREE.Mesh(new THREE.SphereGeometry(.55,10,8),mat(0x2e5d1e,.9));
+   bu.position.set(o.x+b[0],o.y+o.h+.4,o.z+b[1]);bu.castShadow=true;PARK.add(bu);
+  }
+  const ry=o.y+o.h+.05;
+  for(const sgn of [-1,1]){ // zwei grindbare Betonkanten
+   const a=W(-w/2,sgn*(dd/2-tk/2)),b2=W(w/2,sgn*(dd/2-tk/2));
+   RAILS.push({ax:a[0],ay:ry,az:a[1],bx:b2[0],by:ry,bz:b2[1],ledge:true});
+  }
+  return;
+ }
  switch(o.t){
   case 'plane':{
    const aD=clamp(o.a||0,-75,75)*CBDG,bD=clamp(o.b||0,-75,75)*CBDG;
@@ -3550,8 +3979,29 @@ function customObj(raw){
    break}
   case 'halfpipe':{
    const R=o.h;
-   addQuarter(o.x,o.z,o.w,R,R,s,c);   // Südwand: steigt zur lokalen +Z
-   addQuarter(o.x,o.z,o.w,R,R,-s,-c);// Nordwand: steigt zur lokalen -Z
+   const f=Math.max(0,o.dd),Zt=f/2+R;       // Flachstück + zwei Transitionen (Radius = Höhe)
+   const qs=W(0,f/2),qn=W(0,-f/2);
+   addQuarter(qs[0],qs[1],o.w,R,R,s,c,{open:1,novis:1});    // Südwand: steigt zur lokalen +Z
+   addQuarter(qn[0],qn[1],o.w,R,R,-s,-c,{open:1,novis:1});  // Nordwand: steigt zur lokalen -Z
+   for(const sd of [-1,1]){ // befahrbare Decks hinter dem Coping (Drop-in + Ausfahrt)
+    const dc=W(0,sd*(Zt+1.2));
+    RBOXES.push({x:dc[0],z:dc[1],rot:th,w:o.w,d:2.4,h:R,y:0,thr:Math.max(.5,R*.4)});
+   }
+   PARK.add(cbGroup(o));
+   break}
+  case 'stairs':{ // echte Stufen (Kollision je Stufe), von unten nicht befahrbar, optional grindbarer Handlauf
+   const n=clamp(Math.round(o.h/.18),2,16),run=o.dd/n;
+   for(let i=0;i<n;i++){
+    const hh=o.h*(n-i)/n,cc=W(0,-o.dd/2+run*(i+.5));
+    RBOXES.push({x:cc[0],z:cc[1],rot:th,w:o.w,d:run,h:hh,y:o.y,thr:.12});
+   }
+   if(o.p){
+    const x0=-o.w/2-.22,zA=-o.dd/2-.3,zB=o.dd/2+.3,yR=zz=>o.y+o.h*(o.dd/2-zz)/o.dd+.9;
+    const A=W(x0,zA),B=W(x0,zB);
+    RAILS.push({ax:A[0],ay:yR(zA),az:A[1],bx:B[0],by:yR(zB),bz:B[1]});
+    SOLIDPTS.push({x:A[0],z:A[1]},{x:B[0],z:B[1]});
+   }
+   PARK.add(cbGroup(o));
    break}
   case 'bank':{
    RBOXES.push({x:o.x,z:o.z,rot:th,w:o.w,d:o.dd,h:Math.max(.1,o.h-.09),y:o.y});
@@ -3609,8 +4059,10 @@ function buildCustomMap(str){
  HALL.x=gw/2+2;HALL.zN=-gdep/2-2;HALL.zS=gdep/2+2;
  CSPAWN={x:0,z:gdep/2-6};
  PIPE.z0=1;PIPE.z1=0;PIPE.R=9; // globale Halfpipe deaktiviert (Builder-Halfpipes sind QUARTER-Paare)
+ MINI.cells={};MINI.on=true; // Kenney-Kacheln (Editor) nutzen das LUT-Höhenfeld wie Mini Park/Fun XXL
  setLight(0xd8edff,0x42484e,.72,0xfff2d5,2.1,-30,55,20,40);
  scene.background=new THREE.Color(0x9cc4e0);scene.fog=new THREE.Fog(0x9cc4e0,110,240);
+ if(window.SKT)SKT.bg(d.g.bg===undefined?'park':d.g.bg,scene);
  // Boden mit echten Öffnungen für versenkte Bowls und Ebenen (wie im Builder)
  const shape=new THREE.Shape();
  shape.moveTo(-gw/2,-gdep/2);shape.lineTo(gw/2,-gdep/2);shape.lineTo(gw/2,gdep/2);shape.lineTo(-gw/2,gdep/2);shape.closePath();
@@ -3621,6 +4073,21 @@ function buildCustomMap(str){
    const hp=new THREE.Path();
    hp.absellipse(x,-z,Math.max(.3,w-.05),Math.max(.3,w-.05)*sz,0,Math.PI*2,true,r*CBDG);
    shape.holes.push(hp);
+  }else if(raw.t==='pool'){ // aufgezogenes Pool-Becken: rechteckige Öffnung (90°-Raster, wie customObj ausgerichtet)
+   const pw=Math.max(8,Math.round(w/4)*4),pd=Math.max(8,Math.round(dd/4)*4);
+   const pq=Math.round(r*CBDG/(Math.PI/2))*(Math.PI/2);
+   const par=(Math.round(pq/(Math.PI/2))%2+2)%2===1;
+   const sw=par?pd:pw,sd=par?pw:pd;
+   const x1=Math.round((x+sw/2-2)/4)*4+2,z1=Math.round((z+sd/2-2)/4)*4+2;
+   const px=x1-sw/2,pz=z1-sd/2;
+   const cc=Math.cos(pq),ss=Math.sin(pq);
+   const P=new THREE.Path();
+   const pts=[[-pw/2,-pd/2],[pw/2,-pd/2],[pw/2,pd/2],[-pw/2,pd/2]];
+   pts.forEach((p,i)=>{
+    const wx=px+p[0]*cc+p[1]*ss,wz=pz-p[0]*ss+p[1]*cc;
+    if(i===0)P.moveTo(wx,-wz);else P.lineTo(wx,-wz);
+   });
+   P.closePath();shape.holes.push(P);
   }else if(raw.t==='plane'&&y+h<-.05){ // versenkte Ebene: rechteckige Öffnung in der Grundfläche
    const th=r*CBDG,cc=Math.cos(th),ss=Math.sin(th);
    const P=new THREE.Path();
@@ -3632,7 +4099,8 @@ function buildCustomMap(str){
    P.closePath();shape.holes.push(P);
   }
  }
- const gmat=(d.g.m==='holz')?M('wood',gw/8,gdep/8,.85):((d.g.m&&CBMATS[d.g.m]&&d.g.m!=='beton')?mat(CBMATS[d.g.m][0],CBMATS[d.g.m][1],CBMATS[d.g.m][2]):M('concrete',gw/8,gdep/8,.95));
+ const gk=(d.g.m&&CBMATS[d.g.m])?d.g.m:'beton';
+ const gmat=(window.SKT&&SKT.online&&SKT.has(gk))?SKT.mat(gk):((d.g.m==='holz')?M('wood',gw/8,gdep/8,.85):((gk!=='beton')?mat(CBMATS[gk][0],CBMATS[gk][1],CBMATS[gk][2]):M('concrete',gw/8,gdep/8,.95)));
  const gr=new THREE.Mesh(new THREE.ShapeGeometry(shape),gmat);
  gr.rotation.x=-Math.PI/2;gr.receiveShadow=true;PARK.add(gr);
  // Randwände (blockieren, wie die Halle der Original-Karten)
@@ -3644,8 +4112,9 @@ function buildCustomMap(str){
  basePlate(0x3f4a4f);
 }
 
+const MAPNAME={tutorial:'PRO PARK'};
 const MAPDESC={
- tutorial:'Street-Kurs zum Warmwerden: Palette, Bohle und zwei Statisten. Ideal für Ollie, Manual und die ersten Grinds.',
+ tutorial:'Pro Park: Plattform mit Rail, Halfpipe, Bowl, Funboxen, Quarter-Linie im Süden.',
  warehouse:'THPS-Klassiker: Start-Mezzanin mit Doppelschräge, zentrale Halfpipe mit Secret Room, Monster-Rail über der Back-Wall-Quarter, Taxi mit Kickern, Ollie-Channel.',
  school:'THPS-Schoolyard: zwei versenkte Pools mit Rail dazwischen, Halfpipe zum Playground, Gymnasium mit Korb-Quarter und Roofline, Start-Rail von der Markise.',
  minipark:'Kombi-Park mit Poolecke, Funbox-Mittelstücken, Kicker-Bank und Curve-Rail. Kompakt und dicht.',
@@ -3662,6 +4131,7 @@ function initPreviews(){
   prevMapR.setPixelRatio(Math.min(devicePixelRatio||1,1.5));
   prevMapR.setSize(mw,mh); // Inline-Px-Stil statt Prozentkette (gleiches Robustheitsmuster wie Haupt-Canvas)
   prevMapR.shadowMap.enabled=false;
+  prevMapR.outputEncoding=THREE.sRGBEncoding;prevMapR.toneMapping=THREE.ACESFilmicToneMapping;prevMapR.toneMappingExposure=1.0; // wie Hauptrenderer, sonst ueberbelichtet
   prevMapCam=new THREE.PerspectiveCamera(50,mw/mh,1,320);
   prevCharR=new THREE.WebGLRenderer({canvas:cc,antialias:true});
   prevCharR.setPixelRatio(Math.min(devicePixelRatio||1,1.5));
@@ -3675,9 +4145,7 @@ function initPreviews(){
   refreshCharClone();
  }catch(e){prevMapR=null;prevCharR=null}
 }
-/* WebGL-Kontingent schonen: Solange der Map Builder offen ist, werden die beiden
-   Vorschau-Renderer freigegeben (der Builder bringt einen eigenen Kontext mit).
-   Mobil-Browser verwerfen sonst den Kontext des HAUPTSPIELS → schwarzer Bildschirm. */
+/* WebGL-Kontingent: Builder offen -> Vorschau-Renderer freigeben, sonst verliert Mobil das HAUPTSPIEL den Kontext (schwarzer Bildschirm). */
 function releasePreviews(){
  for(const r of [prevMapR,prevCharR]){
   if(r){try{r.dispose()}catch(e){}try{r.forceContextLoss&&r.forceContextLoss()}catch(e){}}
@@ -3723,6 +4191,7 @@ document.querySelectorAll('[data-role]').forEach(b=>{
   if(r==='tilt'){if(tiltOn){tiltOn=false}else enableTilt()}
   else if(r==='cal')tilt.cal=true;
   else if(r==='snd')soundOn=!soundOn;
+  else if(r==='tex'){CBT={};for(const k in CBDSM)delete CBDSM[k];SKT.online=!SKT.online;SKT.setOnline(SKT.online);if(typeof buildPark==='function'&&PARK){buildPark();if(typeof reset==='function')reset()}}
   updateMobileUI();
  });
 });
@@ -3736,7 +4205,7 @@ function chipSelect(b){
  }
  document.querySelectorAll('[data-map]').forEach(x=>x.classList.toggle('on',x===b));
  const isCustom=mapId.startsWith('custom:');
- const mn=$('mapname');if(mn)mn.textContent=(isCustom?mapId.slice(7):mapId).toUpperCase();
+ const mn=$('mapname');if(mn)mn.textContent=(isCustom?mapId.slice(7):(MAPNAME[mapId]||mapId)).toUpperCase();
  const md=$('mapdesc');if(md)md.textContent=isCustom?('Eigene Karte aus dem Map Builder: '+mapId.slice(7)):(MAPDESC[mapId]||'');
  buildPark();reset();
  if(!started)camera.lookAt(pos.x+.85,pos.y+.72,pos.z);
@@ -3842,17 +4311,10 @@ addEventListener('resize',()=>{if(camera&&renderer&&innerWidth>0&&innerHeight>0)
 init();
 })();</script>
 <script>
-/* ============================================================
-   PRO SKATER 99 — MAP BUILDER (schlanke Version)
-   Autarke HTML-Seite: Grundfläche, Objekte platzieren/skalieren/
-   rotieren, Ebenen anheben/absenken/schrägen/versenken, Rails,
-   Materialien, Persistenz in Cookies (+ localStorage-Spiegel).
-   ============================================================ */
+/* PRO SKATER 99 — MAP BUILDER (schlanke Version): autarke HTML-Seite; Objekte platzieren/skalieren/rotieren, Ebenen anheben/absenken/schrägen/versenken, Rails, Materialien, Cookies (+ localStorage-Spiegel). */
 (function(){
 'use strict';
-/* EMBED: true, wenn dieses Skript innerhalb der Spiel-HTML läuft (Overlay #mbview
-   vorhanden). Standalone bleibt die Seite immer offen, im Spiel steuert window.MB
-   (Startmenü-Button) das Overlay. Derselbe Code bedient beide Varianten. */
+/* EMBED: true, wenn innerhalb der Spiel-HTML (Overlay #mbview). Im Spiel steuert window.MB das Overlay; Standalone bleibt offen. */
 const EMBED=!!document.getElementById('mbview');
 let open=!EMBED;
 const $=id=>document.getElementById(EMBED?'mb'+id:id);
@@ -3868,15 +4330,26 @@ const MATS={
  metallRot:{c:0xc23b2e,r:.4,m:.6,n:'Metall rot'},
  dunkel:{c:0x3a3f45,r:.9,m:.05,n:'Dunkel'},
  gruen:{c:0x4e7a3a,r:.95,m:0,n:'Grün'},
- lip:{c:0xf5c542,r:.5,m:.3,n:'Gelb (Lip)'}
+ lip:{c:0xf5c542,r:.5,m:.3,n:'Gelb (Lip)'},
+ asphalt:{c:0x4b4e52,r:.95,m:0,n:'Asphalt'},
+ ziegel:{c:0x9a4f3a,r:.9,m:0,n:'Ziegel'},
+ gras:{c:0x4f8040,r:.97,m:0,n:'Gras'}
 };
 const matCache={};
 function mat(name){
  const k=(name&&MATS[name])?name:'beton';
- if(!matCache[k])matCache[k]=new THREE.MeshStandardMaterial({color:MATS[k].c,roughness:MATS[k].r,metalness:MATS[k].m});
+ if(!matCache[k])matCache[k]=(window.SKT&&SKT.online&&SKT.has(k))?SKT.mat(k):new THREE.MeshStandardMaterial({color:MATS[k].c,roughness:MATS[k].r,metalness:MATS[k].m});
  return matCache[k];
 }
 const DS=new THREE.MeshStandardMaterial({color:MATS.beton.c,roughness:.95,metalness:0,side:THREE.DoubleSide});
+/* Materialwahl wirksam machen: Rampen, Quarter, Funbox, Halfpipe, Pyramide und Bowl
+   nutzen jetzt das gewählte Objekt-Material (DoubleSide, gecached) statt festem Beton. */
+const DSMATS={};
+function dsm(name){
+ const k=(name&&MATS[name])?name:'beton';
+ if(!DSMATS[k])DSMATS[k]=(window.SKT&&SKT.online&&SKT.has(k))?SKT.mat(k,{side:THREE.DoubleSide}):new THREE.MeshStandardMaterial({color:MATS[k].c,roughness:MATS[k].r,metalness:MATS[k].m,side:THREE.DoubleSide});
+ return DSMATS[k];
+}
 
 /* ---------- Objekttypen: Voreinstellungen + Anzeige ---------- */
 const TYPES={
@@ -3890,13 +4363,40 @@ const TYPES={
  bowl:{n:'Bowl',w:7.5,d:7.5,h:3.4,m:'beton',lbl:'Bowl / Pool (Breite = X-Radius, Tiefe = Z-Radius, gleich = rund, Höhe = Beckentiefe)'},
  rail:{n:'Rail',w:8,d:0,h:.7,m:'metall',p:1,lbl:'Rail (Breite = Länge, Höhe = Railhöhe, Pfosten)'},
  railcurve:{n:'Kurven-Rail',w:6,d:0,h:.7,m:'metall',p:1,lbl:'Rail 90°-Bogen (Breite = Bogenradius, Öffnung nach +Z, grindbar)'},
- halfpipe:{n:'Halfpipe',w:14,d:0,h:3.2,m:'holz',lbl:'Halfpipe (Breite = Länge, Höhe = Wandhöhe = Radius, Laufschiene/Coping)'},
+ halfpipe:{n:'Halfpipe',w:14,d:3,h:3.2,m:'holz',lbl:'Halfpipe (Breite = Länge, Tiefe = Flachstück, Höhe = Wandhöhe = Radius; Coping + Decks, Ausfahrt mit Vorwärts + Ollie)'},
+ stairs:{n:'Treppe',w:4,d:3.6,h:.9,m:'beton',p:0,lbl:'Treppe (oben bei -Z, Stufen aus Höhe/0,18 m, Häkchen = Handlauf an der linken Seite, grindbar)'},
  bank:{n:'Bank',w:3,d:1.1,h:.45,m:'holz',lbl:'Parkbank (Sitzfläche grindbar)'},
  zaun:{n:'Zaun',w:12,d:0,h:1.1,m:'metall',lbl:'Zaun (blockiert, Oberkante grindbar)'},
  picknick:{n:'Picknicktisch',w:3,d:1.8,h:.75,m:'holz',lbl:'Picknicktisch (Tischplatte + Bänke grindbar)'},
  pyramide:{n:'Pyramide',w:8,d:8,h:1.2,m:'beton',lbl:'Pyramide (4 Rampen zur Plattform)'},
  tree:{n:'Baum',w:4.2,d:0,h:5,m:'gruen',lbl:'Baum (Höhe = Gesamthöhe)'},
- pillar:{n:'Pfeiler',w:1.3,d:0,h:6,m:'beton',lbl:'Pfeiler (Breite = Durchmesser)'}
+ pillar:{n:'Pfeiler',w:1.3,d:0,h:6,m:'beton',lbl:'Pfeiler (Breite = Durchmesser)'},
+ /* Kenney-Kacheln (Mini Park/Fun XXL): 4x4-m-Kacheln mit Original-Spiel-Physik; k=Kachel-Typ, p/pw=Wandtyp (Häkchen = Abschlusswaende, ns-Flag). */
+ kramp:{n:'Rampe K',k:'ramp',w:4,d:4,h:1.2,m:'beton',lbl:'Kenney-Rampe: Plateau 1,2 m, Transition + Coping (4x4-m-Kachel)'},
+ ksmooth:{n:'Bank K',k:'slope-smooth',w:8,d:4,h:1.6,m:'beton',lbl:'Kenney-Smooth-Bank: 8-m-Kachel, sanfte Zufahrt, Kante grindbar'},
+ khalf:{n:'Halfpipe K',k:'half-pipe',w:4,d:4,h:3.2,m:'beton',p:1,pw:1,lbl:'Kenney-Steilwand 3,2 m + Coping (Häkchen = seitliche Abschlusswände, ohne = Reihenwand)'},
+ khalflow:{n:'Halfpipe K niedrig',k:'half-pipe-low',w:4,d:4,h:1.6,m:'beton',p:1,pw:1,lbl:'Kenney-Steilwand 1,6 m (Anfänger-Return) + Coping'},
+ ksteps:{n:'Stufen K',k:'steps',w:4,d:4,h:1.2,m:'beton',lbl:'Kenney-Stufen: 3 Stufen 1,2/0,8/0,4 m'},
+ kbox:{n:'Box K',k:'obstacle-box',w:4,d:4,h:.84,m:'beton',lbl:'Kenney-Box 4x4 m, 0,84 m hoch'},
+ kboxgrind:{n:'Grindbox K',k:'obstacle-box-grind',w:4,d:4,h:.84,m:'beton',lbl:'Kenney-Grindbox 2x4 m mit grindbarer Kante'},
+ kmid:{n:'Mittelteil K',k:'obstacle-middle',w:4,d:4,h:1.2,m:'beton',lbl:'Kenney-Mittelstück 1,2 m (Aufbau-Modul für Boxen)'},
+ kend:{n:'Endstück K',k:'obstacle-end',w:4,d:4,h:1.2,m:'beton',lbl:'Kenney-Endstück: Rampe 1,2 m auf halber Kachelbreite'},
+ kdeck:{n:'Deck K',k:'structure-platform',w:4,d:4,h:2.2,m:'beton',lbl:'Kenney-Plattform 2,2 m mit grindbarer Kante'},
+ kbowlside:{n:'Bowl-Kante K',k:'bowl-side',w:4,d:4,h:3.2,m:'beton',p:1,pw:1,lbl:'Kenney-Bowl-Wandkachel 3,2 m (Beckenränder, reihenweise stellbar)'},
+ kbowlcorner:{n:'Bowl-Ecke K',k:'bowl-corner-inner',w:4,d:4,h:3.2,m:'beton',p:1,pw:1,lbl:'Kenney-Bowl-Innenecke (Poolecken)'},
+ kbowldeck:{n:'Bowl-Deck K',k:'bowl-platform',w:4,d:4,h:3.2,m:'beton',lbl:'Kenney-Bowl-Deckplatte 3,2 m, beide Kanten grindbar'},
+ krail:{n:'Rail K',k:'rail-low',w:4,d:4,h:1,m:'metall',lbl:'Kenney-Flatrail 4 m auf 1,0 m'},
+ krailhigh:{n:'Rail K hoch',k:'rail-high',w:4,d:4,h:1.72,m:'metall',lbl:'Kenney-Rail 4 m auf 1,72 m'},
+ krailslope:{n:'Rail K schräg',k:'rail-slope',w:4,d:4,h:1.72,m:'metall',lbl:'Kenney-Handrail: 1,72 -> 0,98 m abfallend'},
+ krailcurve:{n:'Rail K Kurve',k:'rail-curve',w:4,d:4,h:1,m:'metall',lbl:'Kenney-Kurvenrail (Viertelbogen), durchgehend grindbar'},
+ kbench:{n:'Bank K',k:'bench',w:4,d:4,h:2.03,m:'holz',lbl:'Kenney-Parkbank 3,1x1,8 m, Sitzkante grindbar'},
+ kpallet:{n:'Palette K',k:'pallet',w:4,d:4,h:.63,m:'holz',lbl:'Kenney-Palette, Slappy-Kanten grindbar'},
+ kplank:{n:'Bohle K',k:'plank',w:4,d:4,h:.2,m:'holz',lbl:'Kenney-Bohle 4 m (niedrige Slappy-Kante)'},
+ kfence:{n:'Zaun K',k:'fence',w:4,d:4,h:1.4,m:'metall',p:1,pw:1,lbl:'Kenney-Zaunkachel 4 m, blockiert (reihenweise stellbar)'},
+ pool:{n:'Pool/Bowl (aufziehen)',w:12,d:12,h:3.2,m:'beton',lbl:'Pool/Bowl selbst aufziehen: ziehen = Rechteck (min. 8x8 m), tippen = 12x12 m — versenkt 3,2 m, Coping grindbar, überall Drop-in'},
+ lampe:{n:'Lichtmast',w:.26,d:0,h:4,m:'dunkel',lbl:'Lichtmast (Fun XXL): Mast im gewählten Material, blockiert'},
+ muell:{n:'Mülleimer',w:.8,d:0,h:1,m:'gruen',lbl:'Mülleimer (Fun XXL), blockiert'},
+ planter:{n:'Pflanzinsel',w:6,d:4,h:.5,m:'beton',lbl:'Pflanzinsel (Fun XXL): Betonrahmen grindbar, bepflanzt, blockiert'}
 };
 function defaultsFor(t){
  const d=TYPES[t]||TYPES.box;
@@ -3910,10 +4410,7 @@ const meshes={};
 
 /* ---------- Three.js Szene ---------- */
 const view=$('view');
-let renderer=null; /* LAZY: WebGL-Kontext erst bei Bedarf (im Spiel bei MB.open) und beim
-   Schließen wieder freigeben. Vier gleichzeitige Kontexte (Spiel + 2 Vorschauen + Builder)
-   ließen Mobil-Browser den ältesten Kontext — den des HAUPTSPIELS — still verlieren:
-   schwarzer Bildschirm, nur HUD sichtbar, Vorschauen liefen weiter. */
+let renderer=null; /* LAZY: WebGL-Kontext erst bei MB.open, beim Schliessen freigeben. Vier Kontexte liessen Mobil-Browser den Hauptspiel-Kontext still verlieren (schwarzer Bildschirm). */
 function ensureRenderer(){
  if(renderer)return renderer;
  renderer=new THREE.WebGLRenderer({antialias:true});
@@ -3921,6 +4418,7 @@ function ensureRenderer(){
  renderer.setSize(innerWidth,innerHeight);
  renderer.shadowMap.enabled=true;
  renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+ renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.0; // wie im Spiel: WYSIWYG
  view.appendChild(renderer.domElement);
  return renderer;
 }
@@ -3937,8 +4435,8 @@ function applyCam(){
   cam.target.z+cam.dist*sp*Math.cos(cam.theta));
  camera.lookAt(cam.target);
 }
-scene.add(new THREE.HemisphereLight(0xcfd8e0,0x2a2f35,.95));
-const sun=new THREE.DirectionalLight(0xffffff,.85);
+scene.add(new THREE.HemisphereLight(0xd8edff,0x42484e,.6));
+const sun=new THREE.DirectionalLight(0xfff2d5,1.3);
 sun.position.set(70,110,45);
 sun.castShadow=true;
 sun.shadow.mapSize.set(2048,2048);
@@ -3962,26 +4460,70 @@ function wedgeGeo(w,d,h){
  g.computeVertexNormals();
  return g;
 }
-function quarterGroup(o){
- const g=new THREE.Group(),seg=22,P=[];
- const z0=-o.dd/2;
- for(let i=0;i<seg;i++){
-  const a0=i/seg*Math.PI/2,a1=(i+1)/seg*Math.PI/2;
-  const za=o.dd*(1-Math.cos(a0)),ya=o.h*Math.sin(a0);
-  const zb=o.dd*(1-Math.cos(a1)),yb=o.h*Math.sin(a1);
-  const x0=-o.w/2,x1=o.w/2;
-  P.push(x0,ya,z0,x1,ya,z0,x1,yb,z0+zb, x0,ya,z0,x1,yb,z0+zb,x0,yb,z0+zb);
+
+/* ---- Profil-Geometrie EXAKT wie die Physik (heightAt): y = H*(1-sqrt(1-t^2)), t = z/D ---- */
+function qGeo(w,D,H,z0){
+ const N=26,P=[],hw=w/2,Y=t=>H*(1-Math.sqrt(Math.max(0,1-t*t)));
+ for(let i=0;i<N;i++){
+  const t0=i/N,t1=(i+1)/N,za=z0+D*t0,zb=z0+D*t1,ya=Y(t0),yb=Y(t1);
+  P.push(-hw,ya,za,hw,ya,za,hw,yb,zb, -hw,ya,za,hw,yb,zb,-hw,yb,zb);          // Fahrflaeche
+  P.push(-hw,ya,za,-hw,yb,zb,-hw,0,z0+D, hw,ya,za,hw,0,z0+D,hw,yb,zb);        // Seitenflaechen (Faecher)
  }
- P.push(-o.w/2,0,z0, -o.w/2,o.h,z0+o.dd, -o.w/2,0,z0+o.dd);
- P.push(o.w/2,0,z0, o.w/2,0,z0+o.dd, o.w/2,o.h,z0+o.dd);
- const geo=new THREE.BufferGeometry();
- geo.setAttribute('position',new THREE.Float32BufferAttribute(P,3));
- geo.computeVertexNormals();
- const shell=new THREE.Mesh(geo,DS);shell.castShadow=shell.receiveShadow=true;
- g.add(shell);
+ P.push(-hw,0,z0+D,hw,0,z0+D,hw,H,z0+D, -hw,0,z0+D,hw,H,z0+D,-hw,H,z0+D);      // Rueckwand
+ const g=new THREE.BufferGeometry();
+ g.setAttribute('position',new THREE.Float32BufferAttribute(P,3));g.computeVertexNormals();return g;
+}
+function quarterGroup(o){
+ const g=new THREE.Group(),z0=-o.dd/2;
+ const shell=new THREE.Mesh(qGeo(o.w,o.dd,o.h,z0),dsm(o.m));shell.castShadow=shell.receiveShadow=true;g.add(shell);
  const cop=new THREE.Mesh(new THREE.CylinderGeometry(.09,.09,o.w,10),mat('metall'));
- cop.rotation.z=Math.PI/2;cop.position.set(0,o.h,z0+o.dd);cop.castShadow=true;
- g.add(cop);
+ cop.rotation.z=Math.PI/2;cop.position.set(0,o.h,z0+o.dd);cop.castShadow=true;g.add(cop);
+ return g;
+}
+/* Halfpipe: Flachstueck (dd) + zwei Transitionen (Radius = Hoehe) + Coping + befahrbare Decks + Stirnwaende */
+function halfpipeGroup(o){
+ const g=new THREE.Group(),R=o.h,f=Math.max(0,o.dd),Zt=f/2+R,DW=2.4;
+ if(f>0){const fl=boxMesh(o.w,.04,f,o.m);fl.position.y=-.008;g.add(fl)}
+ for(const sd of [-1,1]){
+  const sh=new THREE.Mesh(qGeo(o.w,R,R,0),dsm(o.m));sh.castShadow=sh.receiveShadow=true;
+  sh.position.z=sd*f/2;if(sd<0)sh.rotation.y=Math.PI;g.add(sh);
+  const cop=new THREE.Mesh(new THREE.CylinderGeometry(.09,.09,o.w,10),mat('metall'));
+  cop.rotation.z=Math.PI/2;cop.position.set(0,R,sd*Zt);cop.castShadow=true;g.add(cop);
+  const deck=boxMesh(o.w,R,DW,o.m);deck.position.set(0,R/2,sd*(Zt+DW/2));g.add(deck);
+  const trim=boxMesh(o.w+.06,.06,DW+.06,'dunkel');trim.position.set(0,R+.01,sd*(Zt+DW/2));g.add(trim);
+ }
+ const sp=new THREE.Shape(),N=22,Y=t=>R*(1-Math.sqrt(Math.max(0,1-t*t)));
+ sp.moveTo(-Zt,0);sp.lineTo(-Zt,R);
+ for(let i=N-1;i>=0;i--){const t=i/N;sp.lineTo(-f/2-R*t,Y(t))}
+ sp.lineTo(f/2,0);
+ for(let i=1;i<=N;i++){const t=i/N;sp.lineTo(f/2+R*t,Y(t))}
+ sp.lineTo(Zt,0);sp.closePath();
+ const eg=new THREE.ExtrudeGeometry(sp,{depth:.12,bevelEnabled:false});
+ for(const sx of [-1,1]){
+  const ge=eg.clone();ge.translate(0,0,sx>0?o.w/2:-o.w/2-.12);
+  const m=new THREE.Mesh(ge,mat(o.m));m.rotation.y=Math.PI/2;m.castShadow=m.receiveShadow=true;g.add(m);
+ }
+ return g;
+}
+/* Treppe: Stufenzahl aus der Hoehe (ca. 0,18 m je Stufe), oben bei -Z, optional Handlauf */
+function stairsGroup(o){
+ const g=new THREE.Group(),n=Math.max(2,Math.min(16,Math.round(o.h/.18))),run=o.dd/n;
+ for(let i=0;i<n;i++){
+  const hh=o.h*(n-i)/n,zc=-o.dd/2+run*(i+.5);
+  const b=boxMesh(o.w,hh,run,o.m);b.position.set(0,hh/2,zc);g.add(b);
+  const nose=boxMesh(o.w+.03,.035,.08,'metall');nose.position.set(0,hh,zc+run/2-.04);g.add(nose);
+ }
+ if(o.p){
+  const x0=-o.w/2-.22,zA=-o.dd/2-.3,zB=o.dd/2+.3,yR=z=>o.h*(o.dd/2-z)/o.dd+.9;
+  const A=new THREE.Vector3(x0,yR(zA),zA),B=new THREE.Vector3(x0,yR(zB),zB);
+  const dir=B.clone().sub(A),len=dir.length();dir.normalize();
+  const bar=new THREE.Mesh(new THREE.CylinderGeometry(.045,.045,len,10),mat('metall'));
+  bar.position.copy(A).add(B).multiplyScalar(.5);bar.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),dir);bar.castShadow=true;g.add(bar);
+  const np=Math.max(2,Math.round((zB-zA)/1.8)+1);
+  for(let i=0;i<np;i++){const z=zA+(zB-zA)*i/(np-1),y=yR(z);
+   const post=new THREE.Mesh(new THREE.CylinderGeometry(.04,.04,y,8),mat('metall'));
+   post.position.set(x0,y/2,z);post.castShadow=true;g.add(post);}
+ }
  return g;
 }
 function funboxGroup(o){
@@ -3989,7 +4531,7 @@ function funboxGroup(o){
  shape.moveTo(-o.dd/2,0);shape.lineTo(-pd,o.h);shape.lineTo(pd,o.h);shape.lineTo(o.dd/2,0);shape.closePath();
  const geo=new THREE.ExtrudeGeometry(shape,{depth:o.w,bevelEnabled:false});
  geo.translate(0,0,-o.w/2);
- const m=new THREE.Mesh(geo,DS);m.castShadow=m.receiveShadow=true;
+ const m=new THREE.Mesh(geo,dsm(o.m));m.castShadow=m.receiveShadow=true;
  const g=new THREE.Group();g.add(m);
  g.rotation.y=Math.PI/2; // Profil in Z, Breite in X
  return g;
@@ -3998,13 +4540,90 @@ function boxMesh(w,h,d,m){
  const mm=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(m));
  mm.castShadow=mm.receiveShadow=true;return mm;
 }
+/* ---------- Kenney-Kacheln (Mini Park / Fun XXL): echte Spiel-Modelle im Editor ---------- */
+function kenneyTileMesh(tk){
+ try{
+  const K=window.__kenney;
+  if(K&&K.KDATA&&typeof K.kenneyGeo==='function'&&typeof K.kenneyMat==='function'){
+   const m=new THREE.Mesh(K.kenneyGeo(tk),K.kenneyMat());
+   m.scale.setScalar(K.KDATA.S);
+   m.castShadow=m.receiveShadow=true;
+   m.userData.shared=true; // geteilte Geometrie/Material des Spiels: nicht entsorgen
+   return m;
+  }
+ }catch(e){}
+ return null;
+}
+/* Pool/Bowl-Rechteck (4-m-Raster) in Kenney-Kacheln zerlegen — identisch zum Spiel-Script. */
+function poolTiles(w,dd){
+ const T=[],hw=w/2,hd=dd/2;
+ T.push({t:'bowl-corner-inner',lx:-hw+2,lz:-hd+2,rot:0});
+ T.push({t:'bowl-corner-inner',lx:-hw+2,lz:hd-2,rot:Math.PI/2});
+ T.push({t:'bowl-corner-inner',lx:hw-2,lz:hd-2,rot:Math.PI});
+ T.push({t:'bowl-corner-inner',lx:hw-2,lz:-hd+2,rot:-Math.PI/2});
+ for(let x=-hw+6;x<=hw-6+0.001;x+=4){
+  T.push({t:'bowl-side',lx:x,lz:-hd+2,rot:0});
+  T.push({t:'bowl-side',lx:x,lz:hd-2,rot:Math.PI});
+ }
+ for(let z=-hd+6;z<=hd-6+0.001;z+=4){
+  T.push({t:'bowl-side',lx:-hw+2,lz:z,rot:Math.PI/2});
+  T.push({t:'bowl-side',lx:hw-2,lz:z,rot:-Math.PI/2});
+ }
+ for(let x=-hw+6;x<=hw-6+0.001;x+=4)
+  for(let z=-hd+6;z<=hd-6+0.001;z+=4)
+   T.push({t:'pool-floor',lx:x,lz:z,rot:0});
+ return T;
+}
 /* ---------- Objekt-Meshes ---------- */
 function buildInner(o){
  const g=new THREE.Group();
+ const ty=TYPES[o.t]||null;
+ if(ty&&ty.k){ // Kenney-Kachel: echtes Spiel-Modell, Fallback 4-m-Box
+  const m=kenneyTileMesh(ty.k);
+  if(m)g.add(m);
+  else g.add(boxMesh(4,ty.h,4,o.m));
+  return g;
+ }
+ if(o.t==='pool'){ // aufgezogenes Becken: Kenney-Poolkacheln, versenkt 3,2 m
+  const w=Math.max(8,Math.round(o.w/4)*4),dd=Math.max(8,Math.round(o.dd/4)*4);
+  const rot=o.r*DG;
+  for(const tl of poolTiles(w,dd)){
+   const m=kenneyTileMesh(tl.t);
+   if(m){m.position.set(tl.lx,-3.2,tl.lz);m.rotation.y=rot+tl.rot;g.add(m)}
+  }
+  const pg=new THREE.PlaneGeometry(Math.max(w-8,4),Math.max(dd-8,4));pg.rotateX(-Math.PI/2);
+  const fl=new THREE.Mesh(pg,mat(o.m));
+  fl.position.y=-3.19;fl.rotation.y=rot;fl.receiveShadow=true;g.add(fl);
+  return g;
+ }
+ if(o.t==='lampe'){ // Lichtmast (Fun XXL)
+  const mast=new THREE.Mesh(new THREE.CylinderGeometry(.13,.13,o.h,8),mat(o.m));
+  mast.position.y=o.h/2;mast.castShadow=true;g.add(mast);
+  const head=boxMesh(1.1,.28,.5,'dunkel');head.position.y=o.h-.05;g.add(head);
+  return g;
+ }
+ if(o.t==='muell'){ // Mülleimer (Fun XXL)
+  const m=new THREE.Mesh(new THREE.CylinderGeometry(o.w/2,o.w/2,o.h,10),mat(o.m));
+  m.position.y=o.h/2;m.castShadow=m.receiveShadow=true;g.add(m);
+  return g;
+ }
+ if(o.t==='planter'){ // Pflanzinsel (Fun XXL): Betonrahmen + Grünfläche + Büsche
+  const w=o.w,dd=Math.max(1,o.dd),tk=.26;
+  const b1=boxMesh(w,o.h,tk,o.m);b1.position.set(0,o.h/2,-dd/2+tk/2);g.add(b1);
+  const b2=boxMesh(w,o.h,tk,o.m);b2.position.set(0,o.h/2,dd/2-tk/2);g.add(b2);
+  const b3=boxMesh(tk,o.h,dd,o.m);b3.position.set(-w/2+tk/2,o.h/2,0);g.add(b3);
+  const b4=boxMesh(tk,o.h,dd,o.m);b4.position.set(w/2-tk/2,o.h/2,0);g.add(b4);
+  const gr=boxMesh(w-2*tk,.12,dd-2*tk,'gruen');gr.position.y=o.h;g.add(gr);
+  for(const b of [[-w/4,-dd/4],[w/4,dd/4]]){
+   const bu=new THREE.Mesh(new THREE.SphereGeometry(.55,10,8),mat('gruen'));
+   bu.position.set(b[0],o.h+.4,b[1]);bu.castShadow=true;g.add(bu);
+  }
+  return g;
+ }
  if(o.t==='plane'){
   const b=boxMesh(o.w,Math.max(o.h,.2),o.dd,o.m);b.position.y=o.h/2;g.add(b);
  }else if(o.t==='ramp'){
-  const m=new THREE.Mesh(wedgeGeo(o.w,o.dd,o.h),DS);m.castShadow=m.receiveShadow=true;g.add(m);
+  const m=new THREE.Mesh(wedgeGeo(o.w,o.dd,o.h),dsm(o.m));m.castShadow=m.receiveShadow=true;g.add(m);
   const lip=new THREE.Mesh(new THREE.CylinderGeometry(.06,.06,o.w,8),mat('lip'));
   lip.rotation.z=Math.PI/2;lip.position.set(0,o.h,-o.dd/2);lip.castShadow=true;g.add(lip);
  }else if(o.t==='quarter'){
@@ -4025,7 +4644,7 @@ function buildInner(o){
   const N=18;
   for(let k=0;k<=N;k++){const ax=W*k/N;
    pts.push(new THREE.Vector2(fl+ax,-Math.sqrt(Math.max(.0004,W*W-ax*ax))))} // Wand bis Coping
-  const wall=new THREE.Mesh(new THREE.LatheGeometry(pts,48),DS);
+  const wall=new THREE.Mesh(new THREE.LatheGeometry(pts,48),dsm(o.m));
   wall.castShadow=wall.receiveShadow=true;bg.add(wall);
   const rim=new THREE.Mesh(new THREE.TorusGeometry(r,.1,10,48),mat('metall'));
   rim.rotation.x=Math.PI/2;rim.position.y=0;rim.castShadow=true;bg.add(rim);
@@ -4042,27 +4661,9 @@ function buildInner(o){
    post.position.set(o.w+o.w*Math.cos(a),o.h/2,o.w*Math.sin(a));post.castShadow=true;g.add(post);
   }}
  }else if(o.t==='halfpipe'){
-  const R=o.h,seg=20,P=[];
-  for(const side of [-1,1]){ // beide Wände: U-Profil von der Mitte (y=0) zum Coping (y=R)
-   for(let i=0;i<seg;i++){
-    const a0=i/seg*(Math.PI/2),a1=(i+1)/seg*(Math.PI/2);
-    const z0=side*R*Math.sin(a0),y0=R*(1-Math.cos(a0));
-    const z1=side*R*Math.sin(a1),y1=R*(1-Math.cos(a1));
-    const x0=-o.w/2,x1=o.w/2;
-    P.push(x0,y0,z0,x1,y0,z0,x1,y1,z1, x0,y0,z0,x1,y1,z1,x0,y1,z1);
-   }
-  }
-  const geo=new THREE.BufferGeometry();
-  geo.setAttribute('position',new THREE.Float32BufferAttribute(P,3));
-  geo.computeVertexNormals();
-  const shell=new THREE.Mesh(geo,DS);shell.castShadow=shell.receiveShadow=true;g.add(shell);
-  for(const side of [-1,1]){
-   const cop=new THREE.Mesh(new THREE.CylinderGeometry(.09,.09,o.w,10),mat('metall'));
-   cop.rotation.z=Math.PI/2;cop.position.set(0,R,side*R);cop.castShadow=true;g.add(cop);
-   const deck=boxMesh(1.2,.14,R+.6,o.m);deck.position.set(side*(R+.6),R+.07,0);g.add(deck); // Seitendeck
-  }
-  const end1=boxMesh(.1,R,R,o.m);end1.position.set(-o.w/2-.05,R/2,0);g.add(end1);
-  const end2=boxMesh(.1,R,R,o.m);end2.position.set(o.w/2+.05,R/2,0);g.add(end2);
+  g.add(halfpipeGroup(o));
+ }else if(o.t==='stairs'){
+  g.add(stairsGroup(o));
  }else if(o.t==='bank'){
   const seat=boxMesh(o.w,.09,o.dd,o.m);seat.position.y=o.h-.045;g.add(seat);
   const back=boxMesh(o.w,o.h*.6,.09,o.m);back.position.set(0,o.h*.6,-o.dd/2+.05);g.add(back);
@@ -4098,7 +4699,7 @@ function buildInner(o){
    {px:+o.w/4,pz:0,rot: Math.PI/2, w:dd, d:o.w/2}
   ];
   for(const df of defs){
-   const m=new THREE.Mesh(wedgeGeo(df.w,df.d,o.h),DS);
+   const m=new THREE.Mesh(wedgeGeo(df.w,df.d,o.h),dsm(o.m));
    m.rotation.y=df.rot;m.position.set(df.px,0,df.pz);
    m.castShadow=m.receiveShadow=true;g.add(m);
   }
@@ -4132,17 +4733,28 @@ function makeGroup(o,ghostMode){
  g.rotation.set(o.a*DG,o.r*DG,o.b*DG);
  g.add(buildInner(o));
  g.userData.pid=o.id;
- if(ghostMode)g.traverse(n=>{if(n.isMesh){n.material=new THREE.MeshStandardMaterial({color:0xf5c542,transparent:true,opacity:.4,depthWrite:false});n.castShadow=false}});
+ if(ghostMode){
+  const sink=(o.t==='bowl'||o.t==='pool');
+  g.traverse(n=>{if(n.isMesh){n.material=new THREE.MeshStandardMaterial({color:0xf5c542,transparent:true,opacity:sink?.55:.4,depthWrite:false,depthTest:!sink,side:THREE.DoubleSide});n.castShadow=false;if(sink)n.renderOrder=15}});
+  if(o.t==='bowl'){ // gelber Ring auf Bodenniveau: zeigt Position + Loch-Umriss, auch wenn der Boden darüber liegt
+   const r=o.w,sz=(o.dd&&o.dd>0)?o.dd/o.w:1,pts=[];
+   for(let i=0;i<=72;i++){const a=i/72*Math.PI*2;pts.push(new THREE.Vector3(r*Math.cos(a),.08,r*sz*Math.sin(a)))}
+   const ring=new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:0xf5c542,depthTest:false}));
+   ring.renderOrder=20;g.add(ring);
+  }
+ }
  return g;
 }
 function rebuildObj(id){
  const o=map.objs.find(q=>q.id===id);if(!o)return;
  if(meshes[id]){objRoot.remove(meshes[id]);disposeGroup(meshes[id]);delete meshes[id];}
  const g=makeGroup(o,false);meshes[id]=g;objRoot.add(g);
- if(o.t==='bowl')buildGround(); // Bodenloch aktualisieren
+ if(o.t==='bowl'||o.t==='pool')buildGround(); // Bodenloch aktualisieren
  if(selId===id)refreshHelper();
 }
-function disposeGroup(g){g.traverse(n=>{if(n.isMesh){if(n.geometry)n.geometry.dispose();if(n.material&&n.material.dispose&&n.material!==DS&&!Object.values(matCache).includes(n.material))n.material.dispose()}})}
+function disposeGroup(g){g.traverse(n=>{if(n.isMesh&&!n.userData.shared){if(n.geometry)n.geometry.dispose();if(n.material&&n.material.dispose&&n.material!==DS&&!Object.values(matCache).includes(n.material)&&!Object.values(DSMATS).includes(n.material))n.material.dispose()}})}
+/* geteilte Materialien/Geometrien (Kenney-Kacheln aus dem Spiel) markieren: sie leben
+   im Spiel-Script weiter und dürfen beim Objekt-Löschen nicht entsorgt werden. */
 function rebuildAll(){
  buildGround();
  while(objRoot.children.length){const c=objRoot.children[0];objRoot.remove(c);disposeGroup(c)}
@@ -4158,6 +4770,16 @@ function refreshHelper(){
 }
 
 /* ---------- Grundfläche ---------- */
+/* Beim Platzieren von Bowl/Pool verdeckte der Boden die (versenkte) Vorschau:
+   Boden wird dann halbdurchsichtig, die Geister-Bowl zeichnet immer obenauf + Ring auf Bodenniveau. */
+function applyGroundGhost(){
+ if(!groundMesh||!map)return;
+ const on=(placeType==='bowl'||placeType==='pool');
+ if(on){
+  if(!groundMesh.userData.gm){const m=(window.SKT&&SKT.online&&SKT.has(map.ground.m))?SKT.mat(map.ground.m):mat(map.ground.m).clone();m.transparent=true;m.opacity=.28;m.depthWrite=false;groundMesh.userData.gm=m}
+  groundMesh.material=groundMesh.userData.gm;
+ }else groundMesh.material=mat(map.ground.m);
+}
 function buildGround(){
  if(groundMesh){scene.remove(groundMesh);groundMesh.geometry.dispose();groundMesh=null}
  if(gridLines){scene.remove(gridLines);gridLines.geometry.dispose();gridLines=null}
@@ -4166,15 +4788,33 @@ function buildGround(){
  // Boden als Fläche mit echten Öffnungen für versenkte Bowls
  const shape=new THREE.Shape();
  shape.moveTo(-w/2,-d/2);shape.lineTo(w/2,-d/2);shape.lineTo(w/2,d/2);shape.lineTo(-w/2,d/2);shape.closePath();
- for(const o of map.objs)if(o.t==='bowl'){
-  const sz=(o.dd&&o.dd>0)?o.dd/o.w:1;
-  const hp=new THREE.Path();
-  hp.absellipse(o.x,-o.z,Math.max(.3,o.w-.05),Math.max(.3,o.w-.05)*sz,0,Math.PI*2,true,o.r*DG);
-  shape.holes.push(hp);
+ for(const o of map.objs){
+  if(o.t==='bowl'){
+   const sz=(o.dd&&o.dd>0)?o.dd/o.w:1;
+   const hp=new THREE.Path();
+   hp.absellipse(o.x,-o.z,Math.max(.3,o.w-.05),Math.max(.3,o.w-.05)*sz,0,Math.PI*2,true,o.r*DG);
+   shape.holes.push(hp);
+  }else if(o.t==='pool'){ // gezogenes Becken: gedrehte rechteckige Öffnung (90°-Raster, wie im Spiel ausgerichtet)
+   const w=Math.max(8,Math.round(o.w/4)*4),dd=Math.max(8,Math.round(o.dd/4)*4);
+   const pq=Math.round(o.r/90)*90;
+   const cc=Math.cos(pq*DG),ss=Math.sin(pq*DG);
+   const par=(Math.round(pq/90)%2+2)%2===1;
+   const sw=par?dd:w,sd=par?w:dd;
+   const x1=Math.round((o.x+sw/2-2)/4)*4+2,z1=Math.round((o.z+sd/2-2)/4)*4+2;
+   const px=x1-sw/2,pz=z1-sd/2;
+   const P=new THREE.Path();
+   const pts=[[-w/2,-dd/2],[w/2,-dd/2],[w/2,dd/2],[-w/2,dd/2]];
+   pts.forEach((p,i)=>{
+    const wx=px+p[0]*cc+p[1]*ss,wz=pz-p[0]*ss+p[1]*cc;
+    if(i===0)P.moveTo(wx,-wz);else P.lineTo(wx,-wz);
+   });
+   P.closePath();shape.holes.push(P);
+  }
  }
  groundMesh=new THREE.Mesh(new THREE.ShapeGeometry(shape),mat(map.ground.m));
  groundMesh.rotation.x=-Math.PI/2;groundMesh.receiveShadow=true;
  scene.add(groundMesh);
+ applyGroundGhost();
  const step=4,P=[];
  for(let x=-w/2;x<=w/2+.001;x+=step)P.push(x,0.02,-d/2,x,0.02,d/2);
  for(let z=-d/2;z<=d/2+.001;z+=step)P.push(-w/2,0.02,z,w/2,0.02,z);
@@ -4192,7 +4832,7 @@ function buildGround(){
  sun.shadow.camera.top=S;sun.shadow.camera.bottom=-S;
  sun.shadow.camera.far=400;
  sun.shadow.camera.updateProjectionMatrix();
- $('gw').value=w;$('gd').value=d;$('gm').value=map.ground.m;$('mname').value=map.name||'';
+ $('gw').value=w;$('gd').value=d;$('gm').value=map.ground.m;$('bg').value=map.ground.bg||'none';applyBg();$('mname').value=map.name||'';
 }
 
 /* ---------- Serialisierung ---------- */
@@ -4205,7 +4845,7 @@ function serialize(){
 function deserialize(str){
  const raw=JSON.parse(str);
  if(!raw||raw.v!==1||!raw.g||!Array.isArray(raw.o))throw new Error('Format');
- map={name:(typeof raw.n==='string'?raw.n:'').slice(0,32),ground:{w:clamp(+raw.g.w||120,20,300),d:clamp(+raw.g.d||90,20,300),m:MATS[raw.g.m]?raw.g.m:'beton'},objs:[]};
+ map={name:(typeof raw.n==='string'?raw.n:'').slice(0,32),ground:{w:clamp(+raw.g.w||120,20,300),d:clamp(+raw.g.d||90,20,300),m:MATS[raw.g.m]?raw.g.m:'beton',bg:(window.SKT&&SKT.BG[raw.g.bg])?raw.g.bg:(raw.g.bg===undefined?'park':'none')},objs:[]};
  nextId=1;
  for(const r of raw.o){
   const d=defaultsFor(r.t&&TYPES[r.t]?r.t:'box');
@@ -4269,7 +4909,7 @@ function demoMap(){
   ['quarter',-46,-30,90],['funbox',0,-20,0],['rail',0,4,0],['ledge',24,-12,90],
   ['manualpad',0,18,0],['ramp',-12,12,180],['ramp',12,12,0],['bowl',-30,28,0],['plane',36,20,0]
  ];
- map={name:'',ground:{w:120,d:90,m:'beton'},objs:[]};nextId=1;
+ map={name:'',ground:{w:120,d:90,m:'beton',bg:'park'},objs:[]};nextId=1;
  for(const [t,x,z,r] of items){
   const o=Object.assign(defaultsFor(t),{id:nextId++,x,z,r});
   if(t==='plane'){o.y=1.2;o.a=8}
@@ -4292,21 +4932,34 @@ function undo(){
 
 /* ---------- UI: Palette ---------- */
 const palette=$('palette');
-for(const t in TYPES){
- const b=document.createElement('button');
- b.textContent=TYPES[t].n;b.dataset.t=t;
- b.addEventListener('click',()=>{
-  if(placeType===t){exitPlace();return}
-  exitPlace();
-  placeType=t;b.classList.add('active');
-  const o=Object.assign(defaultsFor(t),{id:0});
-  ghost=makeGroup(o,true);scene.add(ghost);ghost.visible=false;
-  $('stMode').textContent='Platzieren: '+TYPES[t].n+' (ESC beendet)';
- });
- palette.appendChild(b);
+const PALGROUPS=[
+ ['Basis',['plane','ramp','quarter','funbox','ledge','box','manualpad','rail','railcurve','halfpipe','stairs','bank','zaun','picknick','pyramide']],
+ ['Mini Park / Fun XXL (Kacheln)',['kramp','ksmooth','khalf','khalflow','ksteps','kbox','kboxgrind','kmid','kend','kdeck','kbowlside','kbowlcorner','kbowldeck','krail','krailhigh','krailslope','krailcurve','kbench','kpallet','kplank','kfence']],
+ ['Requisiten',['tree','pillar','lampe','muell','planter']],
+ ['Bowl & Pool',['bowl','pool']]
+];
+for(const [title,list] of PALGROUPS){
+ const h=document.createElement('h3');h.textContent=title;palette.appendChild(h);
+ for(const t of list){
+  if(!TYPES[t])continue;
+  const b=document.createElement('button');
+  b.textContent=TYPES[t].n;b.dataset.t=t;
+  b.addEventListener('click',()=>{
+   if(placeType===t){exitPlace();return}
+   exitPlace();
+   placeType=t;b.classList.add('active');applyGroundGhost();
+   const o=Object.assign(defaultsFor(t),{id:0});
+   if(t!=='pool'){ // Pool wird aufgezogen (gelbe Vorschau), kein Standard-Geisterobjekt
+    ghost=makeGroup(o,true);scene.add(ghost);ghost.visible=false;
+    $('stMode').textContent='Platzieren: '+TYPES[t].n+' (ESC beendet)';
+   }else $('stMode').textContent='Pool/Bowl: ziehen = Rechteck (min. 8x8 m), tippen = 12x12 m';
+  });
+  palette.appendChild(b);
+ }
 }
 function exitPlace(){
- placeType=null;
+ clearDraw();
+ placeType=null;applyGroundGhost();
  if(ghost){scene.remove(ghost);disposeGroup(ghost);ghost=null}
  palette.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
  $('stMode').textContent='';
@@ -4317,13 +4970,15 @@ const PROWS=[['x','X (m)',-1e3,1e3,.5],['z','Z (m)',-1e3,1e3,.5],['y','Höhe Y (
  ['r','Rotation (°)',-360,360,15],['w','Breite/Länge (m)',.2,300,.5],['dd','Tiefe (m)',0,300,.5],
  ['h','Objekthöhe (m)',.1,60,.1],['a','Schräge X (°)',-85,85,1],['b','Schräge Z (°)',-85,85,1]];
 const pRows=$('pRows');
+const prowEls={}; // key -> Zeilen-Element: Sichtbarkeit hängt vom Objekttyp ab
 for(const [key,lbl,mn,mx,st] of PROWS){
  const row=document.createElement('div');row.className='row';
  const lab=document.createElement('label');lab.textContent=lbl;
  const inp=document.createElement('input');inp.type='number';inp.min=mn;inp.max=mx;inp.step=st;inp.dataset.k=key;
  inp.addEventListener('focus',()=>pushHistory());
- inp.addEventListener('input',()=>{applyProp(inp)});
+ inp.addEventListener('change',()=>{applyProp(inp)}); // nach der Eingabe: Raster korrigieren, nicht während des Tippens
  row.appendChild(lab);row.appendChild(inp);pRows.appendChild(row);
+ prowEls[key]=row;
 }
 { // Material + Pfosten
  const row=document.createElement('div');row.className='row';
@@ -4334,19 +4989,40 @@ for(const [key,lbl,mn,mx,st] of PROWS){
  sel.addEventListener('focus',()=>pushHistory());
  sel.addEventListener('change',()=>{applyProp(sel)});
  row.appendChild(lab);row.appendChild(sel);pRows.appendChild(row);
+ prowEls.m=row;
  const row2=document.createElement('div');row2.className='row';
- const lab2=document.createElement('label');lab2.textContent='Pfosten (Rail)';
+ const lab2=document.createElement('label');lab2.textContent='Pfosten/Wand/Handlauf';
  const chk=document.createElement('input');chk.type='checkbox';chk.dataset.k='p';
  chk.addEventListener('change',()=>{pushHistory();applyProp(chk)});
  row2.appendChild(lab2);row2.appendChild(chk);pRows.appendChild(row2);
+ prowEls.p=row2;
+}
+function propVisible(o,k){ // je Objekttyp nur die relevanten Felder zeigen
+ const ty=TYPES[o.t]||null;
+ if(o.t==='stairs')return ['x','z','y','r','w','dd','h','m','p'].includes(k);
+ if(o.t==='halfpipe')return ['x','z','r','w','dd','h','m'].includes(k);
+ if(ty&&ty.k)return k==='x'||k==='z'||k==='r'||(k==='p'&&!!ty.pw); // Kacheln: Position, 90°-Drehung, optional Wand
+ if(o.t==='pool')return ['x','z','w','dd','r','m'].includes(k);
+ if(o.t==='lampe')return ['x','z','h','m'].includes(k);
+ if(o.t==='muell')return ['x','z','w','h','m'].includes(k);
+ if(o.t==='planter')return ['x','z','w','dd','h','m'].includes(k);
+ return true;
 }
 function applyProp(inp){
  const o=map.objs.find(q=>q.id===selId);if(!o)return;
- const k=inp.dataset.k;
+ const k=inp.dataset.k,ty=TYPES[o.t]||null;
  if(k==='m')o.m=inp.value;
  else if(k==='p')o.p=inp.checked?1:0;
- else o[k]=parseFloat(inp.value)||0;
- if(o.dd<0)o.dd=0;
+ else{
+  let v=parseFloat(inp.value)||0;
+  if(k==='r'&&((ty&&ty.k)||o.t==='pool')){v=Math.round(v/90)*90;inp.value=v}         // Kacheln & Pool: 90°-Raster
+  if((k==='w'||k==='dd')&&o.t==='pool'){v=Math.max(8,Math.round(v/4)*4);inp.value=v} // Pool: 4-m-Raster
+  o[k]=v;
+  if(ty&&ty.k){o.w=4;o.dd=4;o.h=ty.h} // Kachelmaße fix: eine 4x4-m-Kachel
+  if(o.dd<0)o.dd=0;
+  if(o.t==='pool')alignPool(o); // Becken außen aufs 4-m-Kachelraster halten
+  updatePropsInputsOnly();
+ }
  rebuildObj(selId);save();
 }
 function updateProps(){
@@ -4357,6 +5033,8 @@ function updateProps(){
  $('pTitle').textContent=(TYPES[o.t]||TYPES.box).lbl;
  pRows.querySelectorAll('input,select').forEach(inp=>{
   const k=inp.dataset.k;
+  const row=prowEls[k];
+  if(row)row.style.display=propVisible(o,k)?'flex':'none';
   if(inp.type==='checkbox')inp.checked=!!o[k];
   else if(inp.tagName==='SELECT')inp.value=o[k];
   else inp.value=o[k];
@@ -4401,6 +5079,15 @@ function renderLib(){
 $('gw').addEventListener('change',()=>{pushHistory();map.ground.w=clamp(+$('gw').value||120,20,300);buildGround();save()});
 $('gd').addEventListener('change',()=>{pushHistory();map.ground.d=clamp(+$('gd').value||90,20,300);buildGround();save()});
 $('gm').innerHTML=Object.keys(MATS).map(k=>'<option value="'+k+'">'+MATS[k].n+'</option>').join('');
+try{const tb=$('toolbar'),pl=$('palette');new ResizeObserver(()=>{if(tb.offsetHeight)pl.style.top=(tb.offsetHeight+18)+'px';if(tb.offsetHeight)pl.style.maxHeight='calc(100vh - '+(tb.offsetHeight+60)+'px)'}).observe(tb)}catch(e){}
+function applyBg(){
+ const b=(map&&map.ground.bg)||'none';
+ if(window.SKT)SKT.clearBg(scene);
+ scene.background=new THREE.Color(0x191d21);
+ if(window.SKT&&SKT.BG[b]&&b!=='none')SKT.bg(b,scene);
+}
+$('bg').innerHTML=Object.keys(window.SKT?SKT.BG:{none:{n:'Einfarbig'}}).map(k=>'<option value="'+k+'">'+(SKT.BG[k].n)+'</option>').join('');
+$('bg').addEventListener('change',()=>{pushHistory();map.ground.bg=$('bg').value;applyBg();save()});
 $('gm').addEventListener('change',()=>{pushHistory();map.ground.m=$('gm').value;buildGround();save()});
 $('snap').addEventListener('change',()=>{snap=+$('snap').value});
 $('mname').addEventListener('change',()=>{map.name=$('mname').value.trim().slice(0,32);save()});
@@ -4413,7 +5100,7 @@ $('bSave').addEventListener('click',()=>{
 $('bLib').addEventListener('click',()=>{renderLib();$('lib').style.display='flex'});
 $('bNew').addEventListener('click',()=>{
  if(!confirm('Karte wirklich komplett löschen? (Vorher ggf. Export JSON)'))return;
- pushHistory();map={name:'',ground:{w:120,d:90,m:'beton'},objs:[]};nextId=1;selId=null;
+ pushHistory();map={name:'',ground:{w:120,d:90,m:'beton',bg:'park'},objs:[]};nextId=1;selId=null;
  buildGround();rebuildAll();save(true);
 });
 $('bExport').addEventListener('click',()=>{
@@ -4436,7 +5123,8 @@ $('bDel').addEventListener('click',delSel);
 function dupSel(){
  const o=map.objs.find(q=>q.id===selId);if(!o)return;
  pushHistory();
- const c=Object.assign({},o,{id:nextId++,x:o.x+2,z:o.z+2});
+ const c=Object.assign({},o,{id:nextId++,x:o.x+((o.t==='pool')?4:2),z:o.z+((o.t==='pool')?4:2)});
+ if(c.t==='pool')alignPool(c); // Duplikat im Kachelraster halten
  map.objs.push(c);selId=c.id;rebuildAll();save();
 }
 function delSel(){
@@ -4456,7 +5144,11 @@ addEventListener('keydown',e=>{
  else if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){e.preventDefault();save(true)}
  else if(e.key==='r'||e.key==='R'){
   const o=map.objs.find(q=>q.id===selId);if(!o)return;
-  pushHistory();o.r=(o.r+(e.key==='r'?15:-15)+360)%360;rebuildObj(selId);updateProps();save();
+  const ty=TYPES[o.t]||{};
+  const step=(ty.k||o.t==='pool')?90:(e.key==='r'?15:-15); // Kacheln & Pools: 90°-Raster
+  pushHistory();o.r=(o.r+step+360)%360;
+  if(o.t==='pool')alignPool(o);
+  rebuildObj(selId);updateProps();save();
  }
 });
 
@@ -4480,17 +5172,66 @@ function pickObj(e){
 function sn(v){return snap>0?Math.round(v/snap)*snap:v}
 view.addEventListener('contextmenu',e=>e.preventDefault());
 view.style.touchAction='none';
-/* ---------- Zeiger: Maus + Multi-Touch ----------
-   Ein-Finger-Tap platziert/wählt aus, Ein-Finger-Drag auf leerer Fläche dreht die
-   Kamera, Objekt-Drag verschiebt. Zwei Finger: Pinch-Zoom + Pan. Der Tap wird erst
-   nach einer Bewegungsschwelle (TAP_MOVE) als Tap gewertet, damit präzises Positionieren
-   mit dem Finger möglich ist, ohne versehentlich die Kamera zu drehen. */
+/* Zeiger: Maus + Multi-Touch; Tap erst nach TAP_MOVE-Schwelle, Drag auf Objekt schiebt, sonst Kamera, zwei Finger: Pinch-Zoom + Pan. */
 const ptrs=new Map();
 let pinchD=0,pinchX=0,pinchY=0,tap=null;
 const TAP_MOVE=9;
+const sn4=v=>Math.round(v/4)*4; // 4-m-Raster (Kenney-Kacheln, Pools)
+function alignPool(o){ // Becken außen aufs 4-m-Kachelraster legen — Physik ohne Höhenlücken
+ const w=Math.max(8,Math.round(o.w/4)*4),dd=Math.max(8,Math.round(o.dd/4)*4);
+ o.w=w;o.dd=dd;
+ const par=(Math.round(o.r/90)%2+2)%2===1; // 90°/270°: Achsen getauscht
+ const sw=par?dd:w,sd=par?w:dd;           // Ausdehnung in Weltachsen
+ const x1=Math.round((o.x+sw/2-2)/4)*4+2,z1=Math.round((o.z+sd/2-2)/4)*4+2;
+ o.x=x1-sw/2;o.z=z1-sd/2;
+}
+/* ---------- Pool/Bowl aufziehen: Rechteck per Drag, gelbe Vorschau ---------- */
+let drawStart=null,drawGhost=null;
+function makeDrawGhost(){
+ clearDraw();
+ drawGhost=new THREE.Mesh(new THREE.BoxGeometry(1,.4,1),
+  new THREE.MeshStandardMaterial({color:0xf5c542,transparent:true,opacity:.35,depthWrite:false}));
+ drawGhost.visible=false;drawGhost.renderOrder=2;scene.add(drawGhost);
+}
+function drawRect(g){ // Rechteck zwischen Startpunkt und Finger, 4-m-Raster, min. 8x8
+ const x0=Math.min(drawStart.x,g.x),x1=Math.max(drawStart.x,g.x);
+ const z0=Math.min(drawStart.z,g.z),z1=Math.max(drawStart.z,g.z);
+ return {x:Math.round((x0+x1)/2),z:Math.round((z0+z1)/2),
+  w:Math.max(8,sn4(x1-x0)),dd:Math.max(8,sn4(z1-z0))};
+}
+function updateDrawGhost(g){
+ if(!drawStart||!drawGhost)return;
+ const r=drawRect(g);
+ drawGhost.visible=true;
+ drawGhost.scale.set(r.w,1,r.dd);
+ drawGhost.position.set(r.x,.2,r.z);
+ $('stMode').textContent='Pool/Bowl: '+r.w+' x '+r.dd+' m — loslassen setzt das Becken';
+}
+function finishPool(e){ // Drag = gezogenes Rechteck (min. 8x8 m), Tap = 12x12 m
+ if(!drawStart)return;
+ const g=e?toGround(e):null;
+ let o;
+ if(g&&(Math.abs(g.x-drawStart.x)>4||Math.abs(g.z-drawStart.z)>4)){
+  const r=drawRect(g);
+  o=Object.assign(defaultsFor('pool'),{id:nextId++,x:r.x,z:r.z,w:r.w,dd:r.dd});
+ }else o=Object.assign(defaultsFor('pool'),{id:nextId++,x:sn(drawStart.x),z:sn(drawStart.z),w:12,dd:12});
+ alignPool(o); // Kachelraster erzwingen (Becken bleibt, wo es gezogen wurde, max. 2 m feingerastert)
+ pushHistory();
+ map.objs.push(o);selId=o.id;
+ const mg=makeGroup(o,false);meshes[o.id]=mg;objRoot.add(mg);
+ buildGround(); // rechteckige Bodenöffnung
+ refreshHelper();updateProps();save();
+ clearDraw();
+}
+function clearDraw(){
+ drawStart=null;
+ if(drawGhost){scene.remove(drawGhost);drawGhost.geometry.dispose();drawGhost.material.dispose();drawGhost=null}
+ if(placeType==='pool')$('stMode').textContent='Pool/Bowl: ziehen = Rechteck (min. 8x8 m), tippen = 12x12 m';
+}
 view.addEventListener('pointerdown',e=>{
  ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY});
  if(ptrs.size===2){ // zweiter Finger: Pinch-Zoom + Zwei-Finger-Pan, laufende Aktion abbrechen
+  if(mode==='drawpool')clearDraw();
   mode=null;tap=null;
   const a=[...ptrs.values()];
   pinchD=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y)||1;
@@ -4502,6 +5243,11 @@ view.addEventListener('pointerdown',e=>{
  if(e.button===1||(e.button===0&&e.shiftKey)){mode='pan';return}
  if(e.button!==0)return;
  const g=toGround(e);
+ if(placeType==='pool'){ // Pool/Bowl aufziehen: gelbe Vorschau folgt dem Finger
+  if(!g)return;
+  mode='drawpool';makeDrawGhost();drawStart={x:g.x,z:g.z};
+  return
+ }
  if(placeType){tap={x:e.clientX,y:e.clientY,moved:0};return} // Tap: platzieren · Drag: Kamera drehen
  const pid=pickObj(e);
  if(pid!==null){
@@ -4535,6 +5281,10 @@ addEventListener('pointermove',e=>{
   cam.target.addScaledVector(right,-dx*cam.dist*.0012).addScaledVector(up,dy*cam.dist*.0012);
   px=e.clientX;py=e.clientY;applyCam();return
  }
+ if(mode==='drawpool'){ // Pool/Bowl aufziehen: Vorschau folgt dem Finger
+  const g2=toGround(e);if(g2)updateDrawGhost(g2);
+  return
+ }
  if(tap){ // Schwelle noch nicht überschritten: Geisterobjekt folgt dem Finger
   tap.moved+=Math.hypot(dx,dy);
   if(tap.moved>TAP_MOVE){mode='orbit';tap=null} // ab hier: Kamera drehen
@@ -4545,6 +5295,8 @@ addEventListener('pointermove',e=>{
  if(mode==='drag'&&g&&selId!==null){
   const o=map.objs.find(q=>q.id===selId);if(!o)return;
   o.x=sn(g.x-dragOff.x);o.z=sn(g.z-dragOff.z);
+  if(TYPES[o.t]&&TYPES[o.t].k){o.x=sn4(o.x);o.z=sn4(o.z)} // Kacheln im 4-m-Raster halten
+  if(o.t==='pool')alignPool(o); // Becken im Kachelraster halten
   const mg=meshes[selId];if(mg)mg.position.set(o.x,o.y,o.z);
   if(selHelper)selHelper.update();
   updatePropsInputsOnly();save();
@@ -4553,15 +5305,21 @@ addEventListener('pointermove',e=>{
 });
 function endPtr(e){
  ptrs.delete(e.pointerId);
+ if(mode==='drawpool'){ // Pool/Bowl: loslassen setzt, Abbruch (pointercancel) verwirft
+  if(e.type==='pointerup')finishPool(e);else clearDraw();
+  tap=null;mode=null;if(ptrs.size<2)pinchD=0;return
+ }
  if(tap&&e.type==='pointerup'){
   const g=toGround(e);
   if(placeType){ // Tap: Objekt am getippten Punkt platzieren (Serie bleibt aktiv)
    if(g){
     pushHistory();
-    const o=Object.assign(defaultsFor(placeType),{id:nextId++,x:sn(g.x),z:sn(g.z)});
+    const o=Object.assign(defaultsFor(placeType),{id:nextId++,
+     x:(TYPES[placeType]&&TYPES[placeType].k)?sn4(g.x):sn(g.x), // Kacheln: 4-m-Raster
+     z:(TYPES[placeType]&&TYPES[placeType].k)?sn4(g.z):sn(g.z)});
     map.objs.push(o);selId=o.id;
     const mg=makeGroup(o,false);meshes[o.id]=mg;objRoot.add(mg);
-    if(o.t==='bowl')buildGround();
+    if(o.t==='bowl'||o.t==='pool')buildGround();
     refreshHelper();updateProps();save();
    }
   }else if(selId!==null){selId=null;refreshHelper();updateProps()}
@@ -4629,5 +5387,6 @@ if(EMBED){ // eingebettet in der Spiel-HTML: Overlay über window.MB steuern (St
 (function loop(){requestAnimationFrame(loop);if((!EMBED||open)&&renderer)renderer.render(scene,camera)})();
 })();
 </script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" nonce="ybCLprb1lL6sfFqAGkKU6A==" data-cf-beacon='{"version":"2024.11.0","token":"36b4216ae2dc4d5488c249161e71fe1e","spa":2}' crossorigin="anonymous"></script>
 </body>
 </html>
