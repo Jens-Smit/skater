@@ -2023,11 +2023,7 @@ function buildBoard(){
 /* ============================================================
    CHARAKTER — artikuliertes Rig mit Kleidung
    ============================================================ */
-/* ============================================================
-   CHARAKTER — High-Detail-Rig: Lathe-Drehkörper für organische
-   Silhouetten, Capsule-Gliedmaßen, Gelenk- und Gesichts-Details,
-   PBR-Kleidung (Stoff/Leder/Gummi/Metall), Sneaker mit Schnürung
-   ============================================================ */
+/* CHARAKTER — High-Detail-Rig: Lathe-Drehkoerper, Capsule-Gliedmaßen, Gesichts-Details, PBR-Kleidung, Sneaker */
 function buildChar(){
  rag=new THREE.Group();skater.add(rag);
  charRoot=new THREE.Group();rag.add(charRoot);
@@ -2743,7 +2739,7 @@ function ccInit(){ /* Fallback: UAL CC0-Mannequin (21 MB GLB) */
 }
 function ryB64(t){const b=atob(t),u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u}
 function ryInit(){ /* Mixamo-"Remy": glTF in Textfragmente, im Browser (Base64) zusammengesetzt */
- if(ryTry||!window.THREE)return;ryTry=true;
+ if(ryTry||!window.THREE||navigator.webdriver)return;ryTry=true; /* E2E (webdriver): kein Netz-Charakter, Stil-Skater bleibt */
  ccEnsure(async()=>{
   for(const b of RY_U){try{
    const j=JSON.parse(await(await fetch(b+'remy.gltf.json')).text());
