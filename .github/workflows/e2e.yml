@@ -46,6 +46,16 @@ jobs:
           echo "exit=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
           echo "=== Testlauf beendet: $(date -u '+%Y-%m-%d %H:%M:%S') UTC ==="
 
+      - name: Testfehler als Annotationen veroeffentlichen
+        if: always() && steps.tests.outputs.exit != '0'
+        run: |
+          n=0
+          while IFS= read -r line; do
+            [ $n -ge 10 ] && break
+            echo "::error::${line:0:600}"
+            n=$((n+1))
+          done < <(grep -E '^\s*[0-9]+\)|Error:|expect\(|[0-9]+ (failed|flaky|passed)|Timed out' test-output.log | head -40 || true)
+
       - name: Test-Report und Screenshots als Artefakt hochladen
         if: always()
         uses: actions/upload-artifact@v4
