@@ -10,49 +10,12 @@ Skateboard-Spiel (three.js) als eigenstaendige HTML-Datei mit Neigungsphysik, Tr
 
 Fahrtrichtung und Blickrichtung sind entkoppelt: Nach einem 180er (fakie/switch) dreht sich die Figur weich um weitere 180 Grad zur Fahrtrichtung (`switchYaw`-Daempfung), waehrend das Board weiter rueckwaerts rollt.
 
-## Trick-Liste (Layout wie Tony Hawk's Pro Skater)
-
-Richtung heisst: die Taste(n) beim Ausloesen des Tricks halten (WASD/Steuerring, 8 Sektoren inkl. Diagonalen).
-
-Ollie und Sprung-Tricks:
-
-- `SPACE` OLLIE
-- `W + SPACE` NOLLIE (Absprung ueber die Nose, etwas weniger Pop)
-- `W, W + SPACE` FASTPLANT (Doppel-Tipp W, Abstossen mit dem vorderen Fuss, deutlich hoehere Luft)
-- `A/D` in der Luft halten: Ollie-Rotation 180/360/540/720/900 Grad (180 Grad = Fakie-Landung, die Figur dreht weich zur Fahrtrichtung)
-
-Flip-Tricks (`Q` in der Luft + Richtung):
-
-- `LINKS` Kickflip, `RECHTS` Heelflip (Board dreht um die Laengsachse)
-- `OBEN` Impossible (Board ueberschlaegt vertikal um den hinteren Fuss)
-- `UNTEN` 360 Shove-It; `UNTEN, UNTEN` Kickflip to Indy (Flip + sofortige Indy-Anziehung)
-- `UNTEN-LINKS` 360 Flip, `UNTEN-RECHTS` Front Foot Impossible
-- `OBEN-LINKS` / `OBEN-RECHTS`: Street-Skater bekommt HARDFLIP bzw. SEX CHANGE; aus Pipe oder Pool automatisch die Vert-Varianten FINGERFLIP bzw. VARIAL
-
-Shove-It-Tricks (`E` in der Luft + Richtung): Shove-It, Pop Shove-It, Fakie Shove-It, 360 Shove-It, 540 Shove-It.
-
-Grab-Tricks (`G` halten + Richtung; gehalten zaehlt Combo je Sekunde):
-
-- `OBEN` Japan Air, `UNTEN` Tailgrab, `RECHTS` Indy Nosebone, `LINKS` Stalefish
-- `OBEN-LINKS` Method, `OBEN-RECHTS` Rocket Air (Board steil nach oben, beide Haende an der Nose)
-- `UNTEN-LINKS` Madonna, `UNTEN-RECHTS` Benihana
-
-Jede Grab-Richtung hat eine eigene Board-Pose (Stellwinkel, Anziehung, seitlicher Versatz); die Figur spielt die Grab-Animation mit je nach Trick angepasstem Tempo.
-
-Grind- und Lip-Tricks (`SHIFT` tippen genuegt, der Grind laeuft bis zum Rail-Ende durch):
-
-- ohne Richtung 50-50 Grind; bei ~90-Grad-Anflug aufs Rail automatisch BOARDSLIDE (im Grind nochmal `SHIFT` = Wechsel)
-- `W + SHIFT` Nosegrind, `S + SHIFT` 5-0 Grind
-- Diagonal + `SHIFT`: `OBEN-LINKS/OBEN-RECHTS` CROOKED GRIND, `UNTEN-LINKS/UNTEN-RECHTS` SMITH GRIND (hintere Achse, Nose haengt schraeg)
-- HANDPLANT: in der Vert-Luft (Pipe/Pool) `W + SHIFT` halten, kurzer Handstand am Coping, danach Drop-in
-- WALLRIDE: `SHIFT` halten und im Sprung schraeg gegen eine hohe Wand fahren (Springt an die Wand und gleitet entlang)
-
-Die Grind-Pose des Charakters passt sich dem Typ an: Nosegrind und Crooked laufen auf dem vorderen Bein (Nose-Manual-Pose), 5-0 und Smith auf dem hinteren.
-
 ## Dateien
 
 - `pro-skater-99.html`: das vollstaendige Spiel (Skatepark, Physik, Tricks, Map Builder im Startmenue)
 - `mapbuilder.html`: eigenstaendige Version des Map Builders (der aktuellste Builder ist in pro-skater-99.html eingebettet)
+- `anim-viewer.html`: eigenstaendige Ansicht aller Trick-Clips (Raw-URL oeffnen, Knopf je Clip, Laufwerk/Tempo/Kamera)
+- `tools/anims/`: Autoren-Pipeline fuer die Trick-Animationen (Posen autorieren, glTF schreiben, Renders pruefen; siehe Abschnitt unten)
 - `assets/remy/`: Spielfigur "Remy" als reine Textfragmente (glTF-JSON + Base64-Bloecke), im Spiel zusammengesetzt
 - `tests/`, `playwright.config.js`, `package.json`: Playwright-E2E-Tests
 - `.github/workflows/e2e.yml`: GitHub-Actions-Workflow
