@@ -721,7 +721,7 @@ let CSPAWN=null;const CUSTOMMAPS={};  // Custom-Karten: Spawn-Punkt + gecachte B
 const MINI={on:false,cells:{}};   // Kachel-Park (Kenney): Zellen-LUTs
 const GLBH={on:false,x0:0,z0:0,s:1,nx:2,nz:2,h:null}; // GLB-Parks: Kollisions-Hoehenfeld (je Karte aus GLBDEFS)
 let GLBGRP=null;const GLBC={};      // geladene GLB-Szenen je Karte (ueberleben den Map-Wechsel)
-const GBU=['https://cdn.jsdelivr.net/gh/Jens-Smit/skater@main/','https://raw.githubusercontent.com/Jens-Smit/skater/main/','https://raw.githack.com/Jens-Smit/skater/main/'];
+const GBU=['https://raw.githubusercontent.com/Jens-Smit/skater/main/','https://cdn.jsdelivr.net/gh/Jens-Smit/skater@main/','https://raw.githack.com/Jens-Smit/skater/main/']; /* raw zuerst: jsdelivr-Origin-Cache haengt zeitweise hinter main her, Buffer-Guard faengt Restrisiko */
 /* GLBDEFS je Karte: f=GLB, p=Position, sc=Scale, fd=[x0,z0,s,nx,nz,y0,y1,deck] (Hoehenfeld, Deck->Welt-0), b=uint8 delta+deflate+base64, we=Welt-Halbmasse, ww=Wandmasse, ha=HALL, fo=Nebel, li=Licht, zr=Zone-Rechteck, zn=Zonenname, sp=Spawn, wh=Wandhoehe, u=GBU-CDN-Indices, st=Ladezustand (0/1/2) */
 const GLBDEFS={
 };
