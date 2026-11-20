@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Remy Trick-Animationen – Ansicht</title>
+<style>
+:root{color-scheme:dark}
+html,body{margin:0;height:100%;overflow:hidden;background:#101820;color:#fff;font-family:Arial,Helvetica,sans-serif}
+#view{position:fixed;inset:0}
+#ui{position:fixed;top:10px;left:10px;max-width:290px;background:#111d28ee;border:1px solid #2c4257;border-radius:10px;padding:12px;font-size:13px;z-index:5}
+h1{font-size:15px;margin:0 0 4px;color:#ffd34e}
+#stat{font-size:11px;color:#9fb3c1;margin-bottom:8px}
+.clip{display:block;width:100%;margin:2px 0;padding:6px 8px;border:0;border-radius:6px;background:#263b4b;color:#fff;font-size:12px;cursor:pointer;text-align:left}
+.clip.on{background:#1b986c}
+.row{display:flex;gap:6px;margin-top:6px}
+button.vw{flex:1;padding:6px;border:0;border-radius:6px;background:#2a323c;color:#fff;font-size:11px;cursor:pointer}
+button.vw.on{background:#315a7d}
+label{font-size:11px;color:#9fb3c1;display:block;margin-top:8px}
+input[type=range]{width:100%}
+#err{position:fixed;bottom:10px;left:10px;right:10px;background:#4a1a1a;color:#ffd7d7;padding:8px;border-radius:8px;font-size:12px;display:none;z-index:6}
+</style>
+</head>
+<body>
+<div id="view"></div>
+<div id="ui">
+ <h1>Remy Trick-Animationen</h1>
+ <div id="stat">lade assets/remy/remy.gltf.json …</div>
+ <label>Kamera</label>
+ <div class="row"><button class="vw on" data-cam="iso">Iso</button><button class="vw" data-cam="side">Seite</button><button class="vw" data-cam="back">Hinten</button><button class="vw" data-cam="orbit">Orbit</button></div>
+ <label>Tempo <span id="tsw">1.0</span></label>
+ <input type="range" id="ts" min="0.1" max="2" step="0.05" value="1">
+ <label>Beleuchtungs-Drehung</label>
+ <input type="range" id="lp" min="0" max="6.28" step="0.05" value="0.8">
+ <div class="row"><button class="vw" id="pause">Pause</button><button class="vw" id="pause2">Play</button></div>
+</div>
+<div id="err"></div>
+<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r147/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r147/examples/js/loaders/GLTFLoader.js"></script>
+<script>
+/* ============================================================
+   Remy Trick-Animations-Ansicht
+   Laedt assets/remy/remy.gltf.json (inkl. Buffer f0..f7.txt als Base64)
+   direkt aus dem Repository und spielt alle Clips zur Kontrolle ab.
+
+   Einen NEUEN Clip ansehen:
+   1. Pose-Daten mit tools/anims/author_full2.py autorieren (frames2.pkl)
+   2. tools/anims/encode2.py ausfuehren -> schreibt assets/remy/remy.gltf.json + f7.txt
+   3. pushen, diese Seite neu laden: der Clip erscheint automatisch als Schaltflaeche.
+   Details: README.md, Abschnitt "Animationen & Tricks erweitern".
+   ============================================================ */
+const GBU=['https://raw.githubusercontent.com/Jens-Smit/skater/main/','https://cdn.jsdelivr.net/gh/Jens-Smit/skater@main/','https://raw.githack.com/Jens-Smit/skater/main/'];
+const RY_U=GBU.map(u=>u+'assets/remy/');
+const $=id=>document.getElementById(id);
+const stat=$('stat'),err=$('err');
+function fail(m){err.style.display='block';err.textContent='Fehler: '+m}
+function ryB64(t){const b=atob(t),u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u}
+let renderer,scene,camera,mixer,root,acts={},cur=null,camMode='iso',rot=0,light;
+init();
+async function init(){
+ if(!window.THREE||!window.THREE.GLTFLoader){ // GLTFLoader-CDN fehlgeschlagen: unpkg-Fallback
+   await new Promise(r=>{const s=document.createElement('script');s.src='https://unpkg.com/three@0.147.0/examples/js/loaders/GLTFLoader.js';s.onload=r;s.onerror=r;document.head.appendChild(s)});
+ }
+ if(!window.THREE||!window.THREE.GLTFLoader){fail('three.js / GLTFLoader (CDN) nicht verfuegbar');return}
+ renderer=new THREE.WebGLRenderer({antialias:true});
+ renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+ renderer.shadowMap.enabled=true;$('view').appendChild(renderer.domElement);
+ scene=new THREE.Scene();scene.background=new THREE.Color('#101820');
+ scene.add(new THREE.HemisphereLight(0xdfeaf2,0x28323c,0.85));
+ light=new THREE.DirectionalLight(0xffffff,1.1);light.castShadow=true;
+ light.shadow.camera.left=-2.5;light.shadow.camera.right=2.5;light.shadow.camera.top=2.5;light.shadow.camera.bottom=-2.5;
+ scene.add(light);
+ const grid=new THREE.GridHelper(6,24,0x2c4257,0x1c2936);grid.position.y=0.001;scene.add(grid);
+ const plane=new THREE.Mesh(new THREE.PlaneGeometry(8,8),new THREE.ShadowMaterial({opacity:.35}));
+ plane.rotation.x=-Math.PI/2;plane.receiveShadow=true;scene.add(plane);
+ camera=new THREE.PerspectiveCamera(38,innerWidth/innerHeight,.05,50);
+ applyCam(0);
+ let loaded=false;
+ for(const b of RY_U){try{
+   const j=JSON.parse(await(await fetch(b+'remy.gltf.json')).text());
+   for(const bf of j.buffers){const bu=ryB64(await(await fetch(b+bf.uri)).text());if(bu.byteLength!==bf.byteLength)throw 0;bf.uri=URL.createObjectURL(new Blob([bu],{type:'application/octet-stream'}))}
+   await new Promise((res,rej)=>new THREE.GLTFLoader().parse(JSON.stringify(j),'',g=>{build(g);res()},rej));
+   loaded=true;break;
+ }catch(e){}}
+ if(!loaded){fail('remy.gltf.json ueber keine Quelle ladbar (Netz oder CDN-Cache)');return}
+ requestAnimationFrame(loop);
+}
+function build(g){
+ root=g.scene||g.scenes[0];scene.add(root);
+ root.traverse(o=>{if(o.isMesh){o.castShadow=true}});
+ $('stat').textContent='';
+ const bar=$('stat');
+ mixer=new THREE.AnimationMixer(root);
+ const list=$('ui');
+ for(const an of g.animations){ // Schaltflaeche je Clip (Name = Animation im glTF)
+   const btn=document.createElement('button');btn.className='clip';btn.textContent=an.name;
+   const ac=mixer.clipAction(an);
+   if(/^(jump|flip|shove|grab|grind|land|fall)$/.test(an.name)){ac.setLoop(THREE.LoopOnce);ac.clampWhenFinished=true}
+   ac.play();ac.timeScale=0; // alle pausiert starten
+   acts[an.name]={ac,btn};
+   btn.onclick=()=>select(an.name);
+   list.appendChild(btn);
+ }
+ select('ride');
+}
+function select(k){
+ if(cur){acts[cur].ac.fadeOut(.15)}
+ cur=k;const a=acts[k];
+ a.ac.reset().fadeIn(.15).play();a.ac.timeScale=parseFloat($('ts').value);
+ for(const n in acts)acts[n].btn.className='clip'+(n===k?' on':'');
+ $('stat').textContent='Clip: '+k;
+}
+$('ts').oninput=e=>{if(cur)acts[cur].ac.timeScale=parseFloat(e.target.value);$('tsw').textContent=(+e.target.value).toFixed(2)};
+$('pause').onclick=()=>{if(cur)acts[cur].ac.timeScale=0};
+$('pause2').onclick=()=>{if(cur)acts[cur].ac.timeScale=parseFloat($('ts').value)};
+$('lp').oninput=e=>{const a=parseFloat(e.target.value);light.position.set(Math.sin(a)*3,4,Math.cos(a)*3)};
+document.querySelectorAll('button.vw[data-cam]').forEach(b=>b.onclick=()=>{
+ document.querySelectorAll('button.vw[data-cam]').forEach(x=>x.className='vw');b.className='vw on';camMode=b.dataset.cam});
+addEventListener('resize',()=>{if(!renderer)return;renderer.setSize(innerWidth,innerHeight);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix()});
+function applyCam(dt){
+ if(!root){camera.position.set(2.4,1.7,3.2);camera.lookAt(0,1,0);return}
+ const c=root.position||{x:0,z:0},h=1.05;
+ if(camMode==='iso'){camera.position.set(c.x+2.2,h+1.5,c.z+2.9);camera.lookAt(c.x,h,c.z)}
+ else if(camMode==='side'){camera.position.set(c.x+3.6,h+.35,c.z);camera.lookAt(c.x,h,c.z)}
+ else if(camMode==='back'){camera.position.set(c.x,h+2.6,c.z+2.6);camera.lookAt(c.x,h,c.z)}
+ else{rot+=dt*.35;camera.position.set(c.x+Math.sin(rot)*3.4,h+.9,c.z+Math.cos(rot)*3.4);camera.lookAt(c.x,h,c.z)}
+}
+let last=0;
+function loop(t){
+ requestAnimationFrame(loop);
+ const dt=Math.min((t-last)/1000,.05);last=t;
+ if(mixer)mixer.update(dt);
+ applyCam(dt);
+ renderer.render(scene,camera);
+}
+</script>
+</body>
+</html>
