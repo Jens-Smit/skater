@@ -2725,6 +2725,9 @@ function updateTrickText(){
    GLB lazy per CDN (je 2 Fallbacks); offline bleibt der stilisierte Skater aktiv. ---- */
 let ccRoot=null,ccMix=null,ccAct={},ccCur='',ccInitOn=false,ccLI=0,ryTry=false,
     ryRoot=null,ryMix=null,ryAct={},ryCur='';
+const CC_LD=['https://cdn.jsdelivr.net/gh/mrdoob/three.js@r147/examples/js/loaders/GLTFLoader.js',
+ 'https://unpkg.com/three@0.147.0/examples/js/loaders/GLTFLoader.js']; /* GLTFLoader-CDNs, r147 passend zum Inline-three */
+const CC_GL=[];             /* CC0-Mannequin-Fallback ohne Asset: bei Remy-Fehler bleibt der stilisierte Skater aktiv */
 const RY_U=GBU.map(u=>u+'assets/remy/');
 function ccEnsure(cb){ /* GLTFLoader lazy per CDN (2 Fallbacks), dann cb() */
  if(window.THREE&&window.THREE.GLTFLoader)cb();
