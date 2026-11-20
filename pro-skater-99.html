@@ -2759,9 +2759,9 @@ function ryBuild(g){
   rag.add(ryRoot);                /* in rag: Sturz-Taumeln (Bail) wirkt mit */
   if(typeof charRoot!=='undefined')charRoot.visible=false;
   ryMix=new THREE.AnimationMixer(ryRoot);
-  for(const k of ['ride','ride2','jump','fall']){const c=g.animations&&g.animations.find(a=>a.name===k);
+  for(const k of ['ride','ride2','jump','fall','flip','shove','grab','grind','manual','nmanual','land']){const c=g.animations&&g.animations.find(a=>a.name===k);
    if(!c)continue;const ac=ryMix.clipAction(c);
-   if(k==='fall'){ac.setLoop(THREE.LoopOnce);ac.clampWhenFinished=true}
+   if(k==='fall'||k==='land'||k==='jump'||k==='flip'||k==='shove'){ac.setLoop(THREE.LoopOnce);ac.clampWhenFinished=true}
    ryAct[k]=ac}
   rySet('ride',1);ryMix.update(.4);
   if(typeof refreshCharClone==='function')try{refreshCharClone()}catch(e){}
@@ -2777,7 +2777,16 @@ function ryUpdate(dt){
  if(!ryMix){ccUpdate(dt);return}   /* ohne Remy: Mannequin-Logik als Fallback */
  let k='ride',ts=Math.max(.75,Math.min(Math.abs(fwd)/4,1.45));
  if(bail.on)k='fall';
- else if(air)k='jump';
+ else if(air){                      /* Trick-Clips: Flip > Shove > Grab > Sprung */
+  if(Math.abs(flipT-flipA)>.05)k='flip';
+  else if(Math.abs(spinT-spinA)>.05)k='shove';
+  else if(held.grab){k='grab';ts=.8}
+  else k='jump';
+ }else if(grind){k='grind';ts=1}
+ else if(manual!==0)k=manual>0?'nmanual':'manual';   /* Nose/Tail Manual */
+ else if(landT>.22)k='land';       /* Landung: Kompression */
+ else if(pushT>0)k='ride2';        /* Anschub */
+ else if(held.ollie){k='grind';ts=.55}  /* Ollie laden: Crouch */
  rySet(k,ts);ryMix.update(dt);
 }
 function ccBuild(g){
