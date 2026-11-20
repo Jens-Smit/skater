@@ -2747,7 +2747,7 @@ function ryInit(){ /* Mixamo-"Remy": glTF in Textfragmente, im Browser (Base64) 
  ccEnsure(async()=>{
   for(const b of RY_U){try{
    const j=JSON.parse(await(await fetch(b+'remy.gltf.json')).text());
-   for(const bf of j.buffers)bf.uri=URL.createObjectURL(new Blob([ryB64(await(await fetch(b+bf.uri)).text())],{type:'application/octet-stream'}));
+   for(const bf of j.buffers){const bu=ryB64(await(await fetch(b+bf.uri)).text());if(bu.byteLength!==bf.byteLength)throw 0;bf.uri=URL.createObjectURL(new Blob([bu],{type:'application/octet-stream'}))}
    for(const im of j.images)im.uri=URL.createObjectURL(new Blob([ryB64(await(await fetch(b+im.uri)).text())],{type:'image/png'}));
    new THREE.GLTFLoader().parse(JSON.stringify(j),'',g=>ryBuild(g),e=>{});
    return
