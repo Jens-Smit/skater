@@ -2724,7 +2724,7 @@ function updateTrickText(){
 /* ---------- Gemeinsame Visuals pro Frame ---------- */
 /* ---- CC0-CHARAKTER: Quaternius Universal Mannequin + UAL1-Clips (CC0). Loader und
    GLB lazy per CDN (je 2 Fallbacks); offline bleibt der stilisierte Skater aktiv. ---- */
-let ccRoot=null,ccMix=null,ccAct={},ccCur='',ccInitOn=false,ccLI=0,ryTry=false,
+let ccRoot=null,ccMix=null,ccAct={},ccCur='',ccInitOn=false,ccLI=0,ryTry=false,switchYaw=0,
     ryRoot=null,ryMix=null,ryAct={},ryCur='';
 const CC_LD=['https://cdn.jsdelivr.net/gh/mrdoob/three.js@r147/examples/js/loaders/GLTFLoader.js',
  'https://unpkg.com/three@0.147.0/examples/js/loaders/GLTFLoader.js']; /* GLTFLoader-CDNs, r147 passend zum Inline-three */
@@ -2779,6 +2779,9 @@ function rySet(k,ts){
 }
 function ryUpdate(dt){
  if(!ryMix){ccUpdate(dt);return}   /* ohne Remy: Mannequin-Logik als Fallback */
+ /* SWITCH/Fakie: Beim Rueckwaertsrollen (turnBack, z.B. nach Ollie 180) dreht die Figur weich um 180 Grad zur Fahrtrichtung (Board rollt rueckwaerts). */
+ switchYaw=damp(switchYaw,turnBack?Math.PI:0,8,dt);
+ if(ryRoot)ryRoot.rotation.y=-.3+switchYaw;
  let k='ride',ts=Math.max(.75,Math.min(Math.abs(fwd)/4,1.45));
  if(bail.on)k='fall';
  else if(air){                      /* Trick-Clips: Flip > Shove > Grab > Sprung */
@@ -2819,6 +2822,9 @@ function ccSet(k,ts){
 }
 function ccUpdate(dt){
  if(!ccMix)return;
+ /* SWITCH/Fakie: Beim Rueckwaertsrollen (turnBack, z.B. nach Ollie 180) dreht die Figur weich um 180 Grad zur Fahrtrichtung (Board rollt rueckwaerts). */
+ switchYaw=damp(switchYaw,turnBack?Math.PI:0,8,dt);
+ if(ccRoot)ccRoot.rotation.y=(Math.PI-.3)+switchYaw;
  let k='idle',ts=1;const s=Math.abs(fwd);
  if(bail.on)k='hit';
  else if(air)k='jump';
