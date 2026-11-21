@@ -9,7 +9,7 @@
 #hud{position:fixed;inset:0;pointer-events:none;padding:14px;display:none;text-shadow:2px 2px 3px #000}
 .row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.plate{background:#101820d9;border:1px solid #f5c542;border-radius:9px;padding:9px 13px;box-shadow:0 4px 16px #0006}.big{font-size:clamp(22px,4vw,34px);font-weight:900}.gold{color:#ffd34e}.cyan{color:#6de4ef}.muted{font-size:10px;letter-spacing:1.5px;color:#b8c6d1}.right{text-align:right}#trick{position:absolute;top:30%;left:50%;transform:translateX(-50%);font-size:clamp(20px,5vw,42px);font-weight:1000;color:#ffe46b;text-align:center;white-space:nowrap;text-shadow:3px 4px #111}#combo{font-size:16px;color:#fff}#help{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:#101820d9;padding:8px 12px;border-radius:7px;font-size:12px;white-space:nowrap}
 #pbtn{display:none;position:absolute;top:74px;right:14px;width:44px;height:44px;padding:0;border-radius:50%;pointer-events:auto;background:#152a3dcc;color:#fff;border:1px solid #ffffff99;box-shadow:none;font-size:15px}
-#menu,#pause{position:fixed;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;padding:18px;background:linear-gradient(120deg,#07111d99,#0c263999)}.card{max-width:460px;width:100%;max-height:100%;overflow:auto;padding:clamp(18px,4vw,40px);background:#111d28f2;border:2px solid #f5c542;border-radius:18px;box-shadow:0 24px 80px #000b;text-align:center}.eyebrow{letter-spacing:4px;font-weight:bold;color:#69dce8;font-size:12px}h1{font-size:clamp(30px,6vw,56px);line-height:.95;margin:15px 0;color:#ffd34e;font-style:italic;text-shadow:5px 5px #783d16}.desc{color:#d1dce4;line-height:1.55;font-size:13px}#charstat{font-size:11px;color:#9fb3c1;margin:6px 0 12px;min-height:14px}
+#menu,#pause{position:fixed;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;padding:18px;background:linear-gradient(120deg,#07111d99,#0c263999)}.card{max-width:460px;width:100%;max-height:100%;overflow:auto;padding:clamp(18px,4vw,40px);background:#111d28f2;border:2px solid #f5c542;border-radius:18px;box-shadow:0 24px 80px #000b;text-align:center}.eyebrow{letter-spacing:4px;font-weight:bold;color:#69dce8;font-size:12px}h1{font-size:clamp(30px,6vw,56px);line-height:.95;margin:15px 0;color:#ffd34e;font-style:italic;text-shadow:5px 5px #783d16}.desc{color:#d1dce4;line-height:1.55;font-size:13px}
 button{border:0;border-radius:8px;padding:14px 24px;background:#ffd34e;color:#15191d;font-size:16px;font-weight:900;cursor:pointer;box-shadow:0 5px #a66a18}button:active{transform:translateY(3px);box-shadow:0 2px #a66a18}.secondary{background:#263b4b;color:white;box-shadow:none;border:1px solid #6a8799;font-size:13px;padding:10px 16px}#pause{display:none;background:#07111dcc}
 #stats{margin:12px 0 18px;font-size:13px;color:#d1dce4;letter-spacing:1px;line-height:1.7}
 #mobile{display:none;position:fixed;z-index:4;left:0;right:0;bottom:0;padding:0 12px calc(12px + env(safe-area-inset-bottom));justify-content:space-between;align-items:flex-end;pointer-events:none}
@@ -26,12 +26,8 @@ body.touch #mobile{display:flex}body.touch #help{display:none}body.touch #pbtn{d
 .tcirc .b-ollie{bottom:0;left:74px;background:#1b986cee}
 .tcirc button:active{transform:scale(.94)}
 .chips{display:flex;gap:6px;flex-wrap:wrap;pointer-events:auto}
-#menu{padding:0;background:linear-gradient(160deg,#050d1766,#0a223633)}#menu .card{max-width:none;width:100%;height:100%;max-height:100%;border:0;border-radius:0;box-shadow:none;background:linear-gradient(160deg,#0a162455,#0e2c4222);display:flex;flex-direction:column;justify-content:center;overflow:auto}#menu .prevrow{flex:1 1 auto;align-items:stretch}#menu .pbox{flex:1 1 260px}#menu .pwrap{flex:1 1 auto;min-height:96px}
-.prevrow{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 14px;text-align:left}
-.pbox{flex:1 1 216px;min-width:200px;display:flex;flex-direction:column;gap:8px;background:#0b141de6;border:1px solid #2c4257;border-radius:12px;padding:10px}
+#menu{padding:0;background:linear-gradient(160deg,#050d1766,#0a223633)}#menu .card{max-width:none;width:100%;height:100%;max-height:100%;border:0;border-radius:0;box-shadow:none;background:linear-gradient(160deg,#0a162455,#0e2c4222);display:flex;flex-direction:column;justify-content:center;overflow:auto}
 .ptitle{font-size:10px;letter-spacing:2px;font-weight:900;color:#69dce8}
-.pwrap{height:138px;border-radius:8px;overflow:hidden;background:#07111d;border:1px solid #1d2f40}
-.pwrap canvas{width:100%;height:100%;display:block}
 .pdesc{font-size:11px;color:#9fb3c1;line-height:1.5;min-height:30px}
 .menubtns{display:flex;gap:8px;align-items:stretch}
 .menubtns #start{flex:1}
@@ -44,7 +40,7 @@ body.touch #mobile{display:flex}body.touch #help{display:none}body.touch #pbtn{d
 #balNeedle{position:absolute;top:2px;left:50%;width:10px;height:8px;margin-left:-5px;background:#37e5ff;border-radius:3px;box-shadow:0 0 6px #37e5ff}
 #rotate{display:none;position:fixed;inset:0;z-index:9;background:#07111df2;align-items:center;justify-content:center;flex-direction:column;gap:18px;text-align:center;padding:24px;letter-spacing:2px;font-weight:900;color:#ffd34e;font-size:14px}
 @media(orientation:portrait){body.touch #rotate{display:flex}}
-@media(max-height:480px){h1{font-size:34px;margin:6px 0}.card{padding:14px}.prevrow{margin:8px 0 10px;gap:8px}.pbox{min-width:170px;padding:8px;gap:6px}.pwrap{height:96px}.pdesc{min-height:0;line-height:1.3}.joy-ring{width:168px;height:168px}.joy-push{width:58px;height:58px;font-size:10px}.tcirc{width:184px;height:184px}.tcirc button{width:64px;height:64px;font-size:11px}.tcirc .b-flip{top:0;left:60px}.tcirc .b-grab{top:60px;left:0}.tcirc .b-grind{top:60px;right:0}.tcirc .b-ollie{bottom:0;left:60px}.plate{padding:5px 9px}.big{font-size:20px}#pbtn{top:60px}}
+@media(max-height:480px){h1{font-size:34px;margin:6px 0}.card{padding:14px}.pdesc{min-height:0;line-height:1.3}.joy-ring{width:168px;height:168px}.joy-push{width:58px;height:58px;font-size:10px}.tcirc{width:184px;height:184px}.tcirc button{width:64px;height:64px;font-size:11px}.tcirc .b-flip{top:0;left:60px}.tcirc .b-grab{top:60px;left:0}.tcirc .b-grind{top:60px;right:0}.tcirc .b-ollie{bottom:0;left:60px}.plate{padding:5px 9px}.big{font-size:20px}#pbtn{top:60px}}
 
 /* ---------- MAP BUILDER (Overlay im Spiel, vom Startmenü erreichbar) ---------- */
 #mbroot{position:fixed;inset:0;z-index:10;background:#14171a;color:#e6e9ec;user-select:none;font-family:system-ui,-apple-system,sans-serif;font-size:13px}
@@ -126,14 +122,9 @@ body.touch #mobile{display:flex}body.touch #help{display:none}body.touch #pbtn{d
 </div>
 <div id="rotate"><svg width="110" height="90" viewBox="0 0 24 24" fill="none" stroke="#ffd34e" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="10" width="11" height="6.5" rx="1.2"/><path d="M4.2 5.6a10 10 0 0 1 15.6 0"/><path d="M19.8 8.4V5.6H17"/></svg><div>BITTE GERÄT INS<br>QUERFORMAT DREHEN</div></div>
 <div id="menu"><div class="card"><div class="eyebrow">THE UNDERGROUND SKATE SERIES</div><h1>PRO SKATER<br>99</h1><div class="eyebrow">WAREHOUSE SESSIONS — PRO</div>
-<div class="prevrow">
-<div class="pbox"><div class="ptitle">MAP-VORSCHAU</div><div class="pwrap"><canvas id="mapprev"></canvas></div>
-<div class="chips" style="justify-content:flex-start;margin:0"><button class="chip on" data-map="tutorial">PRO PARK</button><button class="chip" data-map="warehouse">WAREHOUSE</button><button class="chip" data-map="school">SCHOOL</button><button class="chip" data-map="minipark">MINI PARK</button><button class="chip" data-map="funpark">FUN XXL</button></div>
-<div class="pdesc" id="mapdesc"></div></div>
-<div class="pbox"><div class="ptitle">CHARAKTER-VORSCHAU</div><div class="pwrap"><canvas id="charprev"></canvas></div>
-<button id="char" class="secondary" style="width:100%">OUTFIT</button>
-<div class="pdesc" id="charstat" style="min-height:0"></div></div>
-</div>
+<div class="ptitle" style="margin-top:18px">KARTE WÄHLEN</div>
+<div class="chips" style="justify-content:center;margin:10px 0 0"><button class="chip on" data-map="tutorial">PRO PARK</button><button class="chip" data-map="warehouse">WAREHOUSE</button><button class="chip" data-map="school">SCHOOL</button><button class="chip" data-map="minipark">MINI PARK</button><button class="chip" data-map="funpark">FUN XXL</button></div>
+<div class="pdesc" id="mapdesc" style="text-align:center;min-height:16px"></div>
 <div class="menubtns"><button id="start" disabled style="opacity:.65;flex:1">3D-GRAFIK WIRD GELADEN …</button><button id="settingsbtn" class="secondary">EINSTELLUNGEN</button><button id="builderbtn" class="secondary">MAP BUILDER</button></div>
 </div></div>
 <div id="settings" style="display:none"><div class="card"><div class="eyebrow">SESSION</div><h1 style="font-size:clamp(26px,5vw,44px)">EINSTELLUNGEN</h1>
@@ -473,7 +464,7 @@ const angDiff=(a,b)=>{let d=(b-a)%(Math.PI*2);if(d>Math.PI)d-=Math.PI*2;if(d<-Ma
 
 /* ---------- Zentraler Zustand ---------- */
 const pos=V(0,.17,24),vel=V(0,0,0);
-let scene,camera,renderer,clock,skater,lean,board,rag,charRoot,rig={},wheels=[],frontTruck=null,blob=null;
+let scene,camera,renderer,clock,skater,lean,board,rag,wheels=[],frontTruck=null,blob=null;
 /* ---------- Diagnose: Fehler und Zustand sichtbar machen (statt stillem schwarzen Bildschirm) ---------- */
 let diagF=0;
 (function(){
@@ -519,7 +510,7 @@ let bail={on:false,t:0,phase:'',vel:V(0,0,0),spinX:0,spinZ:0,seed:0};
 let boardFree=null;
 let tiltOn=isTouch,soundOn=true;
 // Manuelle Balance, Luft-Lean (W/S), Board-Lift bei Grabs, Charakter-Vorschau
-let manBal=0,manT=0,manRel=0,airLean=0,boardLift=0,charShow=0,wPrev=false,sPrev=false,wEdge=-9,sEdge=-9;
+let manBal=0,manT=0,manRel=0,airLean=0,boardLift=0,wPrev=false,sPrev=false,wEdge=-9,sEdge=-9;
 const keys={},press={},held={};
 /* 360°-Analog-Ring (Touch): Lage des Fingers im Steuerkreis, -1..1, plus 45°-Sektor */
 const joy={x:0,y:0,active:false,dir:'',pointerId:null};
@@ -1976,15 +1967,11 @@ function buildFunPark(){
  BOXES.push({x:76,z:0,w:1.4,d:104,h:7});
 }
 /* ============================================================
-   OUTFITS (prozedural, ohne externe Modelle)
+   EIN CHARAKTER: Remy (siehe ryInit). Die alten Outfit-Presets sind
+   entfernt; als Spielfigur existiert nur Remy mit einem Deck-Design.
    ============================================================ */
-const OUTFITS=[
- {label:'STREET — Teal Hoodie',jacket:0x18a6a1,jacket2:0x0d7d78,pants:0x263449,shoe:0xe8e8e8,skin:0xd69b72,hatType:'beanie',hat:0x11161c,deck:{a:'#0ea5e9',b:'#7c3aed',ink:'#ffffff',txt:'PRO 99'}},
- {label:'VERT PRO — Team Kit',jacket:0xe63946,jacket2:0xf1f3f4,pants:0x1d3557,shoe:0x22262c,skin:0xc98a5b,hatType:'helmet',hat:0xf1f3f4,deck:{a:'#f1f3f4',b:'#e63946',ink:'#1d3557',txt:'VERT'}},
- {label:'RETRO 99 — Windbreaker',jacket:0x7f1d1d,jacket2:0xfacc15,pants:0xeab308,shoe:0xf5f5f4,skin:0xd6a26e,hatType:'cap',hat:0x1e3a5f,deck:{a:'#f59e0b',b:'#db2777',ink:'#111111',txt:'99'}}
-];
-let outfitIdx=0,outfit=OUTFITS[0];
-const MATS={},PARTS={};
+const DECK={a:'#0ea5e9',b:'#7c3aed',ink:'#ffffff',txt:'PRO 99'};
+const MATS={};
 
 /* ============================================================
    SKATEBOARD — echtes Modell: Deck mit Kicks, Trucks, Rollen
@@ -1992,7 +1979,7 @@ const MATS={},PARTS={};
 function buildBoard(){
  board=new THREE.Group();skater.add(board);board.position.set(0,0,0);
  const gripM=M('grip',1,3,.98),woodM=mat(0xb98a54,.55);
- MATS.deck=new THREE.MeshStandardMaterial({map:deckTex(outfit.deck),roughness:.5});
+ MATS.deck=new THREE.MeshStandardMaterial({map:deckTex(DECK),roughness:.5});
  const deckMats=[woodM,woodM,gripM,MATS.deck,woodM,woodM];
  const deck=box(board,.36,.028,1.28,deckMats,0,-.038,0);
  const nose=box(board,.36,.026,.24,deckMats,0,-.008,.75);nose.rotation.x=-.32;
@@ -2018,292 +2005,13 @@ function buildBoard(){
  }
 }
 /* ============================================================
-   CHARAKTER — artikuliertes Rig mit Kleidung
+   CHARAKTER — nur EINE Figur: Remy (ryInit).
+   Das alte stilisierte High-Detail-Rig samt Posensystem und Outfit-
+   Wahl ist entfernt. Uebrig bleibt rag als Wurzelknoten: das
+   Sturz-Taumeln (Bail) und Remy haengen daran.
    ============================================================ */
-/* CHARAKTER — High-Detail-Rig: Lathe-Drehkoerper, Capsule-Gliedmaßen, Gesichts-Details, PBR-Kleidung, Sneaker */
 function buildChar(){
  rag=new THREE.Group();skater.add(rag);
- charRoot=new THREE.Group();rag.add(charRoot);
- charRoot.position.y=-.02;charRoot.rotation.y=1.35; // Regular-Stance quer zum Board
- // PBR: Stoff rau, Sneaker-Leder halbglatt, Gummi-Sohle, Metall glänzend
- MATS.jacket=mat(outfit.jacket,.84);MATS.jacket2=mat(outfit.jacket2,.8);
- MATS.pants=mat(outfit.pants,.9);MATS.shoe=mat(outfit.shoe,.44,.06);
- MATS.skin=mat(outfit.skin,.6,.02);MATS.hat=mat(outfit.hat,.82);
- MATS.sole=mat(0xf4f4f6,.38);MATS.metal=mat(0xd8dee9,.2,.9);
- MATS.lace=mat(0xf2f2ee,.72);MATS.eye=mat(0x14171c,.18,.2);MATS.hair=mat(0x2a1c12,.76);
- const add=(p,geo,m,x,y,z)=>{const o=new THREE.Mesh(geo,m);o.position.set(x,y,z);o.castShadow=true;p.add(o);return o};
- const sph=(p,r,m,x,y,z,w=22,h=16)=>add(p,new THREE.SphereGeometry(r,w,h),m,x,y,z);
- const caps=(p,r,l,m,x,y,z,rs=16)=>add(p,new THREE.CapsuleGeometry(r,l,8,rs),m,x,y,z);
- const tor=(p,R,t,m,x,y,z,w=14,h=26)=>add(p,new THREE.TorusGeometry(R,t,w,h),m,x,y,z);
- const flat=o=>{o.rotation.x=Math.PI/2;return o}; // Ring liegend (Loch nach oben)
- /* -- Becken: organische Form statt Klotz -- */
- const hips=new THREE.Group();hips.position.y=.88;charRoot.add(hips);rig.hips=hips;
- const pelv=sph(hips,.17,MATS.pants,0,.02,0,20,14);pelv.scale.set(1.18,.8,.95);
- flat(tor(hips,.165,.022,mat(0x14181d,.62),0,.108,0,12,30)).scale.set(1.15,.86,1); // Gürtel
- box(hips,.055,.04,.022,MATS.metal,0,.108,.145);                                  // Metallschnalle
- for(const bx of[-.11,0,.11])box(hips,.022,.06,.012,mat(0x14181d,.62),bx,.068,.13); // Gürtelschlaufen
- /* -- Rumpf: Hoodie als Lathe-Drehkörper, elliptisch skaliert -- */
- const torso=new THREE.Group();torso.position.y=.11;hips.add(torso);rig.torso=torso;
- const tp=[new THREE.Vector2(.148,0),new THREE.Vector2(.172,.12),new THREE.Vector2(.19,.26),
-  new THREE.Vector2(.185,.37),new THREE.Vector2(.156,.46),new THREE.Vector2(.085,.52)];
- const chest=add(torso,new THREE.LatheGeometry(tp,26),MATS.jacket,0,.02,0);
- chest.scale.set(1.12,1,.8); // breiter als tief
- flat(tor(torso,.188,.034,MATS.jacket2,0,.43,0,12,32)).scale.set(1.12,.82,1);  // Brustband
- flat(tor(torso,.152,.02,MATS.jacket,0,.028,0,10,30)).scale.set(1.1,.82,1);    // Strickbund am Saum
- flat(tor(torso,.092,.03,MATS.jacket2,0,.52,0,12,26)).scale.set(1.08,.92,1);   // Kragen
- box(torso,.21,.11,.035,MATS.jacket2,0,.12,.155);                             // Kängurutasche
- for(const dx of[-.05,.05]){ // Kapuzenbänder mit Metall-Aglets
-  cylXZ(torso,.0075,.15,MATS.lace,dx,.43,.155,8);
-  sph(torso,.012,MATS.metal,dx,.352,.155,10,8);
- }
- const hood=add(torso,new THREE.SphereGeometry(.115,20,14,0,Math.PI*2,0,Math.PI*.62),MATS.jacket,0,.46,-.115);
- hood.rotation.x=-Math.PI*.5; // gefüllte Kapuze im Nacken
- const hoodR=tor(torso,.112,.038,MATS.jacket,0,.5,-.08,12,26);hoodR.rotation.x=Math.PI*.55; // Kapuzenrand
- /* -- Kopf mit Gesicht: Schädel, Kiefer, Ohren, Nase, Augen -- */
- const head=new THREE.Group();head.position.y=.58;torso.add(head);rig.head=head;
- caps(head,.048,.05,MATS.skin,0,.05,0,12);                                     // Hals
- const skull=sph(head,.155,MATS.skin,0,.155,0,26,20);skull.scale.set(.96,1.06,.99);
- const jaw=sph(head,.105,MATS.skin,0,.075,.04,18,14);jaw.scale.set(.86,.72,.95); // Kiefer/Kinn
- for(const ex of[-.148,.148]){const e=sph(head,.037,MATS.skin,ex,.13,.008,10,8);e.scale.set(.42,1,.66)} // Ohren
- const nose=sph(head,.026,MATS.skin,0,.105,.152,10,8);nose.scale.set(.8,1.15,1);
- for(const ex of[-.061,.061]){
-  sph(head,.026,mat(0xf4f1ec,.22),ex,.15,.133,12,10);        // Sklera
-  sph(head,.0125,MATS.eye,ex,.15,.152,10,8);                 // Pupille
-  sph(head,.0045,mat(0xffffff,.1),ex+.004,.156,.163,6,5);    // Glanzlicht
- }
- for(const ex of[-.058,.058]){const b=box(head,.052,.013,.016,MATS.hair,ex,.187,.14);b.rotation.z=ex>0?-.14:.14} // Augenbrauen
- box(head,.05,.009,.012,mat(0x9c6250,.6),0,.068,.152);       // Mund
- const fringe=add(head,new THREE.SphereGeometry(.153,22,12,0,Math.PI*2,0,Math.PI*.45),MATS.hair,0,.157,-.004);
- fringe.scale.set(.98,1.06,1.01);                            // Haaransatz am Oberkopf
- /* -- Kopfbedeckungen: Helmet / Beanie / Cap als Gruppen mit Details -- */
- const hel=new THREE.Group();hel.position.y=.16;head.add(hel);PARTS.helmet=hel;
- add(hel,new THREE.SphereGeometry(.19,22,14,0,Math.PI*2,0,Math.PI*.62),MATS.hat,0,0,0);
- flat(tor(hel,.186,.015,mat(0x1b1f24,.6),0,-.005,0,10,30)).scale.set(1,.96,1); // Helmkante
- for(const vz of[-.06,0,.06])box(hel,.02,.013,.1,mat(0x14181d,.55),0,.165,vz);  // Belüftungsschlitze
- box(hel,.16,.024,.06,mat(0x1b1f24,.45),0,-.005,.16);                          // Visier
- const strap=new THREE.Group();head.add(strap);PARTS.helmetStrap=strap;
- for(const ex of[-.125,.125])box(strap,.028,.085,.02,mat(0x22262c,.72),ex,.09,.135); // Kinnriemen
- const bean=new THREE.Group();bean.position.y=.17;head.add(bean);PARTS.beanie=bean;
- add(bean,new THREE.SphereGeometry(.168,20,14),MATS.hat,0,0,0).scale.set(1,.88,1);
- const foldG=new THREE.Group();head.add(foldG);PARTS.beanieFold=foldG;
- flat(tor(foldG,.163,.03,MATS.hat,0,.06,0,12,30));                              // Umschlag
- sph(foldG,.032,mat(0xe8e6e1,.78),0,.245,0,10,8);                               // Bommel
- const capG=new THREE.Group();capG.position.y=.168;head.add(capG);PARTS.cap=capG;
- add(capG,new THREE.SphereGeometry(.172,22,12,0,Math.PI*2,0,Math.PI*.55),MATS.hat,0,0,0);
- const brimG=new THREE.Group();head.add(brimG);PARTS.capBrim=brimG;
- sph(brimG,.08,MATS.hat,0,.128,-.175,16,12).scale.set(2.05,.16,1.25); // gewölbter Schirm hinten
- /* -- Arme: Capsule-Oberarme (Stoff), freie Unterarme, Bündchen, Hände mit Daumen -- */
- const arm=(name,sx)=>{
-  const sh=new THREE.Group();sh.position.set(sx*.24,.4,0);torso.add(sh);rig[name]=sh;
-  sph(sh,.07,MATS.jacket,0,0,0,16,12);        // Schulter
-  caps(sh,.052,.2,MATS.jacket,0,-.155,0,14);  // Oberarm
-  const el=new THREE.Group();el.position.y=-.31;sh.add(el);rig[name+'Elbow']=el;
-  sph(el,.046,MATS.jacket,0,0,0,14,10);       // Ellbogengelenk
-  caps(el,.041,.16,MATS.skin,0,-.125,0,12);   // Unterarm (gekrempelte Ärmel)
-  flat(tor(el,.044,.013,MATS.jacket2,0,-.212,0,10,18));   // Ärmelbündchen
-  const hand=sph(el,.048,MATS.skin,0,-.262,0,14,12);hand.scale.set(.95,.82,1.12);
-  sph(el,.02,MATS.skin,sx*.045,-.258,-.028,8,6);           // Daumen
-  if(name==='lSh'){ // Metalluhr mit Band und Zifferblatt
-   flat(tor(el,.049,.013,MATS.metal,0,-.232,0,10,18));
-   const wf=cylXZ(el,.024,.014,mat(0x101318,.28,.3),0,-.232,.048,12);wf.rotation.x=Math.PI/2;
-  }
-  return sh;
- };
- arm('lSh',1);arm('rSh',-1);
- /* -- Beine: Capsule-Oberschenkel und -Waden, Jeansbund, High-Detail-Sneaker -- */
- const leg=(name,sx)=>{
-  const hp=new THREE.Group();hp.position.set(sx*.28,-.02,0);hips.add(hp);rig[name]=hp;
-  sph(hp,.084,MATS.pants,0,-.01,0,14,12);      // Hüftgelenk
-  caps(hp,.076,.28,MATS.pants,0,-.195,0,14);   // Oberschenkel
-  const kn=new THREE.Group();kn.position.y=-.42;hp.add(kn);rig[name+'Knee']=kn;
-  sph(kn,.064,MATS.pants,0,0,0,14,10);         // Knie
-  caps(kn,.056,.22,MATS.pants,0,-.165,0,12);   // Wade
-  flat(tor(kn,.056,.014,MATS.pants,0,-.288,0,10,18)); // Jeansbund am Knöchel
-  const foot=new THREE.Group();foot.position.set(0,-.35,.02);kn.add(foot);rig[name+'Foot']=foot;
-  box(foot,.12,.032,.26,MATS.sole,0,-.078,.02);                       // Laufsohle
-  box(foot,.124,.02,.075,MATS.sole,0,-.086,-.088);                    // Fersenkeil
-  box(foot,.104,.078,.2,MATS.shoe,0,-.02,-.018);                      // Schaft
-  sph(foot,.056,MATS.shoe,0,-.026,.142,14,10).scale.set(1.02,.75,1.12); // Vorderkappe
-  flat(tor(foot,.048,.014,MATS.shoe,0,.024,-.078,10,18));             // Knöchelkragen
-  const tng=box(foot,.088,.028,.05,MATS.sole,0,.032,.075);tng.rotation.x=-.35; // Zunge
-  for(let i=0;i<3;i++){ // 3-fach gekreuzte Schnürung mit Metall-Ösen
-   const yc=.016-i*.004,zc=.028+i*.024;
-   cylXZ(foot,.006,.088,MATS.lace,0,yc,zc,8).rotation.z=.55;
-   cylXZ(foot,.006,.088,MATS.lace,0,yc,zc,8).rotation.z=-.55;
-   sph(foot,.008,MATS.metal,sx*.052,.012-i*.004,zc,8,6);
-   sph(foot,.008,MATS.metal,-sx*.052,.012-i*.004,zc,8,6);
-  }
-  box(foot,.048,.032,.018,MATS.jacket2,0,.026,-.132);                 // Fersentab in Akzentfarbe
-  box(foot,.005,.018,.13,MATS.jacket2,sx*.054,-.046,.01);             // Seitenstreifen
-  box(foot,.005,.018,.13,MATS.jacket2,-sx*.054,-.046,.01);
-  return hp;
- };
- leg('lHip',1);leg('rHip',-1);
- applyOutfitVisual();
-}
-function applyOutfitVisual(){
- MATS.jacket.color.setHex(outfit.jacket);MATS.jacket2.color.setHex(outfit.jacket2);
- MATS.pants.color.setHex(outfit.pants);MATS.shoe.color.setHex(outfit.shoe);
- MATS.skin.color.setHex(outfit.skin);MATS.hat.color.setHex(outfit.hat);
- const t=outfit.hatType;
- PARTS.helmet.visible=PARTS.helmetStrap.visible=t==='helmet';
- PARTS.beanie.visible=PARTS.beanieFold.visible=t==='beanie';
- PARTS.cap.visible=PARTS.capBrim.visible=t==='cap';
- if(MATS.deck)MATS.deck.map=deckTex(outfit.deck);
-}
-function setOutfit(i){
- outfitIdx=((i%OUTFITS.length)+OUTFITS.length)%OUTFITS.length;outfit=OUTFITS[outfitIdx];
- applyOutfitVisual();
- $('char').textContent='OUTFIT: '+outfit.label;
- $('charstat').textContent='DECK: '+outfit.deck.txt;
- refreshCharClone();
-}
-
-/* ============================================================
-   POSE-SYSTEM: Zustände → Gelenkziele, weich interpoliert
-   ============================================================ */
-const POSE_KEYS=['crouchY','hipsRX','hipsRY','hipsRZ','torsoRX','torsoRY','torsoRZ','headRX','headRY',
- 'lShX','lShZ','rShX','rShZ','lElX','rElX','lHipX','lHipZ','rHipX','rHipZ','lKneX','rKneX'];
-const P={},C={};
-POSE_KEYS.forEach(k=>{P[k]=0;C[k]=0});
-function setPose(o){POSE_KEYS.forEach(k=>{if(o[k]!==undefined)P[k]=o[k]})}
-function stancePose(spdN,steer,pump){
- setPose({
-  crouchY:-.05-spdN*.06+pump*.015,
-  hipsRX:.04+spdN*.05, hipsRY:steer*.06, hipsRZ:steer*.14,
-  torsoRX:.12+spdN*.2, torsoRY:-steer*.05, torsoRZ:steer*.2,
-  headRX:.02+spdN*.06, headRY:-steer*.35,
-  lShX:-.2-spdN*.5, lShZ:.55+pump*.06,
-  rShX:.1+spdN*.3, rShZ:-.55,
-  lElX:-.35, rElX:.25,
-  lHipX:-.05, lHipZ:.06, rHipX:.02, rHipZ:-.04,
-  lKneX:.28+spdN*.3, rKneX:.24+spdN*.28
- });
-}
-function updatePose(dt){
- const spdN=clamp(Math.abs(fwd)/18,0,1),steer=steerS;
- const t=performance.now()*.001;
- const pump=Math.sin(t*3.2)*.5+.5;
- if(bail.on){
-  const s=bail.seed;
-  if(bail.phase==='fly')setPose({
-   crouchY:0,hipsRX:-.15,hipsRY:.3*Math.sin(s),hipsRZ:.4*Math.sin(s*2),
-   torsoRX:-.55,torsoRY:.5*Math.sin(s*3),torsoRZ:.6*Math.cos(s),
-   headRX:-.4,headRY:.4*Math.sin(s*5),
-   lShX:-1.6,lShZ:1.3,rShX:1.1,rShZ:-1.5,lElX:.7,rElX:.6,
-   lHipX:-.6,lHipZ:.5,rHipX:.35,rHipZ:-.55,lKneX:.5,rKneX:.35
-  });
-  else if(bail.phase==='slide')setPose({
-   crouchY:-.32,hipsRX:.2,hipsRY:.35*Math.sin(s),hipsRZ:.1,
-   torsoRX:.95,torsoRY:.3*Math.sin(s*2),torsoRZ:.15,
-   headRX:.5,headRY:0,
-   lShX:-1.4,lShZ:.7,rShX:-1.2,rShZ:-.7,lElX:.9,rElX:.8,
-   lHipX:-.9,lHipZ:.3,rHipX:-.5,rHipZ:-.3,lKneX:1.5,rKneX:1.2
-  });
-  else stancePose(spdN,0,0); // Aufstehen
- }
- else if(grind){
-  const bal=clamp(grind.balance,-1,1),bd=grind.type==='board';
-  setPose({
-   crouchY:bd?-.24:-.16,hipsRX:bd?.02:.08,hipsRY:0,hipsRZ:steer*.1,
-   torsoRX:bd?.3:.22,torsoRY:bd?.4:0,torsoRZ:steer*.12,
-   headRX:-.05,headRY:bd?-.3:0,
-   lShX:-.7,lShZ:1.0+bal*1.1,rShX:.6,rShZ:-1.0+bal*1.1,lElX:-.4,rElX:.4,
-   lHipX:bd?-.3:-.15,lHipZ:.12,rHipX:bd?-.25:-.1,rHipZ:-.1,lKneX:.85,rKneX:.8
-  }); // Arme balancieren aktiv gegen die Balance-Anzeige
- }
- else if(air){
-  if(held.grab){ // Grab-Posen: Richtungstaste beim Halten bestimmt die Figur
-   const gd=trickDir(),sp=clamp(airSpin*.35,-1.1,1.1);
-   if(gd==='u')setPose({ // INDY: vordere Hand zieht das Board an die Brust
-    crouchY:-.2,hipsRX:.18,hipsRY:.1,hipsRZ:0,
-    torsoRX:.34,torsoRY:sp,torsoRZ:0,
-    headRX:.3,headRY:0,
-    lShX:-.3,lShZ:1.15,rShX:1.75,rShZ:-.95,rElX:.2,
-    lHipX:-.75,lHipZ:.18,rHipX:-.6,rHipZ:-.18,lKneX:1.4,rKneX:1.25
-   });
-   else if(gd==='d')setPose({ // TAIL: hintere Hand ans Brettende, Nase hoch
-    crouchY:-.12,hipsRX:.22,hipsRY:-.08,hipsRZ:0,
-    torsoRX:.4,torsoRY:sp,torsoRZ:0,
-    headRX:-.18,headRY:0,
-    lShX:-1.5,lShZ:.9,lElX:.3,rShX:2.0,rShZ:-1.35,rElX:.15,
-    lHipX:-.55,lHipZ:.12,rHipX:-.4,rHipZ:-.1,lKneX:1.1,rKneX:.9
-   });
-   else if(gd==='l')setPose({ // MELON: Hand hinter dem Körper ans Brett
-    crouchY:-.16,hipsRX:.15,hipsRY:.2,hipsRZ:0,
-    torsoRX:.28,torsoRY:sp,torsoRZ:-.12,
-    headRX:.32,headRY:-.2,
-    lShX:-.25,lShZ:.55,rShX:2.1,rShZ:.75,rElX:.35,
-    lHipX:-.7,lHipZ:.2,rHipX:-.45,rHipZ:-.12,lKneX:1.3,rKneX:1.05
-   });
-   else if(gd==='r')setPose({ // STALEFISH: hintere Hand zwischen Fersen durch
-    crouchY:-.16,hipsRX:.15,hipsRY:-.18,hipsRZ:0,
-    torsoRX:.3,torsoRY:sp,torsoRZ:.12,
-    headRX:.34,headRY:.2,
-    lShX:-1.4,lShZ:1.2,lElX:.25,rShX:1.9,rShZ:-1.6,rElX:.3,
-    lHipX:-.65,lHipZ:.14,rHipX:-.5,rHipZ:-.16,lKneX:1.25,rKneX:1.1
-   });
-   else setPose({ // METHOD: Rücken durchgestreckt, Knie nach hinten
-    crouchY:-.1,hipsRX:-.12,hipsRY:0,hipsRZ:0,
-    torsoRX:-.3,torsoRY:sp,torsoRZ:0,
-    headRX:-.35,headRY:0,
-    lShX:-.5,lShZ:1.35,rShX:1.2,rShZ:-1.45,rElX:.15,
-    lHipX:-.85,lHipZ:.15,rHipX:-.7,rHipZ:-.15,lKneX:1.5,rKneX:1.35
-   });
-  }
-  else setPose({ // Air-Tuck mit Shoulder-Rotation beim Spin
-   crouchY:.03,hipsRX:0,hipsRY:0,hipsRZ:0,
-   torsoRX:.24,torsoRY:clamp(airSpin*.4,-1.2,1.2),torsoRZ:0,
-   headRX:.05,headRY:clamp(airSpin*.3,-1,1),
-   lShX:-1.1,lShZ:.95,rShX:1.0,rShZ:-.95,lElX:-.3,rElX:.3,
-   lHipX:-.5,lHipZ:.12,rHipX:-.35,rHipZ:-.12,lKneX:1.15,rKneX:1.0
-  });
-  if(airTime<.25){ // Ollie-Explosion: Standbein streckt sich, Vorderbein zieht hoch
-   const ex=(.25-airTime)/.25;
-   P.crouchY+=ex*.07;P.rKneX-=ex*.75;P.rHipX+=ex*.3;
-   P.lKneX+=ex*.5;P.lHipX-=ex*.55;P.torsoRX+=ex*.18;
-  }
- }
- else if(manual!==0){ // Manual: Arme ausbalancieren, Hüfte pendelt mit der Balance
-  const b=clamp(manBal,-1,1),os=Math.sin(t*7)*.07;
-  setPose({
-   crouchY:-.16+b*.08,hipsRX:.12,hipsRY:-b*.45,hipsRZ:-b*.38,
-   torsoRX:.16,torsoRY:b*.62,torsoRZ:b*.55,
-   headRX:0,headRY:-b*.5,
-   lShX:-1.05+os,lShZ:1.35,rShX:.95-os,rShZ:-1.35,lElX:-.4,rElX:.4,
-   lHipX:-.55-manual*.28,lHipZ:.18,rHipX:-.3-manual*.22,rHipZ:-.14,lKneX:1.15+os*.5,rKneX:.95-os*.5
-  });
- }
- else if(pushT>0){ // Bein ausschieben
-  const p=1-pushT/.7;
-  const kick=Math.sin(p*Math.PI);
-  stancePose(spdN,steer,pump);
-  P.rHipX=.35+kick*.95;P.rKneX=.95-kick*.8;P.rHipZ=-.15-kick*.1;
-  P.torsoRX=.2;P.crouchY=-.02;
- }
- else if(landT>0){ // Landung abfedern
-  const q=landT/.4;
-  stancePose(spdN,steer,0);
-  P.crouchY=-.05-q*.16;P.lKneX=.3+q*1.0;P.rKneX=.28+q*.95;P.torsoRX=.15+q*.2;
- }
- else{
-  stancePose(spdN,steer,pump);
-  if(held.ollie&&!air&&!grind&&!manual){ // Ollie laden: Knie beugen, Oberkörper über das Board
-   P.crouchY=Math.min(P.crouchY,-.2);P.lKneX+=.55;P.rKneX+=.5;
-   P.lHipX-=.5;P.rHipX-=.45;P.torsoRX+=.32;
-  }
- }
- // Interpolation + Anwendung
- const k=1-Math.exp(-11*dt);
- POSE_KEYS.forEach(key=>{C[key]+=(P[key]-C[key])*k});
- rig.hips.position.y=.88+C.crouchY;
- rig.hips.rotation.set(C.hipsRX,C.hipsRY,C.hipsRZ);
- rig.torso.rotation.set(C.torsoRX,C.torsoRY,C.torsoRZ);
- rig.head.rotation.set(C.headRX,C.headRY,0);
- rig.lSh.rotation.set(C.lShX,0,C.lShZ);rig.rSh.rotation.set(C.rShX,0,C.rShZ);
- rig.lShElbow.rotation.set(C.lElX,0,0);rig.rShElbow.rotation.set(C.rElX,0,0);
- rig.lHip.rotation.set(C.lHipX,0,C.lHipZ);rig.rHip.rotation.set(C.rHipX,0,C.rHipZ);
- rig.lHipKnee.rotation.set(C.lKneX,0,0);rig.rHipKnee.rotation.set(C.rKneX,0,0);
 }
 /* ============================================================
    SPIEL-LOGIK: Physik, Stürze, Kamera, HUD
@@ -2724,28 +2432,20 @@ function updateTrickText(){
 }
 
 /* ---------- Gemeinsame Visuals pro Frame ---------- */
-/* ---- CC0-CHARAKTER: Quaternius Universal Mannequin + UAL1-Clips (CC0). Loader und
-   GLB lazy per CDN (je 2 Fallbacks); offline bleibt der stilisierte Skater aktiv. ---- */
-let ccRoot=null,ccMix=null,ccAct={},ccCur='',ccInitOn=false,ccLI=0,ryTry=false,switchYaw=0,
-    ryRoot=null,ryMix=null,ryAct={},ryCur='';
+/* ---- CHARAKTER: Remy (Mixamo-Rig, assets/remy), GLTFLoader lazy per CDN (2 Fallbacks).
+   Nur noch EIN Charakter: stilisierter Skater und CC0-Mannequin sind entfernt. ---- */
+let ccLI=0,ryTry=false,switchYaw=0,ryRoot=null,ryMix=null,ryAct={},ryCur='';
 const CC_LD=['https://cdn.jsdelivr.net/gh/mrdoob/three.js@r147/examples/js/loaders/GLTFLoader.js',
  'https://unpkg.com/three@0.147.0/examples/js/loaders/GLTFLoader.js']; /* GLTFLoader-CDNs, r147 passend zum Inline-three */
-const CC_GL=[];             /* CC0-Mannequin-Fallback ohne Asset: bei Remy-Fehler bleibt der stilisierte Skater aktiv */
 const RY_U=GBU.map(u=>u+'assets/remy/');
 function ccEnsure(cb){ /* GLTFLoader lazy per CDN (2 Fallbacks), dann cb() */
  if(window.THREE&&window.THREE.GLTFLoader)cb();
  else if(ccLI<CC_LD.length){const s=document.createElement('script');s.src=CC_LD[ccLI++];
   s.onload=()=>ccEnsure(cb);s.onerror=()=>ccEnsure(cb);document.head.appendChild(s)}
 }
-function ccInit(){ /* Fallback: UAL CC0-Mannequin (21 MB GLB) */
- if(ccInitOn)return;ccInitOn=true;
- ccEnsure(()=>{let j=0;const ld=new THREE.GLTFLoader();
-  (function gx(){if(j<CC_GL.length)ld.load(CC_GL[j++],g=>ccBuild(g),undefined,gx)})();
- });
-}
 function ryB64(t){const b=atob(t),u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u}
 function ryInit(){ /* Mixamo-"Remy": glTF in Textfragmente, im Browser (Base64) zusammengesetzt */
- if(ryTry||!window.THREE||navigator.webdriver)return;ryTry=true; /* E2E (webdriver): kein Netz-Charakter, Stil-Skater bleibt */
+ if(ryTry||!window.THREE||navigator.webdriver)return;ryTry=true; /* E2E (webdriver): kein Netz-Charakter, Board laeuft solo */
  ccEnsure(async()=>{
   for(const b of RY_U){try{
    const j=JSON.parse(await(await fetch(b+'remy.gltf.json')).text());
@@ -2754,7 +2454,7 @@ function ryInit(){ /* Mixamo-"Remy": glTF in Textfragmente, im Browser (Base64) 
    new THREE.GLTFLoader().parse(JSON.stringify(j),'',g=>ryBuild(g),e=>{});
    return
   }catch(e){}}
-  ccInit() /* Remy nicht ladbar -> CC0-Mannequin -> sonst stilisiert */
+  /* Remy nicht ladbar: Spiel laeuft mit solo Board, kein Ersatzcharakter mehr */
  });
 }
 function ryBuild(g){
@@ -2763,15 +2463,13 @@ function ryBuild(g){
   ryRoot.rotation.y=-.3;          /* Bau-Yaw PI steckt im Modell; Stance leicht oeffnen */
   ryRoot.traverse(o=>{if(o.isMesh)o.castShadow=true});
   rag.add(ryRoot);                /* in rag: Sturz-Taumeln (Bail) wirkt mit */
-  if(typeof charRoot!=='undefined')charRoot.visible=false;
   ryMix=new THREE.AnimationMixer(ryRoot);
   for(const k of ['ride','ride2','jump','fall','flip','shove','grab','grind','manual','nmanual','land']){const c=g.animations&&g.animations.find(a=>a.name===k);
    if(!c)continue;const ac=ryMix.clipAction(c);
    if(k==='fall'||k==='land'||k==='jump'||k==='flip'||k==='shove'){ac.setLoop(THREE.LoopOnce);ac.clampWhenFinished=true}
    ryAct[k]=ac}
   rySet('ride',1);ryMix.update(.4);
-  if(typeof refreshCharClone==='function')try{refreshCharClone()}catch(e){}
- }catch(e){ryRoot=null;ryMix=null;ccInit()}
+ }catch(e){ryRoot=null;ryMix=null}
 }
 function rySet(k,ts){
  const a=ryAct[k];if(!a)return;a.timeScale=ts;
@@ -2780,7 +2478,7 @@ function rySet(k,ts){
  a.reset().fadeIn(.2).play();ryCur=k;
 }
 function ryUpdate(dt){
- if(!ryMix){ccUpdate(dt);return}   /* ohne Remy: Mannequin-Logik als Fallback */
+ if(!ryMix)return; /* Remy noch nicht geladen: Board laeuft ohne Figur */
  /* SWITCH/Fakie: Beim Rueckwaertsrollen (turnBack, z.B. nach Ollie 180) dreht die Figur weich um 180 Grad zur Fahrtrichtung (Board rollt rueckwaerts). */
  switchYaw=damp(switchYaw,turnBack?Math.PI:0,8,dt);
  if(ryRoot)ryRoot.rotation.y=-.3+switchYaw;
@@ -2801,51 +2499,12 @@ function ryUpdate(dt){
  else if(held.ollie){k='grind';ts=.55}  /* Ollie laden: Crouch */
  rySet(k,ts);ryMix.update(dt);
 }
-function ccBuild(g){
- try{
-  ccRoot=g.scene||g.scenes[0];
-  ccRoot.rotation.y=Math.PI-.3; // Stance leicht geoeffnet zur Fahrtrichtung
-  ccRoot.scale.setScalar(.92);   // 1,83 m Bind-Pose auf Spielfigur-Groesse
-  ccRoot.traverse(o=>{if(o.isMesh)o.castShadow=true});
-  rag.add(ccRoot);               // in rag: Sturz-Taumeln (Bail) wirkt mit
-  if(typeof charRoot!=='undefined')charRoot.visible=false;
-  ccMix=new THREE.AnimationMixer(ccRoot);
-  const N={idle:'Idle_Loop',walk:'Walk_Loop',jog:'Jog_Fwd_Loop',sprint:'Sprint_Loop',jump:'Jump_Loop',land:'Jump_Land',crouch:'Crouch_Idle_Loop',hit:'Hit_Chest'};
-  for(const k in N){const c=g.animations&&g.animations.find(a=>a.name===N[k]);if(!c)continue;
-   const ac=ccMix.clipAction(c);
-   if(k==='land'||k==='hit'){ac.setLoop(THREE.LoopOnce);ac.clampWhenFinished=true}
-   ccAct[k]=ac}
-  ccSet('idle',1);ccMix.update(.4);
-  if(typeof refreshCharClone==='function')try{refreshCharClone()}catch(e){}
- }catch(e){ccRoot=null;ccMix=null}
-}
-function ccSet(k,ts){
- const a=ccAct[k];if(!a)return;a.timeScale=ts;
- if(ccCur===k)return;
- const p=ccAct[ccCur];if(p)p.fadeOut(.2);
- a.reset().fadeIn(.2).play();ccCur=k;
-}
-function ccUpdate(dt){
- if(!ccMix)return;
- /* SWITCH/Fakie: Beim Rueckwaertsrollen (turnBack, z.B. nach Ollie 180) dreht die Figur weich um 180 Grad zur Fahrtrichtung (Board rollt rueckwaerts). */
- switchYaw=damp(switchYaw,turnBack?Math.PI:0,8,dt);
- if(ccRoot)ccRoot.rotation.y=(Math.PI-.3)+switchYaw;
- let k='idle',ts=1;const s=Math.abs(fwd);
- if(bail.on)k='hit';
- else if(air)k='jump';
- else if(grind)k='crouch';
- else if(landT>.2)k='land';
- else if(s>9.5){k='sprint';ts=Math.min(s/6.5,1.6)}
- else if(s>4){k='jog';ts=s/3.6}
- else if(s>.5){k='walk';ts=Math.max(.55,Math.min(s/1.4,1.5))}
- ccSet(k,ts);ccMix.update(dt);
-}
+
 function postUpdateVisuals(dt){
  skater.position.copy(pos);
  orientSkater(dt,false);
  updateBoardVisual(dt);
  if(boardFree)updateBoardFree(dt);
- updatePose(dt);
  ryUpdate(dt);
  camFollow(dt,false);
  updateParticles(dt);
@@ -3593,9 +3252,6 @@ function start(){
     uebernehmen; Groesse mehrfach nachsynchronisiert (siehe auch resize-Handler). */
  const syncSize=()=>{try{const w=innerWidth,h=innerHeight;if(renderer&&camera&&w>0&&h>0){camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h)}}catch(e){}}; // Fenstergroesse + Inline-Px-Stil (siehe init)
  setTimeout(syncSize,350);setTimeout(syncSize,1000);setTimeout(syncSize,2500);
- /* Vorschau-Renderer der Menuevorschauen waehrend der Session freigeben:
-    Mobil-Browser haben nur ein begrenztes WebGL-Kontextkontingent pro Tab. */
- if(window.__pausePreviews){try{window.__pausePreviews()}catch(e){}}
  sound.init();sound.resume();
  if(isTouch&&tiltOn)enableTilt();
  // Querformat: Vollbild + Orientierung anfordern (best effort)
@@ -3628,41 +3284,14 @@ function frame(){
  if(started&&!paused&&!ended)update(dt);
  if(NPCS.length){const nt=clock.elapsedTime;for(const n of NPCS){n.m.rotation.y=n.r+Math.sin(nt*.55+n.p)*.14;n.m.position.y=Math.abs(Math.sin(nt*1.05+n.p))*.04}}
  for(const k in press)press[k]=false;
- // Startseite: Charakter zeigen — Kamera schwenkt langsam um den stehenden Skater.
- // Der Skater bleibt IMMER rechts der Bildmitte: Die Menükarte sitzt links,
- // der Blickpunkt wird deshalb nach Bild-links versetzt.
- // Nach dem Klick auf den Charakter-Button: Nahaufnahme mit langsamer Drehung.
+ // Startseite als Live-Vorschau: langsame Kreisfahrt um den stehenden Skater,
+ // das transparente Menue liegt darueber (kein Mini-Preview mehr noetig).
  if(!started&&skater){
-  if(charShow>0){
-   charShow-=dt;
-   const a=clock.elapsedTime*.5;
-   camera.position.set(pos.x+Math.sin(a)*1.55,pos.y+1.1,pos.z-Math.cos(a)*1.55);
-   const ddx=pos.x-camera.position.x,ddz=pos.z-camera.position.z,ddl=Math.hypot(ddx,ddz)||1;
-   const rx=-ddz/ddl,rz=ddx/ddl; // Bild-rechts in Weltkoordinaten
-   camera.lookAt(pos.x-rx*.34,pos.y+.82,pos.z-rz*.34);
-   skater.rotation.y+=dt*.35;
-  }else{
-   const sw=clock.elapsedTime*.12;
-   camera.position.set(pos.x+Math.sin(sw)*12,pos.y+4.8,pos.z-Math.cos(sw)*12);
-   camera.lookAt(pos.x,pos.y+.8,pos.z);
-  }
+  const sw=clock.elapsedTime*.12;
+  camera.position.set(pos.x+Math.sin(sw)*12,pos.y+4.8,pos.z-Math.cos(sw)*12);
+  camera.lookAt(pos.x,pos.y+.8,pos.z);
  }
  if(renderer)renderer.render(scene,camera);
- // Startbildschirm: Live-Vorschauen in den beiden Containern.
- // Map-Vorschau: langsame Kreisfahrt über den aktiven Park (Szene wird geteilt).
- // Charakter-Vorschau: Klon des Skaters dreht sich im eigenen Mini-Set mit eigenem Licht.
- if(!started&&prevMapR&&prevScene){
-  const pvt=clock.elapsedTime,pa=pvt*.1;
-  prevMapCam.position.set(Math.sin(pa)*70,64,Math.cos(pa)*70);
-  prevMapCam.lookAt(0,0,0);
-  const _sk=scene.userData&&scene.userData.sky;if(_sk)_sk.visible=false; // Himmelskuppel nicht in der Draufsicht
-  prevMapR.render(scene,prevMapCam);
-  if(_sk)_sk.visible=true;
-  if(prevClone)prevClone.rotation.y=pvt*.5;
-  prevCharCam.position.set(0,1.02,2.5);
-  prevCharCam.lookAt(0,.78,0);
-  prevCharR.render(prevScene,prevCharCam);
- }
 }
 function init(){
  try{
@@ -3699,9 +3328,7 @@ function init(){
   camera.lookAt(0,1,20);
   frame();
   $('start').disabled=false;$('start').style.opacity='1';$('start').textContent='SESSION STARTEN';
-  setOutfit(0);
   ryInit();
-  initPreviews();
   const md0=$('mapdesc');if(md0)md0.textContent=MAPDESC[mapId]||'';
  }catch(e){
   const st=$('start');
@@ -3710,7 +3337,6 @@ function init(){
  }
 }
 
-/* ---------- Startbildschirm: Live-Vorschauen (Map + Charakter) ---------- */
 /* ---------- CUSTOM-KARTEN AUS DEM MAP BUILDER ---------- Objekte werden auf die Spielprimitive abgebildet; Halfpipes, Quarters und Pools fahren sich wie Original-Objekte, ovale Bowls mit voller Pool-Physik. */
 const CBDG=Math.PI/180;
 const CBMATS={beton:[0x8a8f8f,.9,0],holz:[0xa07845,.8,0],metall:[0xb8bcc2,.35,.85],metallRot:[0xc23b2e,.4,.6],dunkel:[0x3a3f45,.9,.05],gruen:[0x4e7a3a,.95,0],lip:[0xf5c542,.5,.3],asphalt:[0x4b4e52,.95,0],ziegel:[0x9a4f3a,.9,0],gras:[0x4f8040,.97,0]};
@@ -4222,51 +3848,9 @@ const MAPDESC={
  minipark:'Kombi-Park mit Poolecke, Funbox-Mittelstücken, Kicker-Bank und Curve-Rail. Kompakt und dicht.',
  funpark:'Flow-Park mit diagonaler Smooth-Bank, Curve- und Slope-Rails, Grindboxen und Bowl-Decks am Rand.'
 };
-let prevMapR=null,prevCharR=null,prevMapCam=null,prevCharCam=null,prevScene=null,prevClone=null;
-function initPreviews(){
- if(prevMapR||prevCharR)return; // bereits aktiv
- try{
-  const mc=$('mapprev'),cc=$('charprev');
-  if(!mc||!cc||typeof THREE.WebGLRenderer!=='function')return;
-  const mw=mc.clientWidth||224,mh=mc.clientHeight||138,cw=cc.clientWidth||224,chh=cc.clientHeight||138;
-  prevMapR=new THREE.WebGLRenderer({canvas:mc,antialias:true});
-  prevMapR.setPixelRatio(Math.min(devicePixelRatio||1,1.5));
-  prevMapR.setSize(mw,mh); // Inline-Px-Stil statt Prozentkette (gleiches Robustheitsmuster wie Haupt-Canvas)
-  prevMapR.shadowMap.enabled=false;
-  prevMapR.outputEncoding=THREE.sRGBEncoding;prevMapR.toneMapping=THREE.ACESFilmicToneMapping;prevMapR.toneMappingExposure=1.0; // wie Hauptrenderer, sonst ueberbelichtet
-  prevMapCam=new THREE.PerspectiveCamera(50,mw/mh,1,320);
-  prevCharR=new THREE.WebGLRenderer({canvas:cc,antialias:true});
-  prevCharR.setPixelRatio(Math.min(devicePixelRatio||1,1.5));
-  prevCharR.setSize(cw,chh); // Inline-Px-Stil statt Prozentkette
-  prevCharR.shadowMap.enabled=false;
-  prevCharCam=new THREE.PerspectiveCamera(40,cw/chh,.05,20);
-  prevScene=new THREE.Scene();
-  prevScene.background=new THREE.Color(0x0a1726);
-  prevScene.add(new THREE.HemisphereLight(0xdfeaf2,0x22303c,.95));
-  const pdir=new THREE.DirectionalLight(0xfff2d8,.9);pdir.position.set(2.2,3.2,2.6);prevScene.add(pdir);
-  refreshCharClone();
- }catch(e){prevMapR=null;prevCharR=null}
-}
-/* WebGL-Kontingent: Builder offen -> Vorschau-Renderer freigeben, sonst verliert Mobil das HAUPTSPIEL den Kontext (schwarzer Bildschirm). */
-function releasePreviews(){
- for(const r of [prevMapR,prevCharR]){
-  if(r){try{r.dispose()}catch(e){}try{r.forceContextLoss&&r.forceContextLoss()}catch(e){}}
- }
- prevMapR=null;prevCharR=null;
-}
-window.__pausePreviews=releasePreviews;
-window.__resumePreviews=()=>initPreviews();
-function refreshCharClone(){
- if(!prevScene||!skater)return;
- if(prevClone)prevScene.remove(prevClone);
- prevClone=skater.clone();
- prevClone.position.set(0,0,0);prevClone.rotation.set(0,0,0);
- prevScene.add(prevClone);
-}
 /* ---------- Eingabe-Listener ---------- */
 $('start').addEventListener('click',start);
 $('builderbtn').addEventListener('click',()=>{if(window.MB)window.MB.open()});
-$('char').addEventListener('click',()=>{setOutfit(outfitIdx+1);charShow=3.5});
 // Einstellungen: eigener Screen, erreichbar vom Startbildschirm
 $('settingsbtn').addEventListener('click',()=>{$('settings').style.display='flex'});
 $('setclose').addEventListener('click',()=>{$('settings').style.display='none'});
@@ -4275,13 +3859,11 @@ $('resume').addEventListener('click',()=>{paused=false;$('pause').style.display=
 $('restart').addEventListener('click',()=>{reset();paused=false;ended=false;$('pause').style.display='none';$('pause').querySelector('h1').textContent='PAUSE';clock.getDelta()});
 $('tomenu').addEventListener('click',()=>{ // zurück ins Hauptmenü (End-of-Game-Screen)
  started=false;paused=false;ended=false;
- if(window.__resumePreviews){try{window.__resumePreviews()}catch(e){}} // Menuevorschauen wieder aktivieren
  $('pause').style.display='none';
  $('menu').style.display='flex';
  $('hud').style.display='none';
  $('tomenu').style.display='none';
  $('resume').style.display='inline-block';
- charShow=0;
  reset();
  orientSkater(0,true);
  clock.getDelta();
@@ -4407,9 +3989,7 @@ document.querySelectorAll('[data-act]').forEach(b=>{
 addEventListener('contextmenu',e=>e.preventDefault());
 addEventListener('orientationchange',()=>{tilt.cal=true});
 addEventListener('resize',()=>{if(camera&&renderer&&innerWidth>0&&innerHeight>0){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)} /* Groesse 0 ignorieren (Vollbild-/Orientierungswechsel); Inline-Px-Stil haelt die Leinwand auf allen Browsern sichtbar */
- if(prevMapR){const mc=$('mapprev'),cc=$('charprev');if(mc&&cc){const mw=mc.clientWidth||224,mh=mc.clientHeight||138,cw=cc.clientWidth||224,chh=cc.clientHeight||138;
-  prevMapR.setSize(mw,mh);prevMapCam.aspect=mw/mh;prevMapCam.updateProjectionMatrix();
-  prevCharR.setSize(cw,chh);prevCharCam.aspect=cw/chh;prevCharCam.updateProjectionMatrix()}}});
+});
 init();
 })();</script>
 <script>
@@ -5462,7 +5042,6 @@ if(EMBED){ // eingebettet in der Spiel-HTML: Overlay über window.MB steuern (St
  window.MB={
   open(){
    if(open)return;open=true;
-   if(window.__pausePreviews){try{window.__pausePreviews()}catch(e){}} // Vorschau-Kontexte freigeben
    ensureRenderer();
    document.body.dataset.mb='1';
    overlay.style.display='block';menuEl.style.display='none';
@@ -5481,7 +5060,6 @@ if(EMBED){ // eingebettet in der Spiel-HTML: Overlay über window.MB steuern (St
     try{if(renderer.domElement&&renderer.domElement.parentNode)renderer.domElement.parentNode.removeChild(renderer.domElement)}catch(e){}
     renderer=null;}
    if(window.__refreshChips){try{window.__refreshChips()}catch(e){}} // neue Karten ins Startmenü
-   if(window.__resumePreviews){try{window.__resumePreviews()}catch(e){}} // Vorschauen wieder aktiv
   }
  };
  $('bClose').addEventListener('click',()=>window.MB.close());
