@@ -2465,11 +2465,11 @@ function ryBuild(g){
   rag.add(ryRoot);                /* in rag: Sturz-Taumeln (Bail) wirkt mit */
   /* Kopfproportionen (Skin-FK nachvermessen): Der komplette Kopfhub steckt als
      konstanter Anhebungs-Track in den Clips (Skelett-Offset 70/-29, voll 33 cm).
-     Kalibrierung Ride-Pose: Faktor 0.2 -> Augen nur 4.4 cm ueber Schultergelenk
-     (Ohren auf Schulterhoehe, zu tief); 0.845 -> 25.7 cm (Hals kopflang).
-     Faktor 0.35 -> Kinn ~3.5 cm, Augen ~9.3 cm ueber Schultergelenk, Ohren
-     ~4 cm darueber: natuerliche Haltung, alle Posen konsistent. */
-  for(const c of g.animations||[]){const tr=(c.tracks||[]).find(t=>t.name&&t.name.endsWith('mixamorigHead.position'));if(tr)for(let i=0;i<tr.values.length;i++)tr.values[i]*=.35}
+     Kalibrierung Ride-Pose: 0.2 -> Augen 4.4 cm ueber Schultergelenk (zu tief);
+     0.35 -> 9.3 cm (Richtung stimmt); User-Wunsch: gleicher Schritt nochmals
+     drauf -> 0.5: Kinn ~8.4 cm, Augen ~14.3 cm, Ohren ~9 cm ueber
+     Schultergelenk (+5 cm Welt-Hub wie beim Schritt 0.2->0.35). */
+  for(const c of g.animations||[]){const tr=(c.tracks||[]).find(t=>t.name&&t.name.endsWith('mixamorigHead.position'));if(tr)for(let i=0;i<tr.values.length;i++)tr.values[i]*=.5}
   ryMix=new THREE.AnimationMixer(ryRoot);
   for(const k of ['ride','ride2','jump','fall','flip','shove','grab','grind','manual','nmanual','land']){const c=g.animations&&g.animations.find(a=>a.name===k);
    if(!c)continue;const ac=ryMix.clipAction(c);
