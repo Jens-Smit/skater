@@ -2460,9 +2460,13 @@ function ryInit(){ /* Mixamo-"Remy": glTF in Textfragmente, im Browser (Base64) 
 function ryBuild(g){
  try{
   ryRoot=g.scene||g.scenes[0];
-  ryRoot.rotation.y=-.3;          /* Bau-Yaw PI steckt im Modell; Stance leicht oeffnen */
+  ryRoot.rotation.y=Math.PI-.3;    /* Remy-Mesh frontet durch Bake-PI rueckwaerts: PI drehen; Stance oeffnet leicht zur Fahrtrichtung */
   ryRoot.traverse(o=>{if(o.isMesh)o.castShadow=true});
   rag.add(ryRoot);                /* in rag: Sturz-Taumeln (Bail) wirkt mit */
+  /* Kopf rund 5 cm tiefer: In den Clips ist eine konstante Kopf-Anhebung gebacken
+     (Skelett-Offset 70/-29, Welt-Hub ~32 cm im Ride-Massstab). Anhebungs-Track
+     auf 84.5 % skalieren -> Hub sinkt um ~5 cm, alle Posen bleiben konsistent. */
+  for(const c of g.animations||[]){const tr=(c.tracks||[]).find(t=>t.name&&t.name.endsWith('mixamorigHead.position'));if(tr)for(let i=0;i<tr.values.length;i++)tr.values[i]*=.845}
   ryMix=new THREE.AnimationMixer(ryRoot);
   for(const k of ['ride','ride2','jump','fall','flip','shove','grab','grind','manual','nmanual','land']){const c=g.animations&&g.animations.find(a=>a.name===k);
    if(!c)continue;const ac=ryMix.clipAction(c);
@@ -2481,7 +2485,7 @@ function ryUpdate(dt){
  if(!ryMix)return; /* Remy noch nicht geladen: Board laeuft ohne Figur */
  /* SWITCH/Fakie: Beim Rueckwaertsrollen (turnBack, z.B. nach Ollie 180) dreht die Figur weich um 180 Grad zur Fahrtrichtung (Board rollt rueckwaerts). */
  switchYaw=damp(switchYaw,turnBack?Math.PI:0,8,dt);
- if(ryRoot)ryRoot.rotation.y=-.3+switchYaw;
+ if(ryRoot)ryRoot.rotation.y=Math.PI-.3+switchYaw;
  let k='ride',ts=Math.max(.75,Math.min(Math.abs(fwd)/4,1.45));
  if(bail.on)k='fall';
  else if(air){                      /* Trick-Clips: Wrap/Flip > Shove > Grab > Sprung */
@@ -2538,9 +2542,9 @@ function postUpdateVisuals(dt){
 /* ---------- Haupt-Update ---------- */
 // Vorwärts-Geste (W / Pfeil hoch / Steuerring oben / Tilt vor): öffnet Ausfahrten.
 function fwHHold(){return !!(keys.w||keys.arrowup||(joy.active&&(joy.dir==='u'||joy.dir==='ul'||joy.dir==='ur'))||(tiltOn&&tilt.has&&dz(tilt.fb,5,22)>.3))}
-// Auto-Absprung an Pipe-, Pool- und Beckenlippen: flüssiger Pop mit 30 % des
-// Normal-Sprungs, wenn der Ollie zu spät kommt oder der Schwung an der Lippe
-// stirbt. Der Carve-Anteil (tangential) bleibt erhalten, damit der Fluss nicht abreißt.
+// Auto-Absprung an Pipe-, Pool- und Beckenlippen: fluessiger Pop mit 50 % des
+// Normal-Sprungs, wenn der Schwung an der Lippe sterben wuerde (Restweg kleiner
+// als der Bremsweg). Der Carve-Anteil (tangential) bleibt erhalten, damit der Fluss nicht abreisst.
 function vertAutoPop(vAuto,ux,uz,outSpd){
  if(autoPopCd>0)return false; // Abklingzeit: kein Lip-Bouncing direkt nach der Landung
  const tSpd=-vel.x*uz+vel.z*ux;          // Tangentialanteil (Carve-Schwung) bleibt
@@ -2907,8 +2911,45 @@ function update(dt){
      vel.x-=q.dirX*8.5*dt;vel.z-=q.dirZ*8.5*dt;
     }
    }
-   // KEIN automatischer Absprung an Lip/Coping: der Skater verweilt in der Neigung,
-   // bremst oben ab und carve zurück — Absprung nur manuell per Ollie.
+   /* AUTO-POP an Quarter-/Halfpipe-/Pool-Lippen: Ohne Ollie blieb der Skater an der
+      Kante haengen. Prognose: Bremsweg des Schwungs = out²/28 (Verzoegerung ~14).
+      Ist der verbleibende Weg bis zur Lippe kleiner, steht der Stillstand an der
+      Kante fest — dann gibt es einen fluiden Pop mit 50 % des Vert-Ollies
+      (out*hx*.92+3.2, halbiert), inkl. Ausfahrts-Schwung und Lip-Turn. */
+   if(autoPopCd<=0&&onPipe){
+    const sgp=Math.sign(pos.x)||1,outC=vel.x*sgp;
+    const hxC=Math.min(Math.abs((heightAt(pos.x+sgp*.2,pos.z)-heightAt(pos.x-sgp*.2,pos.z))/.4),4);
+    if(outC>.6&&hxC>1&&PIPE.R-Math.abs(pos.x)<=outC*outC/28+.03)
+     vertAutoPop(clamp(.5*(outC*hxC*.92+3.2),3.5,10),sgp,0,outC);
+   }
+   if(autoPopCd<=0&&onBowl&&onBowlR>onBowlB.R-3){
+    const rl=onBowlR||1,ux=(pos.x-onBowlB.x)/rl,uz=(pos.z-onBowlB.z)/rl;
+    const outC=vel.x*ux+vel.z*uz;
+    const hxC=Math.min(Math.abs((heightAt(pos.x+ux*.2,pos.z+uz*.2)-heightAt(pos.x-ux*.2,pos.z-uz*.2))/.4),4);
+    if(outC>.6&&hxC>1&&onBowlB.R-onBowlR<=outC*outC/28+.03)
+     vertAutoPop(clamp(.5*(outC*hxC*.92+3.2),3.5,10),ux,uz,outC);
+   }
+   if(autoPopCd<=0&&onEll){
+    let gx=onEllLX/(onEll.rx*onEll.rx),gz=onEllLZ/(onEll.rz*onEll.rz);
+    const gul=Math.hypot(gx,gz)||1e-4;   // du/dm: (1-u)/gul = Restweg zur Lippe in Metern
+    gx/=gul;gz/=gul;
+    const ux=gx*onEll.c+gz*onEll.s,uz=-gx*onEll.s+gz*onEll.c;
+    const outC=vel.x*ux+vel.z*uz;
+    const hxC=Math.min(Math.abs((heightAt(pos.x+ux*.2,pos.z+uz*.2)-heightAt(pos.x-ux*.2,pos.z-uz*.2))/.4),4);
+    if(outC>.6&&hxC>1&&(1-onEllU)/gul<=outC*outC/28+.03)
+     vertAutoPop(clamp(.5*(outC*hxC*.92+3.2),3.5,10),ux,uz,outC);
+   }
+   if(autoPopCd<=0)for(const q of QUARTERS){
+    const dxq=pos.x-q.x,dzq=pos.z-q.z;
+    const lq=dxq*q.dirX+dzq*q.dirZ,loq=dxq*q.perpX+dzq*q.perpZ;
+    if(lq<0||lq>q.D+.3||Math.abs(loq)>q.w/2+.3)continue;
+    const outC=vel.x*q.dirX+vel.z*q.dirZ;
+    if(outC>.6&&q.D-lq<=outC*outC/28+.03){
+     const hxC=Math.min(Math.abs((heightAt(pos.x+q.dirX*.2,pos.z+q.dirZ*.2)-heightAt(pos.x-q.dirX*.2,pos.z-q.dirZ*.2))/.4),4);
+     if(hxC>1)vertAutoPop(clamp(.5*(outC*hxC*.92+3.2),3.5,10),q.dirX,q.dirZ,outC);
+    }
+    break;
+   }
   }
  }else{
   // Luftphase
