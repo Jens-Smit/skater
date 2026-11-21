@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="de">
-<!-- build 2026-11-21-3: Neue Spielfigur Michelle (CHAR2, texturiert; GLB direkt vom three.js-CDN geladen, Commit-gepinnt mit raw-Fallback) mit Remy-Clip-Retarget (Bind-Delta, Fallback Remy; Fix: GLTFLoader sanitisiert Node-Namen, 'mixamorig:'-Prefix existiert im Objektbaum nicht -- Retarget war No-Op), T-Pose-Fix (Mixer-Originalzustand = Ride-Pose statt Bind), Vert-Ollie ohne W senkrecht nach oben (Gradienten-Umleitung, kein Drift in die Beckenmitte), Quarter-Auto-Pop-Band 0.28m (frame-robust), Trick-Rotationen +50% (24/23/24 rad/s) -->
+<!-- build 2026-11-21-4: Figuren-Wahl im Startscreen (MICHELLE/REMY, beide Instanzen mit eigenen Mixern vorgebaut, Auswahl persistiert), T-Pose-Flash bei langen Flugphasen behoben (PropertyMixer schreibt nur bei Wertaelnderung: Overlay-Basis = Ride-Pose statt Bind), Absprungphysik an Quarter/Halfpipe/Pool zurueck auf Lowpoly-Basis (Prognose-Auto-Pop entfernt, Rim-Band-Auto-Pop bleibt), neues Popsicle-Deck (Planform, Konkav, Kreisbogen-Kicks) mit Lathe-Rollaeln und verbesserten Trucks -->
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>PRO SKATER 99 — Warehouse Sessions Pro</title>
@@ -131,6 +131,9 @@ body.touch #mobile{display:flex}body.touch #help{display:none}body.touch #pbtn{d
 <div class="ptitle" style="margin-top:18px">KARTE WÄHLEN</div>
 <div class="chips" style="justify-content:center;margin:10px 0 0"><button class="chip on" data-map="tutorial">PRO PARK</button><button class="chip" data-map="warehouse">WAREHOUSE</button><button class="chip" data-map="school">SCHOOL</button><button class="chip" data-map="minipark">MINI PARK</button><button class="chip" data-map="funpark">FUN XXL</button></div>
 <div class="pdesc" id="mapdesc" style="text-align:center;min-height:16px"></div>
+<div class="ptitle" style="margin-top:14px">FIGUR WÄHLEN</div>
+<div class="chips" style="justify-content:center;margin:8px 0 0"><button class="chip" data-char="ch2">MICHELLE</button><button class="chip" data-char="ry">REMY</button></div>
+<div class="pdesc" id="chardesc" style="text-align:center;min-height:14px">MICHELLE — texturiert (three.js-Beispielasset) · REMY — stilisiert, Clip-Quelle/Fallback</div>
 <div class="menubtns"><button id="start" disabled style="opacity:.65;flex:1">3D-GRAFIK WIRD GELADEN …</button><button id="settingsbtn" class="secondary">EINSTELLUNGEN</button><button id="builderbtn" class="secondary">MAP BUILDER</button></div>
 </div></div>
 <div id="settings" style="display:none"><div class="card"><div class="eyebrow">SESSION</div><h1 style="font-size:clamp(26px,5vw,44px)">EINSTELLUNGEN</h1>
@@ -1984,30 +1987,91 @@ const MATS={};
    ============================================================ */
 function buildBoard(){
  board=new THREE.Group();skater.add(board);board.position.set(0,0,0);
+ /* NEUES POPSICLE-DECK (2026-11-21-4): Planform-Taper mit abgerundetem Nose/Tail,
+    konkave Gripseite (Kanten +1.8 cm, im Kick auslaufend) und Kicks als Kreisbogen
+    (R 1.25, ~21 Grad am Ende) statt drei Boxen. Materialgruppen: oben Grip,
+    unten Deck-Graphic (deckTex/DECK), Kanten Holzlaminat. Rollen als Lathe-Profil
+    mit Reifenschulter, Trucks mit Kapsel-Hanger, Kingpin, Achsmuttern. */
  const gripM=M('grip',1,3,.98),woodM=mat(0xb98a54,.55);
  MATS.deck=new THREE.MeshStandardMaterial({map:deckTex(DECK),roughness:.5});
- const deckMats=[woodM,woodM,gripM,MATS.deck,woodM,woodM];
- const deck=box(board,.36,.028,1.28,deckMats,0,-.038,0);
- const nose=box(board,.36,.026,.24,deckMats,0,-.008,.75);nose.rotation.x=-.32;
- const tail=box(board,.36,.026,.24,deckMats,0,-.008,-.75);tail.rotation.x=.32;
- for(const z of [-.52,.52])for(const x of [-.11,.11]){
-  const b=cylXZ(board,.013,.012,mat(0x9aa2aa,.4,.7),x,-.02,z,6);
+ const HALF=.42,KICK=.44,RK=1.25,PHI=Math.asin(KICK/RK),TH=.014,TOP=-.024,CC=.018,W0=.18;
+ const LEND=HALF+KICK,BOD=26,NKC=22,J=9;
+ /* Laengsschnitte: Body flach, Nose/Tail je Kreisbogen (Steigung am Ende ~21 Grad) */
+ const secZ=[],secY=[];
+ for(let i=NKC;i>=1;i--){const p=i/NKC*PHI;secZ.push(-(HALF+RK*Math.sin(p)));secY.push(RK*(1-Math.cos(p)))}
+ for(let i=0;i<=BOD;i++){secZ.push(-HALF+i/BOD*2*HALF);secY.push(0)}
+ for(let i=1;i<=NKC;i++){const p=i/NKC*PHI;secZ.push(HALF+RK*Math.sin(p));secY.push(RK*(1-Math.cos(p)))}
+ /* Planform: volle Breite bis |z|=.5, dann abgerundeter Taper zur Spitze (hw -> 0,
+    Deck schliesst sich dort), Konkav-Faktor laeuft im Kick linear aus */
+ const hwOf=z=>{const k=(Math.abs(z)-.5)/(LEND-.5);return W0*Math.pow(k<=0?1:Math.max(0,1-k*k),.55)};
+ const fdOf=z=>1-clamp((Math.abs(Math.abs(z)-HALF))/KICK,0,1);
+ const P=[],U=[],I=[];let vi=0;
+ function strip(surf){ /* +1: Gripseite (normal +y), -1: Unterseite (normal -y, Textil spiegelverkehrt lesbar) */
+  const off=vi;
+  for(let i=0;i<secZ.length;i++){const z=secZ[i],yy=secY[i],hw=hwOf(z),fd=fdOf(z);
+   for(let j=0;j<=J;j++){const xn=j/J*2-1;
+    P.push(xn*hw,TOP+yy+CC*xn*xn*fd+(surf<0?-TH:0),z);
+    U.push(surf>0?j/J:1-j/J,i/(secZ.length-1));vi++;
+   }}
+  for(let i=0;i<secZ.length-1;i++)for(let j=0;j<J;j++){
+   const a=off+i*(J+1)+j,b=a+1,c=a+J+1,d=c+1;
+   if(surf>0)I.push(a,c,b,b,c,d);else I.push(a,b,c,b,d,c);
+  }
  }
- // Trucks: Baseplate, Hanger, Kingpin, Achse
- const truckM=mat(0xb6bec4,.35,.75);
+ function rail(sgn){ /* Seitenwand (Deck-Kante) zwischen Ober- und Unterseite */
+  const off=vi,n=secZ.length;
+  for(let i=0;i<n;i++){const z=secZ[i],yy=secY[i],hw=hwOf(z),fd=fdOf(z);
+   P.push(sgn*hw,TOP+yy+CC*fd,z);U.push(i/(n-1),0);vi++;
+   P.push(sgn*hw,TOP+yy+CC*fd-TH,z);U.push(i/(n-1),1);vi++;
+  }
+  for(let i=0;i<n-1;i++){
+   const a=off+i*2,b=a+1,c=a+2,d=a+3;
+   if(sgn>0)I.push(a,c,b,c,d,b);else I.push(a,b,c,c,b,d);
+  }
+ }
+ const gT=I.length;strip(1);const gTE=I.length;const gB=I.length;strip(-1);const gBE=I.length;
+ const gR=I.length;rail(1);const gRE=I.length;const gL=I.length;rail(-1);const gLE=I.length;
+ const dg=new THREE.BufferGeometry();
+ dg.setAttribute('position',new THREE.Float32BufferAttribute(P,3));
+ dg.setAttribute('uv',new THREE.Float32BufferAttribute(U,2));
+ dg.setIndex(I);
+ dg.addGroup(gT,gTE-gT,0);dg.addGroup(gB,gBE-gB,1);dg.addGroup(gR,gRE-gR,2);dg.addGroup(gL,gLE-gL,2);
+ dg.computeVertexNormals();
+ const deck=new THREE.Mesh(dg,[gripM,MATS.deck,woodM,woodM]);
+ deck.castShadow=deck.receiveShadow=true;board.add(deck);
+ /* Trucks: Baseplate, Kapsel-Hanger (grob in Z), Kingpin, Achse, Muttern, Washers */
+ const truckM=mat(0xb6bec4,.35,.75),steelM=mat(0x8b939a,.35,.85),boltM=mat(0xd7dde2,.3,.8);
  for(const z of [-.42,.42]){
   const t=new THREE.Group();t.position.set(0,0,z);board.add(t);
-  box(t,.13,.026,.14,truckM,0,-.058,0);
-  box(t,.36,.055,.08,truckM,0,-.112,0);
-  const kp=cylXZ(t,.011,.06,mat(0x8b939a,.4,.7),0,-.085,.028,6);kp.rotation.x=.5;
-  const axle=cylXZ(t,.014,.42,mat(0x8b939a,.35,.8),0,-.112,0,8);axle.rotation.z=Math.PI/2;
-  if(z>0)frontTruck=t;
-  for(const x of [-.19,.19]){
-   const wh=cylXZ(t,.058,.048,new THREE.MeshStandardMaterial({color:0xf7f0da,roughness:.42}),x,-.112,z,14);
-   wh.rotation.z=Math.PI/2;
-   const hub=cylXZ(t,.02,.052,mat(0x2c3138,.5,.5),x,-.112,z,10);hub.rotation.z=Math.PI/2;
-   wheels.push(wh);
+  box(t,.128,.02,.125,truckM,0,-.052,0);
+  const hg=new THREE.Mesh(new THREE.CapsuleGeometry(.026,.23,4,10),truckM);
+  hg.scale.set(1,1.05,1.55);hg.rotation.z=Math.PI/2;hg.position.set(0,-.098,0);
+  hg.castShadow=true;t.add(hg);
+  const kp=cylXZ(t,.011,.06,steelM,0,-.075,.03,6);kp.rotation.x=.5;
+  const axle=cylXZ(t,.012,.40,steelM,0,-.112,0,8);axle.rotation.z=Math.PI/2;
+  for(const sx of [-.18,.18]){
+   const nut=new THREE.Mesh(new THREE.CylinderGeometry(.008,.008,.012,8),steelM);
+   nut.rotation.z=Math.PI/2;nut.position.set(sx,-.112,0);nut.castShadow=true;t.add(nut);
+   const wash=new THREE.Mesh(new THREE.TorusGeometry(.017,.0035,8,16),steelM);
+   wash.rotation.y=Math.PI/2;wash.position.set(sx*.88,-.112,0);t.add(wash);
   }
+  if(z>0)frontTruck=t;
+  /* Rollen: Lathe-Profil (Reifenschulter + Kern), Nabe dunkel — Rollradius bleibt .058,
+     Bodenkontakt bleibt -.17 (Konsistenz zu Physik-Rollrechnung und FK-Fusshoehe) */
+  for(const x of [-.155,.155]){
+   const prof=[[.006,-.023],[.048,-.023],[.056,-.017],[.058,-.007],[.058,.007],[.056,.017],[.048,.023],[.006,.023]]
+    .map(p=>new THREE.Vector2(p[0],p[1]));
+   const wh=new THREE.Mesh(new THREE.LatheGeometry(prof,18),
+    new THREE.MeshStandardMaterial({color:0xf7f0da,roughness:.42}));
+   wh.rotation.z=Math.PI/2;wh.position.set(x,-.112,0);wh.castShadow=true;t.add(wh);wheels.push(wh);
+   const hub=new THREE.Mesh(new THREE.CylinderGeometry(.011,.011,.05,10),mat(0x2c3138,.5,.5));
+   hub.rotation.z=Math.PI/2;hub.position.set(x,-.112,0);t.add(hub);
+  }
+ }
+ /* Truck-Schrauben: 2x2 Senkkoepfe je Achse auf dem Griptape */
+ for(const z of [-.42,.42])for(const bx of [-.04,.04])for(const bz of [-.045,.045]){
+  const b=new THREE.Mesh(new THREE.CylinderGeometry(.0055,.0055,.005,8),boltM);
+  b.position.set(bx,TOP+.0025,z+bz);board.add(b);
  }
 }
 /* ============================================================
@@ -2546,10 +2610,13 @@ function updateTrickText(){
 }
 
 /* ---------- Gemeinsame Visuals pro Frame ---------- */
-/* ---- CHARAKTER: CHAR2 "Michelle" (bevorzugt, texturiert, assets/char2) mit Remy-Clip-Retarget,
-   Fallback Remy (Mixamo-Rig, assets/remy); GLTFLoader lazy per CDN (2 Fallbacks).
-   Remy liefert die 11 eigenen Skate-Clips, die per Bind-Delta auf beide Rigs laufen. ---- */
+/* ---- CHARAKTER: zwei Figuren wahlweise (Startscreen): CHAR2 "Michelle" (bevorzugt,
+   texturiert, three.js-Beispielasset) und Remy (stilisiert, assets/remy) — beide mit
+   Remys 11 Skate-Clips (Michelle per Bind-Delta-Retarget). Remy bleibt Fallback,
+   wenn CHAR2 nicht laedt (CDN); GLTFLoader lazy per CDN (2 Fallbacks). ---- */
 let ccLI=0,ryTry=false,switchYaw=0,ryRoot=null,ryMix=null,ryAct={},ryCur='',ryYaw=Math.PI-0.3,ryCar2=false;
+const ryChars={},rySel0=(()=>{try{const v=localStorage.getItem('ps99char');return v==='ry'||v==='ch2'?v:'ch2'}catch(e){return 'ch2'}})();
+let rySel=rySel0,rySt=null; /* ryChars: Instanzen je Figur; rySel: gewaehlte Figur (persistiert) */
 const CC_LD=['https://cdn.jsdelivr.net/gh/mrdoob/three.js@r147/examples/js/loaders/GLTFLoader.js',
  'https://unpkg.com/three@0.147.0/examples/js/loaders/GLTFLoader.js']; /* GLTFLoader-CDNs, r147 passend zum Inline-three */
 const RY_U=GBU.map(u=>u+'assets/remy/');
@@ -2641,10 +2708,17 @@ function ryInit(){ /* Remy = Clip-Quelle; CHAR2 (Michelle) = bevorzugte Figur, R
    new THREE.GLTFLoader().parse(JSON.stringify(j),'',gr=>{
     const rmy=gr.scene||gr.scenes&&gr.scenes[0];
     if(!rmy||!gr.animations||!gr.animations.length)return;
-    /* Erst Michelle versuchen (texturiertes Mixamo-Rig), Remy-Clips retargeten;
-       schlaegt char2 fehl (CDN), laeuft das Spiel mit Remy wie bisher. */
+    /* ZWEI Figuren parallel vorgebaut: Michelle mit RETARGETETEN CLIP-KOPIEN (Remy-
+       Original bleibt unberuehrt) und Remy mit den Original-Clips. Jede Instanz
+       haelt eigenen Mixer/Actions/Overlay-Knochen; gewaehlt wird im Startscreen
+       (ryApplySel), Faellt char2 aus, bleibt Remy als einzige Figur (Fallback). */
     char2Load(g2=>{
-     try{ryRetarget(g2.scene,rmy,gr.animations);ryBuild(g2.scene,gr.animations,true)}
+     try{
+      const clips=gr.animations.map(a=>a.clone());
+      ryRetarget(g2.scene,rmy,clips);
+      ryBuild(g2.scene,clips,true);            /* Michelle (CHAR2, texturiert) */
+      ryBuild(rmy,gr.animations,false);        /* Remy (Original-Clips) */
+     }
      catch(e){ryBuild(rmy,gr.animations,false)}
     },()=>ryBuild(rmy,gr.animations,false));
    },()=>{});
@@ -2669,19 +2743,25 @@ function ryBuild(root,anims,car2){
      Skalierung 0.5: Kinn ~8.4 cm, Augen ~14.3 cm, Ohren ~9 cm ueber Schultergelenk.
      CHAR2: Track bereits in ryRetarget genullt, x0.5 bleibt wirkungslos. */
   for(const c of anims||[]){const tr=(c.tracks||[]).find(t=>t.name&&t.name.endsWith('mixamorigHead.position'));if(tr)for(let i=0;i<tr.values.length;i++)tr.values[i]*=.5}
-  /* Knochen-Cache fuer die prozeduralen Trick-Overlays: Bind-Pose als Ruecksetzpunkt,
-     das Overlay wird NACH jedem Mixer-Update aufmultipliziert (kein Vererben ueber Frames). */
+  /* KNOCHEN-CACHE FUER DIE TRICK-OVERLAYS: Ruecksetzpunkt ist NICHT mehr die Bind-
+     Pose, sondern die Ride-Ausgangspose Frame 0 — deshalb steht dieses Capturing
+     NACH dem T-Pose-Fix unten. Grund: Der PropertyMixer schreibt eine Komponente
+     nur in den Szenegraphen, wenn sich der akkumulierte Wert gegen den Vorframe
+     aendert (PropertyMixer.apply, Change-Detection). Nach dem Ende kurzer Clips
+     (LoopOnce+clampWhenFinished) oder bei frame-gleichen Werten — das ist exakt
+     der Zustand in langen Flugphasen ohne Trick — bleibt der Knochen also beim
+     zuletzt geschriebenen Wert, und das Overlay-Reset in ryUpdate setzt ihn auf
+     diese Basis zurueck. War die Basis die Bind-Pose, blitzte genau dort die
+     T-Pose auf (Ollie -> lange Luft -> Landung). Mit der Ride-Pose als Basis
+     stehen nicht beschriebene Frames stattdessen in natuerlicher Skaterpose. */
   ryBones={};ryBase={};
-  for(const bn of RY_BONES){const b=ryRoot.getObjectByName('mixamorig'+bn);
-   if(b){ryBones[bn]=b;ryBase[bn]=b.quaternion.clone()}}
-  /* T-POSE-FIX: Der AnimationMixer blendet bei Gewichts-Luecken (schnelle Clip-
-     Wechsel in der Luft, z.B. Ollie->Flip->Grab) die Originalzustands-Kopie der
-     Bindings ein (PropertyMixer.apply: "original * (1 - SummeDerGewichte)"). Diese
-     Kopie wird beim ERSTEN Aktivieren einer Aktion als Snapshot der Knochen
-     gespeichert -- ohne diesen Fix also die Bind-Pose = T-Pose, daher die
-     T-Pose-Blitzer beim Ollie. Fix: Skelett VOR dem ersten Mixer-Update manuell
-     in die Ride-Ausgangspose (Frame 0) bringen -> Gewichts-Luecken blenden auf
-     eine natuerliche Skaterpose zurueck, nie auf die T-Pose. */
+  /* T-POSE-FIX (fade-Luecken): Der AnimationMixer blendet bei Gewichts-Luecken
+     (schnelle Clip-Wechsel in der Luft, z.B. Ollie->Flip->Grab) die Original-
+     zustands-Kopie der Bindings ein (PropertyMixer.apply: akku + original *
+     (1-SummeDerGewichte)). Diese Kopie wird beim ERSTEN Aktivieren einer Aktion
+     als Snapshot der Knochen gespeichert — ohne diesen Fix also die Bind-Pose =
+     T-Pose, daher die T-Pose-Blitzer beim Ollie. Fix: Skelett VOR dem ersten
+     Mixer-Update manuell in die Ride-Ausgangspose (Frame 0) bringen. */
   const ryPose0=(anims||[]).find(a=>a&&a.name==='ride');
   if(ryPose0)for(const tr of ryPose0.tracks||[]){
    const b=ryRoot.getObjectByName(tr.name.split('.')[0]);
@@ -2689,20 +2769,60 @@ function ryBuild(root,anims,car2){
    if(tr.name.endsWith('.quaternion'))b.quaternion.fromArray(tr.values,0);
    else if(tr.name.endsWith('.position'))b.position.fromArray(tr.values,0);
   }
+  for(const bn of RY_BONES){const b=ryRoot.getObjectByName('mixamorig'+bn);
+   if(b){ryBones[bn]=b;ryBase[bn]=b.quaternion.clone()}}
   ryMix=new THREE.AnimationMixer(ryRoot);
   for(const k of ['ride','ride2','jump','fall','flip','shove','grab','grind','manual','nmanual','land']){const c=anims&&anims.find(a=>a.name===k);
    if(!c)continue;const ac=ryMix.clipAction(c);
    if(k==='fall'||k==='land'||k==='jump'||k==='flip'||k==='shove'){ac.setLoop(THREE.LoopOnce);ac.clampWhenFinished=true}
    ryAct[k]=ac}
   rySet('ride',1);ryMix.update(.4);
+  /* INSTANZ REGISTRIEREN (Figuren-Wahl): Globals-Schnappschuss dieser Figur;
+     ryApplySel haengt die gewaehlte Instanz in rag und richtet die Globals neu. */
+  const nm=ryCar2?'ch2':'ry';
+  ryChars[nm]={name:nm,root:ryRoot,mix:ryMix,act:ryAct,cur:ryCur,bones:ryBones,base:ryBase,yaw:ryYaw,car2:ryCar2};
+  ryApplySel();
  }catch(e){ryRoot=null;ryMix=null}
 }
 function rySet(k,ts){
  const a=ryAct[k];if(!a)return;a.timeScale=ts;
  if(ryCur===k)return;
  const p=ryAct[ryCur];if(p)p.fadeOut(.2);
- a.reset().fadeIn(.2).play();ryCur=k;
+ a.reset().fadeIn(.2).play();ryCur=k;if(rySt)rySt.cur=k; /* Stash-Sync: Auswahl-Wechsel (ryApplySel) uebernimmt den Clip-Zustand */
 }
+/* ---------- FIGUR-WAHL: MICHELLE (ch2) / REMY (ry) im Startscreen ----------
+   Beide Instanzen halten eigene Mixer/Actions/Overlay-Knochen (ryBuild registriert
+   sie in ryChars). Die Auswahl haengt nur die aktive Wurzel in rag (Sturz-Taumeln)
+   und richtet die Globals auf ihren Zustand; persistiert in localStorage 'ps99char'.
+   Ist die gewaehlte Figur (noch) nicht geladen, greift die andere als Anzeige-
+   Fallback, die Auswahl bleibt aber gespeichert und wird beim Lade-Erfolg aktiv. */
+function ryApplySel(){
+ let st=ryChars[rySel]||ryChars.ry||ryChars.ch2||null;
+ if(!st||!st.root||!st.mix){uiCharChips();return}
+ rySt=st;ryRoot=st.root;ryMix=st.mix;ryAct=st.act;ryCur=st.cur||'ride';
+ ryBones=st.bones;ryBase=st.base;ryYaw=st.yaw;ryCar2=st.car2;
+ switchYaw=0;ryPoseName='';ryPoseW=0; /* Overlay-Zustand gehoert zur Anzeige, nicht zur Figur */
+ for(const nm in ryChars){const r=ryChars[nm].root;if(nm!==st.name&&r.parent===rag)rag.remove(r)}
+ if(ryRoot.parent!==rag)rag.add(ryRoot);
+ uiCharChips();
+}
+function charSelect(b){
+ rySel=b.dataset.char;
+ try{localStorage.setItem('ps99char',rySel)}catch(e){}
+ ryApplySel();
+}
+function uiCharChips(){
+ document.querySelectorAll('[data-char]').forEach(x=>{
+  const nm=x.dataset.char,has=!!ryChars[nm];
+  x.classList.toggle('on',nm===rySel);
+  x.style.opacity=has?'':'.45';
+  x.title=has?'':(nm==='ch2'?'wird geladen …':'(noch nicht geladen)');
+ });
+ const cd=$('chardesc');
+ if(cd)cd.textContent=ryChars.ch2?'MICHELLE — texturiert (three.js-Beispielasset, Mixamo-Rig) · REMY — stilisiert, Clip-Quelle':
+  'MICHELLE LÄDT — vorübergehend REMY aktiv';
+}
+document.querySelectorAll('[data-char]').forEach(b=>b.addEventListener('click',()=>charSelect(b)));
 function ryUpdate(dt){
  if(!ryMix)return; /* Remy noch nicht geladen: Board laeuft ohne Figur */
  /* SWITCH/Fakie: Beim Rueckwaertsrollen (turnBack, z.B. nach Ollie 180) dreht die Figur weich um 180 Grad zur Fahrtrichtung (Board rollt rueckwaerts). */
@@ -2724,8 +2844,9 @@ function ryUpdate(dt){
  else if(landT>.22)k='land';       /* Landung: Kompression */
  else if(pushT>0)k='ride2';        /* Anschub */
  else if(held.ollie){k='grind';ts=.55}  /* Ollie laden: Crouch */
- /* Overlay-Knochen auf die Bind-Pose zuruecksetzen, Mixer schreibt die Clip-Werte,
-    danach das gewichtete Trick-Overlay aufmultiplizieren. */
+ /* Overlay-Knochen auf ihre Basis zuruecksetzen (Ride-Pose Frame 0, NICHT Bind:
+     der Mixer beschreibt Knochen nur bei Wertaelnderung — siehe ryBuild), Mixer
+     schreibt die Clip-Werte, danach das gewichtete Trick-Overlay aufmultiplizieren. */
  if(ryBones)for(const bn in ryBones)ryBones[bn].quaternion.copy(ryBase[bn]);
  rySet(k,ts);ryMix.update(dt);
  ryPoseApply(dt,ryPoseWant());
@@ -3200,45 +3321,15 @@ function update(dt){
      vel.x-=q.dirX*8.5*dt;vel.z-=q.dirZ*8.5*dt;
     }
    }
-   /* AUTO-POP an Quarter-/Halfpipe-/Pool-Lippen: Ohne Ollie blieb der Skater an der
-      Kante haengen. Prognose: Bremsweg des Schwungs = out²/28 (Verzoegerung ~14).
-      Ist der verbleibende Weg bis zur Lippe kleiner, steht der Stillstand an der
-      Kante fest — dann gibt es einen fluiden Pop mit 50 % des Vert-Ollies
-      (out*hx*.92+3.2, halbiert), inkl. Ausfahrts-Schwung und Lip-Turn. */
-   if(autoPopCd<=0&&onPipe){
-    const sgp=Math.sign(pos.x)||1,outC=vel.x*sgp;
-    const hxC=Math.min(Math.abs((heightAt(pos.x+sgp*.2,pos.z)-heightAt(pos.x-sgp*.2,pos.z))/.4),4);
-    if(outC>.6&&hxC>1&&PIPE.R-Math.abs(pos.x)<=outC*outC/28+.03)
-     vertAutoPop(clamp(.5*(outC*hxC*.92+3.2),3.5,10),sgp,0,outC);
-   }
-   if(autoPopCd<=0&&onBowl&&onBowlR>onBowlB.R-3){
-    const rl=onBowlR||1,ux=(pos.x-onBowlB.x)/rl,uz=(pos.z-onBowlB.z)/rl;
-    const outC=vel.x*ux+vel.z*uz;
-    const hxC=Math.min(Math.abs((heightAt(pos.x+ux*.2,pos.z+uz*.2)-heightAt(pos.x-ux*.2,pos.z-uz*.2))/.4),4);
-    if(outC>.6&&hxC>1&&onBowlB.R-onBowlR<=outC*outC/28+.03)
-     vertAutoPop(clamp(.5*(outC*hxC*.92+3.2),3.5,10),ux,uz,outC);
-   }
-   if(autoPopCd<=0&&onEll){
-    let gx=onEllLX/(onEll.rx*onEll.rx),gz=onEllLZ/(onEll.rz*onEll.rz);
-    const gul=Math.hypot(gx,gz)||1e-4;   // du/dm: (1-u)/gul = Restweg zur Lippe in Metern
-    gx/=gul;gz/=gul;
-    const ux=gx*onEll.c+gz*onEll.s,uz=-gx*onEll.s+gz*onEll.c;
-    const outC=vel.x*ux+vel.z*uz;
-    const hxC=Math.min(Math.abs((heightAt(pos.x+ux*.2,pos.z+uz*.2)-heightAt(pos.x-ux*.2,pos.z-uz*.2))/.4),4);
-    if(outC>.6&&hxC>1&&(1-onEllU)/gul<=outC*outC/28+.03)
-     vertAutoPop(clamp(.5*(outC*hxC*.92+3.2),3.5,10),ux,uz,outC);
-   }
-   if(autoPopCd<=0)for(const q of QUARTERS){
-    const dxq=pos.x-q.x,dzq=pos.z-q.z;
-    const lq=dxq*q.dirX+dzq*q.dirZ,loq=dxq*q.perpX+dzq*q.perpZ;
-    if(lq<0||lq>q.D+.3||Math.abs(loq)>q.w/2+.3)continue;
-    const outC=vel.x*q.dirX+vel.z*q.dirZ;
-    if(outC>.6&&q.D-lq<=outC*outC/28+.03){
-     const hxC=Math.min(Math.abs((heightAt(pos.x+q.dirX*.2,pos.z+q.dirZ*.2)-heightAt(pos.x-q.dirX*.2,pos.z-q.dirZ*.2))/.4),4);
-     if(hxC>1)vertAutoPop(clamp(.5*(outC*hxC*.92+3.2),3.5,10),q.dirX,q.dirZ,outC);
-    }
-    break;
-   }
+   /* KEIN PROGNOSE-AUTO-POP VOR DER LIPPE (Stand 2026-11-21-4, Rueckkehr zur
+      Lowpoly-Basis): Die Bremsweg-Prognosebloecke (Pipe/Bowl/Ellipse/Quarter,
+      "Restweg <= out²/28") haben die Abspruenge an Quarters, Halfpipes und
+      besonders Pools/Bowls verfaelscht — der Schwung wurde mitten in der
+      Transition radial umgebogen und frueh abgefetzt. Abspruenge laufen
+      wieder wie im Altbau: Die Wand traegt den Skater hoch, an der Rim-Klemme
+      gibt es den fluessigen Auto-Pop (Pipe-Hochband, Quarter-Rim-Band .28,
+      Bowl-/Ellipse-Lippe), ansonsten carvet die obere Transition zurueck.
+      Manueller Ollie steht jederzeit offen. */
   }
  }else{
   // Luftphase
