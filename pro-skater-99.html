@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="de">
-<!-- build 2026-11-21-1: THPS1-Trickregister: 8 Flip-, 8 Grab-, 8 Grind-, 5 Lip-Tricks + 5 Specials mit Special-Leiste, prozedurale Remy-Pose-Overlays pro Trick, Board-Animationprofil je Trick (DARKSLIDE-Gripflip, Lip-Posen, Grab-Seitenversatz) -->
+<!-- build 2026-11-21-3: Neue Spielfigur Michelle (CHAR2, texturiert; GLB direkt vom three.js-CDN geladen, Commit-gepinnt mit raw-Fallback) mit Remy-Clip-Retarget (Bind-Delta, Fallback Remy; Fix: GLTFLoader sanitisiert Node-Namen, 'mixamorig:'-Prefix existiert im Objektbaum nicht -- Retarget war No-Op), T-Pose-Fix (Mixer-Originalzustand = Ride-Pose statt Bind), Vert-Ollie ohne W senkrecht nach oben (Gradienten-Umleitung, kein Drift in die Beckenmitte), Quarter-Auto-Pop-Band 0.28m (frame-robust), Trick-Rotationen +50% (24/23/24 rad/s) -->
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>PRO SKATER 99 — Warehouse Sessions Pro</title>
@@ -1973,8 +1973,8 @@ function buildFunPark(){
  BOXES.push({x:76,z:0,w:1.4,d:104,h:7});
 }
 /* ============================================================
-   EIN CHARAKTER: Remy (siehe ryInit). Die alten Outfit-Presets sind
-   entfernt; als Spielfigur existiert nur Remy mit einem Deck-Design.
+   EIN CHARAKTER: Michelle (CHAR2, bevorzugt) mit Remys Skate-Clips per
+   Bind-Delta-Retarget; Fallback Remy (siehe ryInit/ryRetarget). Ein Deck-Design.
    ============================================================ */
 const DECK={a:'#0ea5e9',b:'#7c3aed',ink:'#ffffff',txt:'PRO 99'};
 const MATS={};
@@ -2011,10 +2011,10 @@ function buildBoard(){
  }
 }
 /* ============================================================
-   CHARAKTER — nur EINE Figur: Remy (ryInit).
-   Das alte stilisierte High-Detail-Rig samt Posensystem und Outfit-
-   Wahl ist entfernt. Uebrig bleibt rag als Wurzelknoten: das
-   Sturz-Taumeln (Bail) und Remy haengen daran.
+   CHARAKTER — eine Figur (ryInit): Michelle als CHAR2 bevorzugt,
+   Remy als Fallback, beide mit denselben 11 Skate-Clips und Overlays.
+   rag bleibt der Wurzelknoten: Sturz-Taumeln (Bail) und die Figur
+   haengen daran.
    ============================================================ */
 function buildChar(){
  rag=new THREE.Group();skater.add(rag);
@@ -2055,7 +2055,7 @@ function updateParticles(dt){
    Alle Tricks der THPS1-Liste mit EIGENEM Animationsprofil:
    - Board: fl (Rollen), im (vertikaler Wrap), sp (Shove-Anteil) beim Flip;
      GRABBOARD = [Pitch, Yaw, Lift, Seitenversatz] je Grab; dark = Griptape unten (Darkslide)
-   - Remy: prozedurale Knochen-Overlays (RY_POSES) auf den Basis-Clip,
+   - Figur: prozedurale Knochen-Overlays (RY_POSES) auf den Basis-Clip,
      Achsen-Vorzeichen aus den Clips vermessen (Knie -x, Oberschenkel +x,
      linker Arm +z seitlich, rechter Arm -z, Wirbelsäule +x vorn)
    - Lip-Familie: Stall-States an der Vert-Lippe (TH_LIP/LIPB)
@@ -2086,7 +2086,7 @@ const TH_LIP={
 /* Board-Pose je Lip-Stall: [Pitch, Yaw, Lift] */
 const LIPB={axle:[.06,0,0],disaster:[1.1,0,.02],rock:[-.42,.1,.04],noseblunt:[-1.2,.05,.05],blunt:[1.2,.05,.05]};
 
-/* Prozedurale Remy-Overlays (Grad, Euler XYZ, additiv auf den Basis-Clip) */
+/* Prozedurale Figur-Overlays (Grad, Euler XYZ, additiv auf den Basis-Clip; achsengleich auf Remy und Michelle) */
 const RY_POSES={
  /* Grab-Familie */
  g_nosegrab:{RightArm:[-18,0,-38],RightForeArm:[-30,0,0],LeftArm:[0,0,22],Head:[-12,10,0]},
@@ -2546,51 +2546,151 @@ function updateTrickText(){
 }
 
 /* ---------- Gemeinsame Visuals pro Frame ---------- */
-/* ---- CHARAKTER: Remy (Mixamo-Rig, assets/remy), GLTFLoader lazy per CDN (2 Fallbacks).
-   Nur noch EIN Charakter: stilisierter Skater und CC0-Mannequin sind entfernt. ---- */
-let ccLI=0,ryTry=false,switchYaw=0,ryRoot=null,ryMix=null,ryAct={},ryCur='';
+/* ---- CHARAKTER: CHAR2 "Michelle" (bevorzugt, texturiert, assets/char2) mit Remy-Clip-Retarget,
+   Fallback Remy (Mixamo-Rig, assets/remy); GLTFLoader lazy per CDN (2 Fallbacks).
+   Remy liefert die 11 eigenen Skate-Clips, die per Bind-Delta auf beide Rigs laufen. ---- */
+let ccLI=0,ryTry=false,switchYaw=0,ryRoot=null,ryMix=null,ryAct={},ryCur='',ryYaw=Math.PI-0.3,ryCar2=false;
 const CC_LD=['https://cdn.jsdelivr.net/gh/mrdoob/three.js@r147/examples/js/loaders/GLTFLoader.js',
  'https://unpkg.com/three@0.147.0/examples/js/loaders/GLTFLoader.js']; /* GLTFLoader-CDNs, r147 passend zum Inline-three */
 const RY_U=GBU.map(u=>u+'assets/remy/');
+/* CHAR2 = bevorzugte Spielfigur: "Michelle" (Mixamo-Charakter Ch03, voll texturiert
+   mit Diffuse/Normal/Glossiness-Maps) aus den three.js-Beispielassets -- als GLB
+   direkt vom CDN geladen (Exakt-Pin auf den Commit im mrdoob/three.js-Repo, nicht
+   verschieblich wie ein Branch; jsdelivr zuerst, raw.github als Fallback). Remy bleibt
+   Clip-Quelle UND Fallback: die 11 eigenen Skate-Clips (ride/jump/flip/grab/...)
+   werden per Bind-Delta-Retarget (siehe ryRetarget) von Remys Mixamo-Rig auf
+   Michelles identisches Mixamo-Rig uebertragen, so bleiben alle Tricks, Poses und
+   Overlays erhalten. Lizenz: three.js-Beispielasset (Mixamo), siehe three.js-Repo. */
+/* Michelle-GLB: exakter Asset-Stand im mrdoob/three.js-Repo, Commit-gepinnt (3.276.888 Bytes, Groesse gegen Verzeichnisabfrage verifiziert) */
+const CH2_GLB='examples/models/gltf/Michelle.glb';
+const CH2_GLB_PIN='06f796f88e9522a6194a08fa7d125260614b4cb5/'; /* exakter Asset-Stand im mrdoob/three.js-Repo (Commit-Pin, nicht verschieblich wie ein Branch) */
+const CH2_FU=['https://cdn.jsdelivr.net/gh/mrdoob/three.js@','https://raw.githubusercontent.com/mrdoob/three.js/']; /* Fallback-Kette: Praefix + Commit-Pin + CH2_GLB */
+const CH2_S=.86;                         /* Wrapper-Skalierung: Fuss-Hoehendelta gegen Remy minimal (FK-vermessen) */
+const CH2_F=.4448264257115178/CH2_S;     /* Hips-Trackfaktor: identischer Welthub wie Remy-Rootscale .004448 */
+function char2Load(ok,err){
+ let i=0;
+ (async function nxt(){
+  if(i>=CH2_FU.length)return err();
+  const b=CH2_FU[i++];
+  try{
+   const r=await fetch(b+CH2_GLB_PIN+CH2_GLB);    /* GLB-Binary direkt (kein Base64-Umweg, keine repo-eigene Kopie noetig) */
+   if(!r.ok)throw 0;
+   const u=new Uint8Array(await r.arrayBuffer());
+   if(u.length<20||u[0]!==103||u[1]!==108||u[2]!==84||u[3]!==70)throw 0; /* 'glTF'-Magic: kein HTML/Captive-Portal-Muell parsen */
+   new THREE.GLTFLoader().parse(u.buffer,'',ok,()=>nxt());   /* GLB-binary direkt parsen */
+  }catch(e){nxt()}
+ })();
+}
+/* BIND-DELTA-RETARGET: Remy-Clips sind lokale Rotationen in Remys Knochenkonvention.
+   Michelle hat dieselbe Mixamo-Hierarchie ("mixamorig:X"), aber andere Bind-Posen
+   (Hips-Marker, A-Pose-Anteile, Blender-Z-Up-Bake). Pro Rotationsschluessel:
+   q' = qBindMichelle * qBindRemy^-1 * qClip  -> identische Welt-Pose, Michelles
+   Proportionen. Hips-Translation: gleicher Welthub wie bei Remy (Faktor CH2_F)
+   plus Achstausch (x,z,-y) fuer den +90-X-Bake des Character-Wurzelknotens.
+   Head-Positionstrack: reiner Remy-Kalibrationshack (70/-29 Lift, Remy-Bind 0) --
+   auf Michelle genullt, ihre Kopfhoehe sitzt im Modell selbst. Offline per
+   Voll-FK vermesssen: Hips-Delta 0.012, Fuss-Hoehendelta 0.02. */
+function ryRetarget(c2,rmy,anims){
+ const rb={};
+ rmy.traverse(o=>{if(o.name&&o.name.indexOf('mixamorig')===0)rb[o.name]=o.quaternion.clone()});
+ const cb={};
+ c2.traverse(o=>{if(!o.name||o.name.indexOf('mixamorig')!==0)return;
+  /* GLTFLoader sanitisiert Node-Namen beim Parsen (THREE.PropertyBinding.
+     sanitizeNodeName entfernt ':' ) -- 'mixamorig:Hips' heisst im Objektbaum
+     bereits 'mixamorigHips'. Der alte Prefix-Test auf 'mixamorig:' lief deshalb
+     IMMER leer: das Rotations-Retarget war ein No-Op, Michelle lief auf
+     Remy-Rohclips gegen ihre eigene Bind-Pose (Beine falsch, Fuesse ueber
+     Kniehoehe geklappt). Fix: generisches Prefix, Umbenennung als Fallback. */
+  if(o.name.indexOf('mixamorig:')===0)o.name='mixamorig'+o.name.slice(10);
+  cb[o.name]=o.quaternion.clone()});
+ const qi=new THREE.Quaternion(),qv=new THREE.Quaternion();
+ for(const c of anims){
+  for(const tr of (c.tracks||[])){
+   const nm=tr.name.split('.')[0];
+   if(tr.name.endsWith('.position')){
+    if(nm==='mixamorigHead'){for(let i=0;i<tr.values.length;i++)tr.values[i]=0}
+    else if(nm==='mixamorigHips'){
+     for(let i=0;i<tr.values.length;i+=3){const x=tr.values[i]*CH2_F,y=tr.values[i+1]*CH2_F,z=tr.values[i+2]*CH2_F;
+      tr.values[i]=x;tr.values[i+1]=z;tr.values[i+2]=-y}}
+    continue;
+   }
+   if(!tr.name.endsWith('.quaternion'))continue;
+   const br=rb[nm],bb=cb[nm];
+   if(!br||!bb)continue;
+   qv.copy(br).invert();qi.copy(bb).multiply(qv);                 /* delta = cb * rb^-1 */
+   for(let i=0;i<tr.values.length;i+=4){
+    qv.set(tr.values[i],tr.values[i+1],tr.values[i+2],tr.values[i+3]).premultiply(qi); /* qi * clip */
+    tr.values[i]=qv.x;tr.values[i+1]=qv.y;tr.values[i+2]=qv.z;tr.values[i+3]=qv.w;
+   }
+  }
+ }
+}
 function ccEnsure(cb){ /* GLTFLoader lazy per CDN (2 Fallbacks), dann cb() */
  if(window.THREE&&window.THREE.GLTFLoader)cb();
  else if(ccLI<CC_LD.length){const s=document.createElement('script');s.src=CC_LD[ccLI++];
   s.onload=()=>ccEnsure(cb);s.onerror=()=>ccEnsure(cb);document.head.appendChild(s)}
 }
 function ryB64(t){const b=atob(t),u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u}
-function ryInit(){ /* Mixamo-"Remy": glTF in Textfragmente, im Browser (Base64) zusammengesetzt */
+function ryInit(){ /* Remy = Clip-Quelle; CHAR2 (Michelle) = bevorzugte Figur, Remy = Fallback */
  if(ryTry||!window.THREE||navigator.webdriver)return;ryTry=true; /* E2E (webdriver): kein Netz-Charakter, Board laeuft solo */
  ccEnsure(async()=>{
   for(const b of RY_U){try{
    const j=JSON.parse(await(await fetch(b+'remy.gltf.json')).text());
    for(const bf of j.buffers){const bu=ryB64(await(await fetch(b+bf.uri)).text());if(bu.byteLength!==bf.byteLength)throw 0;bf.uri=URL.createObjectURL(new Blob([bu],{type:'application/octet-stream'}))}
    for(const im of j.images)im.uri=URL.createObjectURL(new Blob([ryB64(await(await fetch(b+im.uri)).text())],{type:'image/png'}));
-   new THREE.GLTFLoader().parse(JSON.stringify(j),'',g=>ryBuild(g),e=>{});
+   new THREE.GLTFLoader().parse(JSON.stringify(j),'',gr=>{
+    const rmy=gr.scene||gr.scenes&&gr.scenes[0];
+    if(!rmy||!gr.animations||!gr.animations.length)return;
+    /* Erst Michelle versuchen (texturiertes Mixamo-Rig), Remy-Clips retargeten;
+       schlaegt char2 fehl (CDN), laeuft das Spiel mit Remy wie bisher. */
+    char2Load(g2=>{
+     try{ryRetarget(g2.scene,rmy,gr.animations);ryBuild(g2.scene,gr.animations,true)}
+     catch(e){ryBuild(rmy,gr.animations,false)}
+    },()=>ryBuild(rmy,gr.animations,false));
+   },()=>{});
    return
   }catch(e){}}
-  /* Remy nicht ladbar: Spiel laeuft mit solo Board, kein Ersatzcharakter mehr */
+  /* Nichts ladbar: Spiel laeuft mit solo Board, kein Ersatzcharakter mehr */
  });
 }
-function ryBuild(g){
+function ryBuild(root,anims,car2){
  try{
-  ryRoot=g.scene||g.scenes[0];
-  ryRoot.rotation.y=Math.PI-.3;    /* Remy-Mesh frontet durch Bake-PI rueckwaerts: PI drehen; Stance oeffnet leicht zur Fahrtrichtung */
+  ryRoot=root;ryCar2=!!car2;
+  if(car2){
+   /* Michelle: Skalierung FK-vermessen (Fuesse auf Boardhoehe wie Remy, Delta 0.02),
+      Yaw um PI versaetzt zum Remy-Bake (Stance-Front per FK vermesssen). */
+   ryRoot.scale.setScalar(CH2_S);
+   ryYaw=-.3;
+  }else ryYaw=Math.PI-.3;    /* Remy-Mesh frontet durch Bake-PI rueckwaerts: PI drehen; Stance oeffnet leicht zur Fahrtrichtung */
   ryRoot.traverse(o=>{if(o.isMesh)o.castShadow=true});
   rag.add(ryRoot);                /* in rag: Sturz-Taumeln (Bail) wirkt mit */
-  /* Kopfproportionen (Skin-FK nachvermessen): Der komplette Kopfhub steckt als
+  /* Kopfproportionen (nur Remy-Pfad): Der komplette Kopfhub steckt als
      konstanter Anhebungs-Track in den Clips (Skelett-Offset 70/-29, voll 33 cm).
-     Kalibrierung Ride-Pose: 0.2 -> Augen 4.4 cm ueber Schultergelenk (zu tief);
-     0.35 -> 9.3 cm (Richtung stimmt); User-Wunsch: gleicher Schritt nochmals
-     drauf -> 0.5: Kinn ~8.4 cm, Augen ~14.3 cm, Ohren ~9 cm ueber
-     Schultergelenk (+5 cm Welt-Hub wie beim Schritt 0.2->0.35). */
-  for(const c of g.animations||[]){const tr=(c.tracks||[]).find(t=>t.name&&t.name.endsWith('mixamorigHead.position'));if(tr)for(let i=0;i<tr.values.length;i++)tr.values[i]*=.5}
+     Skalierung 0.5: Kinn ~8.4 cm, Augen ~14.3 cm, Ohren ~9 cm ueber Schultergelenk.
+     CHAR2: Track bereits in ryRetarget genullt, x0.5 bleibt wirkungslos. */
+  for(const c of anims||[]){const tr=(c.tracks||[]).find(t=>t.name&&t.name.endsWith('mixamorigHead.position'));if(tr)for(let i=0;i<tr.values.length;i++)tr.values[i]*=.5}
   /* Knochen-Cache fuer die prozeduralen Trick-Overlays: Bind-Pose als Ruecksetzpunkt,
      das Overlay wird NACH jedem Mixer-Update aufmultipliziert (kein Vererben ueber Frames). */
   ryBones={};ryBase={};
   for(const bn of RY_BONES){const b=ryRoot.getObjectByName('mixamorig'+bn);
    if(b){ryBones[bn]=b;ryBase[bn]=b.quaternion.clone()}}
+  /* T-POSE-FIX: Der AnimationMixer blendet bei Gewichts-Luecken (schnelle Clip-
+     Wechsel in der Luft, z.B. Ollie->Flip->Grab) die Originalzustands-Kopie der
+     Bindings ein (PropertyMixer.apply: "original * (1 - SummeDerGewichte)"). Diese
+     Kopie wird beim ERSTEN Aktivieren einer Aktion als Snapshot der Knochen
+     gespeichert -- ohne diesen Fix also die Bind-Pose = T-Pose, daher die
+     T-Pose-Blitzer beim Ollie. Fix: Skelett VOR dem ersten Mixer-Update manuell
+     in die Ride-Ausgangspose (Frame 0) bringen -> Gewichts-Luecken blenden auf
+     eine natuerliche Skaterpose zurueck, nie auf die T-Pose. */
+  const ryPose0=(anims||[]).find(a=>a&&a.name==='ride');
+  if(ryPose0)for(const tr of ryPose0.tracks||[]){
+   const b=ryRoot.getObjectByName(tr.name.split('.')[0]);
+   if(!b)continue;
+   if(tr.name.endsWith('.quaternion'))b.quaternion.fromArray(tr.values,0);
+   else if(tr.name.endsWith('.position'))b.position.fromArray(tr.values,0);
+  }
   ryMix=new THREE.AnimationMixer(ryRoot);
-  for(const k of ['ride','ride2','jump','fall','flip','shove','grab','grind','manual','nmanual','land']){const c=g.animations&&g.animations.find(a=>a.name===k);
+  for(const k of ['ride','ride2','jump','fall','flip','shove','grab','grind','manual','nmanual','land']){const c=anims&&anims.find(a=>a.name===k);
    if(!c)continue;const ac=ryMix.clipAction(c);
    if(k==='fall'||k==='land'||k==='jump'||k==='flip'||k==='shove'){ac.setLoop(THREE.LoopOnce);ac.clampWhenFinished=true}
    ryAct[k]=ac}
@@ -2607,7 +2707,7 @@ function ryUpdate(dt){
  if(!ryMix)return; /* Remy noch nicht geladen: Board laeuft ohne Figur */
  /* SWITCH/Fakie: Beim Rueckwaertsrollen (turnBack, z.B. nach Ollie 180) dreht die Figur weich um 180 Grad zur Fahrtrichtung (Board rollt rueckwaerts). */
  switchYaw=damp(switchYaw,turnBack?Math.PI:0,8,dt);
- if(ryRoot)ryRoot.rotation.y=Math.PI-.3+switchYaw;
+ if(ryRoot)ryRoot.rotation.y=ryYaw+switchYaw; /* Yaw je Figur: Remy PI-.3, Michelle -.3 (FK-vermessen) */
  let k='ride',ts=Math.max(.75,Math.min(Math.abs(fwd)/4,1.45));
  if(bail.on)k='fall';
  else if(air){                      /* Trick-Clips: Wrap/Flip > Shove > Grab > Sprung */
@@ -3009,6 +3109,28 @@ function update(dt){
      }
     }
    }
+   /* VERT-OLLIE OHNE W: An der steilen Transition soll der Sprung SENKRECHT nach
+      oben gehen statt mit Restschwang ueber die Wand zu driften (alte Mindest-
+      auswaertsgeschwindigkeit 1.2 m/s drueckte den Skater an der Wand hoch, die
+      Carve-Reflexion schleuderte ihn dann quer uebers Becken in die Mitte).
+      Generischer Gradienten-Fixup NACH den Wand-spezifischen Abspruengen:
+      Wandwaertige Geschwindigkeit wird auf steiler Transition vollstaendig
+      abgebaut (weich skaliert ab Steilheit .55), der Tangentialanteil (Carve)
+      bleibt unberuehrt. Mit W (Air out) laeuft der Absprung wie bisher. */
+   if(!fwH&&ollieStyle!=='fastplant'){
+    const gx=(heightAt(pos.x+.25,pos.z)-heightAt(pos.x-.25,pos.z))/.5;
+    const gz=(heightAt(pos.x,pos.z+.25)-heightAt(pos.x,pos.z-.25))/.5;
+    const gl=Math.hypot(gx,gz);
+    if(gl>.55){
+     const ux=gx/gl,uz=gz/gl,vn=vel.x*ux+vel.z*uz;
+     if(vn>0){ // bergauf: Wandkomponente nach oben umlenken, Querdrift verhindern
+      const k=clamp((gl-.55)*1.8,0,1); // 0 an flacher, 1 an steiler Wand
+      const take=vn*k;
+      vel.x-=ux*take;vel.z-=uz*take;
+      vertical+=take*.45; // Teil des abgebauten Schwungs als zusaetzliche Hoehe
+     }
+    }
+   }
    if(ollieStyle==='fastplant')addTrick('ollie','FASTPLANT',80);
    else if(ollieStyle==='nollie')addTrick('ollie','NOLLIE',40);
    else addTrick('ollie','OLLIE',50);
@@ -3221,9 +3343,9 @@ function update(dt){
   }else curGrab='';
   // UNDERFLIP: Sobald der erste Flip fast durchgelaufen ist, dreht das Board doppelt zurueck
   if(underQ===1&&Math.abs(flipT-flipA)<.35){underQ=2;flipT-=Math.PI*4;sound.blip(620,900,.09,'square',.08)}
-  if(Math.abs(flipT-flipA)>.001)flipA+=Math.sign(flipT-flipA)*Math.min(16*dt,Math.abs(flipT-flipA));
-  if(Math.abs(impT-impA)>.001)impA+=Math.sign(impT-impA)*Math.min(15*dt,Math.abs(impT-impA));
-  if(spinA<spinT)spinA=Math.min(spinT,spinA+16*dt);
+  if(Math.abs(flipT-flipA)>.001)flipA+=Math.sign(flipT-flipA)*Math.min(24*dt,Math.abs(flipT-flipA)); // +50% Drehgeschwindigkeit
+  if(Math.abs(impT-impA)>.001)impA+=Math.sign(impT-impA)*Math.min(23*dt,Math.abs(impT-impA)); // +50%
+  if(spinA<spinT)spinA=Math.min(spinT,spinA+24*dt); // +50%
  }
 
  // Bewegung + Wand-/Hindernis-Kollision
@@ -3258,7 +3380,11 @@ function update(dt){
       if(vertical<0){vel.x-=2*vq*q.dirX;vel.z-=2*vq*q.dirZ} // fallend: spiegeln, volles Tempo
       else{vel.x-=vq*q.dirX;vel.z-=vq*q.dirZ} // steigend: an der Wand hochgleiten
      }
-    }else if(lq0<q.D&&lq>q.D-.1&&pos.y-.17>q.H-.3){ // wie Bowl: Auto-Pop oder an der Kante halten
+    }else if(lq0<q.D&&lq>q.D-.28&&pos.y-.17>q.H-.3){ // wie Bowl: Auto-Pop oder an der Kante halten
+     /* Band auf .28 m verbreitert: bei hohem Anfahrtstempo wurde die alte .1-Zone
+        zwischen zwei Frames uebersprungen und der Auto-Pop verschluckt — der
+        natuerliche Low-Pop ohne Ollie fehlte dann komplett (lq>q.D-Overshoot
+        wird mitgefangen, da die Bedingung rueckwirkend die Kante prueft). */
      if(!vertAutoPop(Math.max(3.5,.3*Math.sqrt(29*Math.max(.5,q.H+1.2-(pos.y-.17)))),q.dirX,q.dirZ,vq)){
       const k=(q.D-.05)/lq;pos.x=q.x+dxq*k;pos.z=q.z+dzq*k;
      }
