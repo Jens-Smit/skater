@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="de">
-<!-- build 2026-11-20-2: CC_LD-Fix + Trick-Animationen v2 (Sprungtiming, Grab-Kopf) -->
+<!-- build 2026-11-21-1: THPS1-Trickregister: 8 Flip-, 8 Grab-, 8 Grind-, 5 Lip-Tricks + 5 Specials mit Special-Leiste, prozedurale Remy-Pose-Overlays pro Trick, Board-Animationprofil je Trick (DARKSLIDE-Gripflip, Lip-Posen, Grab-Seitenversatz) -->
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>PRO SKATER 99 — Warehouse Sessions Pro</title>
@@ -38,6 +38,12 @@ body.touch #mobile{display:flex}body.touch #help{display:none}body.touch #pbtn{d
 .chip{padding:7px 10px;font-size:11px;border-radius:14px;background:#152a3dcc;color:#fff;border:1px solid #ffffff88;box-shadow:none}.chip.on{background:#1b986cdd}
 #balance{display:none;position:absolute;left:50%;bottom:58px;transform:translateX(-50%);width:240px;height:14px;background:#0d1720e0;border:2px solid #f5c542;border-radius:10px;overflow:hidden;z-index:3}#balance.vert{width:14px;height:190px;bottom:auto;top:50%;transform:translate(-50%,-50%)}#balance.vert #balNeedle{width:8px;height:10px;margin-left:-4px;margin-top:-5px}
 #balNeedle{position:absolute;top:2px;left:50%;width:10px;height:8px;margin-left:-5px;background:#37e5ff;border-radius:3px;box-shadow:0 0 6px #37e5ff}
+#spWrap{margin-top:7px}
+#sp{width:112px;height:9px;margin-top:3px;background:#131c26;border:1px solid #6de4ef88;border-radius:5px;overflow:hidden}
+#spFill{height:100%;width:100%;background:linear-gradient(90deg,#7c3aed,#d4941a);transform-origin:left;transform:scaleX(0)}
+#sp.full{border-color:#ffe46b}
+#sp.full #spFill{background:linear-gradient(90deg,#ffd34e,#ffe46b);animation:spblink .4s steps(2,end) infinite}
+@keyframes spblink{50%{filter:brightness(1.7)}}
 #rotate{display:none;position:fixed;inset:0;z-index:9;background:#07111df2;align-items:center;justify-content:center;flex-direction:column;gap:18px;text-align:center;padding:24px;letter-spacing:2px;font-weight:900;color:#ffd34e;font-size:14px}
 @media(orientation:portrait){body.touch #rotate{display:flex}}
 @media(max-height:480px){h1{font-size:34px;margin:6px 0}.card{padding:14px}.pdesc{min-height:0;line-height:1.3}.joy-ring{width:168px;height:168px}.joy-push{width:58px;height:58px;font-size:10px}.tcirc{width:184px;height:184px}.tcirc button{width:64px;height:64px;font-size:11px}.tcirc .b-flip{top:0;left:60px}.tcirc .b-grab{top:60px;left:0}.tcirc .b-grind{top:60px;right:0}.tcirc .b-ollie{bottom:0;left:60px}.plate{padding:5px 9px}.big{font-size:20px}#pbtn{top:60px}}
@@ -108,13 +114,13 @@ body.touch #mobile{display:flex}body.touch #help{display:none}body.touch #pbtn{d
 <body>
 <div id="hud">
  <div class="row">
-  <div class="plate"><div class="muted">SESSION SCORE</div><div id="score" class="big">0</div><div class="muted">BEST <span id="best" class="gold">0</span></div></div>
+  <div class="plate"><div class="muted">SESSION SCORE</div><div id="score" class="big">0</div><div class="muted">BEST <span id="best" class="gold">0</span></div><div id="spWrap"><div class="muted">SPECIAL</div><div id="sp"><div id="spFill"></div></div></div></div>
   <div class="plate" style="text-align:center"><div class="muted">TIME LEFT</div><div id="timer" class="big">05:00</div></div>
   <div class="plate right"><div class="muted">PRO SKATER 99</div><div class="gold" style="font-weight:900" id="mapname">PRO PARK</div><div class="muted" id="zone">STREET COURSE</div></div>
  </div>
  <div id="balance"><div id="balNeedle"></div></div>
  <button id="pbtn">II</button>
- <div id="trick"></div><div id="help"><b>A/D</b> lenken (Luft: halten = 180–900° Drehung) · <b>SPACE</b> Ollie · <b>W+SPACE</b> Nollie · <b>2×W+SPACE</b> Fastplant · <b>Q</b> Flip mit Richtung (Diagonalen: 360 Flip, Impossible, Harflip/Sex Change bzw. Fingerflip/Varial; 2×S+Q = Kickflip to Indy) · <b>E</b> Shove-it · <b>G</b> halten = Grab (Richtung: Japan, Method, Rocket, Benihana …) · <b>SHIFT</b> = Grind (W = Nosegrind, S = 5-0, Diagonal = Crooked/Smith, 90°-Anflug = Boardslide; in der Vert-Luft + W = Handplant; im Sprung gegen eine Wand = Wallride) · <b>W,S nacheinander</b> = Manual · <b>X</b> Push · <b>M</b> Sound · <b>R</b> Reset · <b>P</b> Pause</div>
+ <div id="trick"></div><div id="help"><b>A/D</b> lenken (Luft: Drehung) · <b>SPACE</b> Ollie (<b>W</b>+Nollie, <b>2×W</b>+Fastplant) · <b>Q</b> Flip: ← Kickflip, → Heelflip, ↑ Impossible, ↓ Pop Shove-It, Diagonalen Hardflip / Inward Heelflip / Varial Kick- und Heelflip · <b>E</b> Shove-it · <b>G</b> halten = Grab: ↑ Nose, ↓ Tail, ← Melon, → Indy, ↖ Method, ↗ Stiffy, ↙ Madonna, ↘ Benihana · <b>SHIFT</b> Grind: W Nosegrind, S 5-0, ←/→ Boardslide, Diagonalen Crooked / Salad (90°-Anflug: Noseslide / Tailslide) · Vert-Lippe + SHIFT = Lip-Tricks (Axle Stall, ← Disaster, → Rock to Fakie, ↑ Noseblunt, ↓ Blunt to Fakie; in der Vert-Luft ↑ = Handplant) · <b>SPECIALS</b> (Leiste voll): →↓+G THE 900 · ←→+G Christ Air · ↑↓+G McTwist · ←→+SHIFT Darkslide · ↑↓+Q Kickflip Underflip · <b>W,S nacheinander</b> Manual · <b>X</b> Push · <b>M</b> Sound · <b>R</b> Reset · <b>P</b> Pause</div>
 </div>
 <div id="mobile">
  <div class="joy-ring" id="joyRing"><div class="joy-direction-indicator" id="joyKnob"></div><button class="joy-push" id="joyPush" data-act="push">PUSH</button></div>
@@ -2044,8 +2050,106 @@ function updateParticles(dt){
  }}
 }
 
+/* ============================================================
+   THPS1-TRICKREGISTER (Erweiterung 21.11.2026)
+   Alle Tricks der THPS1-Liste mit EIGENEM Animationsprofil:
+   - Board: fl (Rollen), im (vertikaler Wrap), sp (Shove-Anteil) beim Flip;
+     GRABBOARD = [Pitch, Yaw, Lift, Seitenversatz] je Grab; dark = Griptape unten (Darkslide)
+   - Remy: prozedurale Knochen-Overlays (RY_POSES) auf den Basis-Clip,
+     Achsen-Vorzeichen aus den Clips vermessen (Knie -x, Oberschenkel +x,
+     linker Arm +z seitlich, rechter Arm -z, Wirbelsäule +x vorn)
+   - Lip-Familie: Stall-States an der Vert-Lippe (TH_LIP/LIPB)
+   - Specials: volle Special-Leiste (spMeter), Richtungstipp-Folge (seqHit) + Aktionstaste
+   ============================================================ */
+let spMeter=0,seqLast='',lastDirs=[],grabEdge=false,spGrab='',curGrab='',underQ=0,boardOffX=0,darkRoll=0,lip=null;
+let ryBones=null,ryBase=null,ryPoseName='',ryPoseW=0;
+const DEG=Math.PI/180;
+const RY_E=new THREE.Euler(),RY_Q=new THREE.Quaternion(),RY_QI=new THREE.Quaternion();
+
+/* Grab-Tricks (THPS1): Richtung → Trick */
+const TH_GRAB={'':'INDY','u':'NOSEGRAB','d':'TAILGRAB','l':'MELON','r':'INDY','ul':'METHOD','ur':'STIFFY','dl':'MADONNA','dr':'BENIHANA'};
+const TH_GRABPTS={'INDY':150,'NOSEGRAB':160,'TAILGRAB':150,'MELON':160,'METHOD':200,'STIFFY':180,'MADONNA':220,'BENIHANA':220};
+/* Board-Pose je Grab: [Pitch, Yaw, Lift, Seitenversatz] */
+const GRABBOARD={'INDY':[-.2,-.28,.12,0],'NOSEGRAB':[-.55,.45,.1,0],'TAILGRAB':[.4,-.35,.06,0],
+ 'MELON':[-.32,.3,.1,0],'METHOD':[-.62,.08,.2,-.15],'STIFFY':[-.15,0,.14,0],
+ 'MADONNA':[-.5,-.4,.1,-.18],'BENIHANA':[.42,.55,.07,.22],
+ 'THE 900':[-.3,-.2,.15,0],'CHRIST AIR':[0,1.51,.3,.55],'MCTWIST':[-.5,.35,.15,0]};
+/* Grind-Einstiegs-Punkte je Typ */
+const TH_GRINDPTS={'5050':120,'board':220,'nose':250,'tail':250,'crooked':300,'salad':300,'nslide':260,'tslide':260,'dark':500};
+/* Lip-Tricks (THPS1): n = Name, p = Punkte, h = Haltedauer */
+const TH_LIP={
+ axle:{n:'AXLE STALL',p:240,h:.55},
+ disaster:{n:'DISASTER',p:320,h:.6},
+ rock:{n:'ROCK TO FAKIE',p:260,h:.85},
+ noseblunt:{n:'NOSEBLUNT',p:560,h:.6},
+ blunt:{n:'BLUNT TO FAKIE',p:480,h:.6}};
+/* Board-Pose je Lip-Stall: [Pitch, Yaw, Lift] */
+const LIPB={axle:[.06,0,0],disaster:[1.1,0,.02],rock:[-.42,.1,.04],noseblunt:[-1.2,.05,.05],blunt:[1.2,.05,.05]};
+
+/* Prozedurale Remy-Overlays (Grad, Euler XYZ, additiv auf den Basis-Clip) */
+const RY_POSES={
+ /* Grab-Familie */
+ g_nosegrab:{RightArm:[-18,0,-38],RightForeArm:[-30,0,0],LeftArm:[0,0,22],Head:[-12,10,0]},
+ g_tailgrab:{LeftArm:[0,22,30],LeftForeArm:[38,0,0],RightArm:[0,0,-18],Spine2:[8,0,0]},
+ g_melon:{LeftArm:[0,28,34],LeftForeArm:[42,0,0],Spine2:[12,0,0],Head:[-10,0,0]},
+ g_indy:{RightArm:[0,-24,-34],RightForeArm:[-40,0,0]},
+ g_method:{LeftUpLeg:[42,0,0],RightUpLeg:[42,0,0],LeftLeg:[-55,0,0],RightLeg:[-55,0,0],Spine:[-14,0,0],Spine2:[-20,0,0],LeftArm:[-14,0,36],RightArm:[0,0,26],Head:[6,0,0]},
+ g_stiffy:{LeftUpLeg:[-12,0,0],RightUpLeg:[-12,0,0],LeftLeg:[-20,0,0],RightLeg:[-26,0,0],LeftArm:[0,0,34],RightArm:[0,0,-34],Spine2:[-8,0,0]},
+ g_madonna:{RightUpLeg:[58,0,18],RightLeg:[-14,0,0],LeftArm:[0,-18,28],LeftForeArm:[30,0,0],Head:[8,14,0]},
+ g_benihana:{LeftUpLeg:[38,0,-24],LeftLeg:[-16,0,0],RightArm:[0,14,-24],RightForeArm:[-38,0,0],Spine2:[6,0,-8]},
+ /* Specials */
+ sp_the900:{Spine2:[14,0,0],LeftUpLeg:[26,0,0],RightUpLeg:[26,0,0],LeftLeg:[-48,0,0],RightLeg:[-48,0,0],RightArm:[0,-18,-26],RightForeArm:[-30,0,0]},
+ sp_christ:{LeftArm:[0,6,86],RightArm:[0,-6,-86],LeftForeArm:[20,0,0],RightForeArm:[-20,0,0],Spine2:[-6,0,4],Head:[-14,0,0]},
+ sp_mctwist:{Head:[-34,0,-16],Spine:[-8,0,-22],Spine2:[-12,0,-18],LeftArm:[0,0,-34],LeftForeArm:[44,0,0],RightUpLeg:[30,0,10]},
+ /* Flip- und Shove-Luft */
+ flipair:{LeftArm:[0,0,24],RightArm:[0,0,-24],Spine2:[8,0,0]},
+ shoveair:{Spine2:[0,-16,0],LeftArm:[0,0,18],RightArm:[0,0,-18]},
+ /* Handplant */
+ handplant:{RightArm:[0,0,-74],RightForeArm:[-20,0,0],Spine:[0,0,-8],Head:[14,0,0]},
+ /* Grind-Familie */
+ gr_dark:{Spine2:[26,0,0],LeftUpLeg:[38,0,0],RightUpLeg:[38,0,0],LeftLeg:[-72,0,0],RightLeg:[-72,0,0],LeftArm:[0,0,20],RightArm:[0,0,-20]},
+ gr_board:{Spine2:[0,-26,0],Neck:[0,-14,0]},
+ gr_nslide:{Spine2:[0,-20,0],Neck:[0,-12,0]},
+ gr_tslide:{Spine2:[0,22,0],Neck:[0,12,0]},
+ /* Lip-Tricks */
+ lip_axle:{Spine2:[6,0,0],LeftArm:[0,0,26],RightArm:[0,0,-26]},
+ lip_disaster:{Spine:[-10,0,0],Spine2:[-12,0,0],LeftArm:[0,0,46],RightArm:[0,0,-46],Head:[18,0,0]},
+ lip_rock:{RightArm:[0,0,-42],RightUpLeg:[18,0,0],Head:[-18,0,0],Spine2:[10,0,0]},
+ lip_noseblunt:{Spine:[-16,0,0],Spine2:[-20,0,0],LeftArm:[0,0,58],RightArm:[0,0,-58],Head:[-24,0,0]},
+ lip_blunt:{Spine:[-18,0,0],Spine2:[-22,0,0],LeftArm:[0,0,50],RightArm:[0,0,-50],Head:[-28,0,0]}
+};
+const RY_BONES=['Spine','Spine1','Spine2','Neck','Head','LeftArm','RightArm','LeftForeArm','RightForeArm','LeftHand','RightHand','LeftUpLeg','RightUpLeg','LeftLeg','RightLeg','LeftFoot','RightFoot'];
+
 /* ---------- Tricks & Punkte ---------- */
-function addTrick(key,name,pts){if(!tricks[key])trickCount++;tricks[key]=name;combo+=pts}
+function addTrick(key,name,pts){if(!tricks[key])trickCount++;tricks[key]=name;combo+=pts;if(pts>0)spMeter=Math.min(1,spMeter+pts*.00055)}
+function spUse(){spMeter=0;sound.blip(920,1380,.16,'square',.12)}
+/* Richtungstipp-Folge in der Luft (für Specials): letzter Wechsel < 0.4 s her */
+function seqPush(d){if(d&&d!==seqLast){seqLast=d;lastDirs.push({d,t:performance.now()*.001});if(lastDirs.length>4)lastDirs.shift()}}
+function seqHit(a,b){
+ const n=lastDirs;if(n.length<2)return false;
+ const t1=n[n.length-2],t2=n[n.length-1],now=performance.now()*.001;
+ return t1.d===a&&t2.d===b&&now-t2.t<.4&&t2.t-t1.t<.45;
+}
+function grindName(t,ledge){
+ return t==='board'?'BOARDSLIDE':t==='nose'?'NOSEGRIND':t==='tail'?'5-0 GRIND':t==='crooked'?'CROOKED GRIND':
+  t==='nslide'?'NOSESLIDE':t==='tslide'?'TAILSLIDE':t==='dark'&&ledge?'DARKSLIDE':t==='dark'?'DARKSLIDE':
+  t==='salad'?'SALAD GRIND':t==='smith'?'SMITH GRIND':(ledge?'LEDGE GRIND':'50-50 GRIND');
+}
+/* Lip-Trick an der Vert-Lippe starten (statt Auto-Ollie), Richtung waehlt die Stall-Art */
+function lipStart(ux,uz){
+ const gd=trickDir();
+ const kind=(gd===''||gd==='ul'||gd==='ur'||gd==='dl'||gd==='dr')?'axle':gd==='l'?'disaster':gd==='r'?'rock':gd==='u'?'noseblunt':'blunt';
+ const D=TH_LIP[kind];
+ lip={t:0,ux,uz,kind,x:pos.x,z:pos.z,y:pos.y};
+ air=true;airTime=0;vertical=0;manual=0;flipA=flipT=spinA=spinT=impA=impT=0;airSpin=0;
+ vel.x*=.05;vel.z*=.05;
+ if(kind==='disaster'){heading+=Math.PI;airSpin+=Math.PI} /* DISASTER: Landung mit 180 am Rand */
+ addTrick('lip',D.n,D.p);
+ autoPopCd=.55;vertOut=false;
+ sound.blip(430,540,.14,'square',.1);spawnDust(pos.x,pos.y-.15,pos.z,6);
+ press.grind=false;
+ return true;
+}
 function showFinal(text,pts){finalHTML=`${text}<div id="combo">${pts>0?'+'+pts.toLocaleString('de-DE')+' PTS':''}</div>`;finalT=1.5}
 function bank(){
  const sd=Math.abs(airSpin);
@@ -2067,7 +2171,7 @@ function doBail(){
  bail.spinZ=(Math.random()*4+2)*(Math.random()<.5?-1:1);
  bail.vel.set(vel.x*.4,Math.max(vertical*.3,2.5),vel.z*.4);
  if(grind)grind=null;
- wr=null;hplant=null;wrCd=.5;ollieStyleT=0;grabFlash=0;
+ wr=null;hplant=null;lip=null;wrCd=.5;ollieStyleT=0;grabFlash=0;spGrab='';curGrab='';underQ=0;seqLast='';lastDirs=[];
  vertSpd=0;vertOut=false;autoTurn=false;ollieBuf=0;
  air=true;vertical=0;combo=0;tricks={};
  // Skateboard löst sich und fliegt weg
@@ -2094,7 +2198,7 @@ function land(){
   }
   if(sideways)ok=false;
  }
- air=false;vertical=0;manual=0;manT=0;airLean=0;wr=null;wrCd=.5;hplant=null;grabFlash=0;
+ air=false;vertical=0;manual=0;manT=0;airLean=0;wr=null;wrCd=.5;hplant=null;lip=null;grabFlash=0;spGrab='';curGrab='';underQ=0;seqLast='';lastDirs=[];
  // Landung sauber ausrichten: Der Schwung (vel) bestimmt die Fahrtrichtung.
  // Steht der Körper danach in etwa in Fahrtrichtung → normal weiterfahren;
  // steht er in etwa dagegen (180-Drehung) → Fakie: rückwärts weiter, ohne Tempo-Verlust.
@@ -2174,7 +2278,7 @@ function land(){
    airMan=0;
   }
  }else{doBail();if(sideways)showFinal('ZU SCHRÄG GELANDET!',0)}
- flipA=flipT=spinA=spinT=impA=impT=0;airTime=0;airSpin=0;vertSpd=0;vertOut=false;autoTurn=false;
+ flipA=flipT=spinA=spinT=impA=impT=0;airTime=0;airSpin=0;vertSpd=0;vertOut=false;autoTurn=false;underQ=0;lip=null;spGrab='';curGrab='';
 }
 
 /* ---------- Sturz-Physik: Flug → Rutschen → Aufstehen ---------- */
@@ -2272,7 +2376,7 @@ const upSm=V(0,1,0);
 /* ---------- Board-Visual ---------- */
 function updateBoardVisual(dt){
  if(boardFree)return;
- let pitch=0,gyaw=0,grabLift=0;
+ let pitch=0,gyaw=0,grabLift=0,wantOffX=0;
  if(air){
   if(ollieStyleT>0){ /* Pop-Optik: Nollie (Nase runter), Fastplant (Absenken beim Abstossen) */
    ollieStyleT=Math.max(0,ollieStyleT-dt);
@@ -2280,12 +2384,14 @@ function updateBoardVisual(dt){
   }
   pitch=airLean*.28+pitch;
   if(hplant){pitch=1.3;grabLift=.08}   /* HANDPLANT: Board steil am Coping */
+  else if(lip){ /* THPS1-Lip-Stalls: Board-Pose je Art; Rock to Fakie rockt zurueck */
+   const L=LIPB[lip.kind];pitch=L[0];gyaw=L[1];grabLift=L[2];
+   if(lip.kind==='rock'&&lip.t>.3)pitch=Math.min(L[0]+(lip.t-.3)*2.3,.55);
+  }
   else if(wr){pitch=.08}               /* WALLRIDE: Board lehnt an der Wand (Roll-Neigung unten) */
-  else if(held.grab||grabFlash>0){ // Grab-Pose nach Tabelle: [Pitch, Yaw-Versatz, Lift]
-   const gd=held.grab?trickDir():'';
-   const P=gd==='u'?[-.55,.45,.1]:gd==='d'?[.4,0,.05]:gd==='l'?[-.32,.3,.1]:gd==='r'?[-.2,-.28,.12]:
-            gd==='ul'?[-.62,0,.16]:gd==='ur'?[.85,0,.06]:gd==='dl'?[-.5,-.4,.1]:gd==='dr'?[.42,.55,.06]:[-.28,0,.12];
-   pitch=P[0];gyaw=P[1];grabLift=P[2];
+  else if(held.grab||grabFlash>0){ // Grab-Pose je Trick aus dem Register: [Pitch, Yaw, Lift, Seitenversatz]
+   const P=GRABBOARD[curGrab]||GRABBOARD.INDY;
+   pitch=P[0];gyaw=P[1];grabLift=P[2];wantOffX=P[3];
   }
  }
  else if(grind){
@@ -2295,6 +2401,9 @@ function updateBoardVisual(dt){
   else if(grind.type==='smith'){pitch+=.3;gyaw=.4} // SMITH: hintere Achse, Nose haengt schraeg runter
   else if(grind.type==='crooked'){pitch-=.08;gyaw=.45} // Nase schräg zur Ledge
   else if(grind.type==='salad'){pitch+=.16;gyaw=-.45}
+  else if(grind.type==='nslide'){pitch-=.1;gyaw=Math.PI/2*.92} // NOSESLIDE: Nose quer auf der Kante
+  else if(grind.type==='tslide'){pitch+=.12;gyaw=Math.PI/2*.92} // TAILSLIDE: Tail quer auf der Kante
+  else if(grind.type==='dark'){pitch=.03;gyaw=Math.PI/2*.92}    // DARKSLIDE quer, Griptape unten (Roll-Flip siehe unten)
  }
  else if(manual!==0){ // Manual: Nase/Schwanz oben, Balance fließt mit
   const b=clamp(manBal,-1,1);
@@ -2302,8 +2411,11 @@ function updateBoardVisual(dt){
  }
  boardP=damp(boardP,pitch,10,dt);
  boardLift=damp(boardLift,grabLift,10,dt);
+ boardOffX=damp(boardOffX,wantOffX,10,dt);                                  /* Grab-Ausleger: Benihana/Christ Air */
+ darkRoll=damp(darkRoll,(grind&&grind.type==='dark')?Math.PI:0,7,dt);      /* DARKSLIDE: Board aufs Griptape drehen */
+ board.position.x=boardOffX;
  board.position.y=boardLift;
- board.rotation.set(boardP+impA,spinA+gyaw,flipA+(wr?-.5:0)+(hplant?.15:0));
+ board.rotation.set(boardP+impA,spinA+gyaw,flipA+(wr?-.5:0)+(hplant?.15:0)+darkRoll);
  for(const w of wheels)w.rotation.x-=fwd*dt/.058;
  if(frontTruck)frontTruck.rotation.y=damp(frontTruck.rotation.y,steerS*.3,12,dt);
 }
@@ -2351,6 +2463,8 @@ function updateHud(){
  $('score').textContent=Math.floor(score).toLocaleString('de-DE');
  $('best').textContent=best.toLocaleString('de-DE');
  $('timer').textContent=`${String(Math.floor(t/60)).padStart(2,'0')}:${String(t%60).padStart(2,'0')}`;
+ const sp=$('sp');
+ if(sp){sp.classList.toggle('full',spMeter>=1);$('spFill').style.transform='scaleX('+spMeter.toFixed(3)+')'}
 }
 function updateZone(){
  const x=pos.x;
@@ -2470,6 +2584,11 @@ function ryBuild(g){
      drauf -> 0.5: Kinn ~8.4 cm, Augen ~14.3 cm, Ohren ~9 cm ueber
      Schultergelenk (+5 cm Welt-Hub wie beim Schritt 0.2->0.35). */
   for(const c of g.animations||[]){const tr=(c.tracks||[]).find(t=>t.name&&t.name.endsWith('mixamorigHead.position'));if(tr)for(let i=0;i<tr.values.length;i++)tr.values[i]*=.5}
+  /* Knochen-Cache fuer die prozeduralen Trick-Overlays: Bind-Pose als Ruecksetzpunkt,
+     das Overlay wird NACH jedem Mixer-Update aufmultipliziert (kein Vererben ueber Frames). */
+  ryBones={};ryBase={};
+  for(const bn of RY_BONES){const b=ryRoot.getObjectByName('mixamorig'+bn);
+   if(b){ryBones[bn]=b;ryBase[bn]=b.quaternion.clone()}}
   ryMix=new THREE.AnimationMixer(ryRoot);
   for(const k of ['ride','ride2','jump','fall','flip','shove','grab','grind','manual','nmanual','land']){const c=g.animations&&g.animations.find(a=>a.name===k);
    if(!c)continue;const ac=ryMix.clipAction(c);
@@ -2493,21 +2612,58 @@ function ryUpdate(dt){
  if(bail.on)k='fall';
  else if(air){                      /* Trick-Clips: Wrap/Flip > Shove > Grab > Sprung */
   if(hplant){k='grab';ts=.5}                       /* Handplant: angezogene Hocke am Coping */
+  else if(lip){k='jump';ts=.45}                   /* Lip-Stall: rueckholbar ueber OLLIE */
   else if(Math.abs(flipT-flipA)>.05||Math.abs(impT-impA)>.05)k='flip';
   else if(Math.abs(spinT-spinA)>.05)k='shove';
   else if(held.grab||grabFlash>0){k='grab';ts=.8}
   else if(wr){k='ride2';ts=.92}                    /* Wallride: Stand entlang der Wand */
   else k='jump';
- }else if(grind){ /* Poesen je Grind-Typ: Nose-Grinds aufs vordere, 5-0/Smith aufs hintere Bein */
-  k=(grind.type==='nose'||grind.type==='crooked')?'nmanual':(grind.type==='tail'||grind.type==='smith')?'manual':'grind';ts=1}
+ }else if(grind){ /* Poesen je Grind-Typ: Nose-Gewicht aufs vordere, 5-0/Slides aufs hintere Bein */
+  k=(grind.type==='nose'||grind.type==='crooked'||grind.type==='nslide')?'nmanual':(grind.type==='tail'||grind.type==='smith'||grind.type==='tslide')?'manual':'grind';ts=1}
  else if(manual!==0)k=manual>0?'nmanual':'manual';   /* Nose/Tail Manual */
  else if(landT>.22)k='land';       /* Landung: Kompression */
  else if(pushT>0)k='ride2';        /* Anschub */
  else if(held.ollie){k='grind';ts=.55}  /* Ollie laden: Crouch */
+ /* Overlay-Knochen auf die Bind-Pose zuruecksetzen, Mixer schreibt die Clip-Werte,
+    danach das gewichtete Trick-Overlay aufmultiplizieren. */
+ if(ryBones)for(const bn in ryBones)ryBones[bn].quaternion.copy(ryBase[bn]);
  rySet(k,ts);ryMix.update(dt);
+ ryPoseApply(dt,ryPoseWant());
+}
+function ryPoseWant(){
+ if(!ryMix||bail.on)return '';
+ if(air){
+  if(hplant)return 'handplant';
+  if(lip)return 'lip_'+lip.kind;
+  if(spGrab)return spGrab==='THE 900'?'sp_the900':spGrab==='CHRIST AIR'?'sp_christ':'sp_mctwist';
+  if(Math.abs(flipT-flipA)>.05||Math.abs(impT-impA)>.05)return 'flipair';
+  if(Math.abs(spinT-spinA)>.05)return 'shoveair';
+  if(held.grab||grabFlash>0){const pk='g_'+(curGrab||'INDY').toLowerCase();return RY_POSES[pk]?pk:''}
+  return '';
+ }
+ if(grind){
+  if(grind.type==='dark')return 'gr_dark';
+  if(grind.type==='board')return 'gr_board';
+  if(grind.type==='nslide')return 'gr_nslide';
+  if(grind.type==='tslide')return 'gr_tslide';
+ }
+ return '';
+}
+function ryPoseApply(dt,want){
+ if(want!==ryPoseName){ryPoseName=want;ryPoseW=0}
+ ryPoseW=damp(ryPoseW,want?1:0,want?9:7,dt);
+ if(!ryBones||!RY_POSES[ryPoseName]||ryPoseW<=.002)return;
+ const P=RY_POSES[ryPoseName];
+ for(const bn in P){const b=ryBones[bn];if(!b)continue;const e=P[bn];
+  RY_E.set(e[0]*DEG,e[1]*DEG,e[2]*DEG);
+  RY_Q.setFromEuler(RY_E);
+  RY_QI.identity().slerp(RY_Q,ryPoseW);
+  b.quaternion.multiply(RY_QI);
+ }
 }
 
 function postUpdateVisuals(dt){
+ spMeter=Math.max(0,spMeter-dt*.02); /* Special-Leiste laeuft langsam leer */
  skater.position.copy(pos);
  orientSkater(dt,false);
  updateBoardVisual(dt);
@@ -2550,6 +2706,8 @@ function fwHHold(){return !!(keys.w||keys.arrowup||(joy.active&&(joy.dir==='u'||
 // als der Bremsweg). Der Carve-Anteil (tangential) bleibt erhalten, damit der Fluss nicht abreisst.
 function vertAutoPop(vAuto,ux,uz,outSpd){
  if(autoPopCd>0)return false; // Abklingzeit: kein Lip-Bouncing direkt nach der Landung
+ /* THPS1-LIP-TRICKS: GRIND an der Lippe (Stall-Familie) statt Auto-Ollie */
+ if((held.grind||press.grind)&&lipStart(ux,uz))return true;
  const tSpd=-vel.x*uz+vel.z*ux;          // Tangentialanteil (Carve-Schwung) bleibt
  const rSpd=Math.max(outSpd,.8);        // sanfte Auswärts-Komponente
  vel.x=ux*rSpd-uz*tSpd;vel.z=uz*rSpd+ux*tSpd;
@@ -2575,7 +2733,7 @@ function update(dt){
  if(!air&&!grind&&ollieBuf>0&&!press.ollie){press.ollie=true;ollieBuf=0}
 
  const inp=readInput();
- // Doppel-Tap W/S (auch Touch-Sektoren): FASTPLANT (Oben,Oben+Ollie) und KICKFLIP TO INDY (Unten,Unten+Flip)
+ // Doppel-Tap W/S (auch Touch-Sektoren): FASTPLANT (Oben,Oben+Ollie)
  const tN=performance.now()*.001;
  const upE=!!(keys.w||keys.arrowup||(joy.active&&(joy.dir==='u'||joy.dir==='ul'||joy.dir==='ur')));
  const dnE=!!(keys.s||keys.arrowdown||(joy.active&&(joy.dir==='d'||joy.dir==='dl'||joy.dir==='dr')));
@@ -2606,7 +2764,7 @@ function update(dt){
  // Grind-Art nach Hoch/Runter: W = Nosegrind, S = 5-0, nichts = 50-50
  // HANDPLANT (Lip-Trick): oben + GRIND in der Luft an der Vert-Lippe (Halfpipe/Pool),
  // wenn kein Rail in Reichweite: kurzer Handstand am Coping, danach Drop-in zurueck ins Becken.
- if(air&&!grind&&!hplant&&!wr&&grindCd<=0&&(held.grind||press.grind)&&trickDir()==='u'
+ if(air&&!grind&&!hplant&&!wr&&!lip&&grindCd<=0&&(held.grind||press.grind)&&trickDir()==='u'
     &&(vertSpd>2.2||(inPipeZ&&Math.abs(pos.x)>PIPE.R*.5))&&!nearRail()){
   hplant={t:0,x:pos.x,z:pos.z,y:pos.y,nx:inPipeZ?(Math.sign(pos.x)||1):0};
   addTrick('lip','HANDPLANT',200);
@@ -2618,17 +2776,23 @@ function update(dt){
   if(n){
    const vd=vel.x*n.dx+vel.z*n.dz;
    const sgn=vd>=0?1:-1;
-   // Grind-Art nach THPS-Schema: keine Richtung = 50-50 (im ~90°-Anflug automatisch BOARDSLIDE),
-   // hoch=Nosegrind, runter=5-0, Diagonalen=Crooked/Smith, seitlich=Crooked/Salad
+   // Grind-Art nach THPS1-Schema: keine Richtung = 50-50, hoch=Nosegrind, runter=5-0,
+   // seitlich=Boardslide, Diagonalen=Crooked/Salad; im ~90°-Anflug rutschen die
+   // Diagonalen als Noseslide/Tailslide quer. Spezial (Leiste voll + Links,Rechts): DARKSLIDE.
    const gd=trickDir();
    const vAng=Math.hypot(vel.x,vel.z)||1e-9;
    const sinApp=Math.abs((vel.x*n.dz-vel.z*n.dx)/vAng);
-   const gtype=(gd===''&&sinApp>.72)?'board':gd==='u'?'nose':gd==='d'?'tail':(gd==='ul'||gd==='ur')?'crooked':(gd==='dl'||gd==='dr')?'smith':gd==='l'?'crooked':gd==='r'?'salad':'5050';
+   let gtype=(gd===''&&sinApp>.72)?'board':gd==='u'?'nose':gd==='d'?'tail':
+    (gd==='ul'||gd==='ur')?(sinApp>.72?'nslide':'crooked'):(gd==='dl'||gd==='dr')?(sinApp>.72?'tslide':'salad'):
+    (gd==='l'||gd==='r')?'board':(sinApp>.72?'board':'5050');
+   if(spMeter>=1&&seqHit('l','r'))gtype='dark'; // SPECIAL: DARKSLIDE auf dem Griptape
    grind={r:n.r,dx:n.dx,dy:n.dy,dz:n.dz,len:n.len,sign:sgn,type:gtype,
     t:clamp(((pos.x-n.r.ax)*n.dx+(pos.y-n.r.ay)*n.dy+(pos.z-n.r.az)*n.dz)/n.len,0,1),
     balance:(Math.random()-.5)*.3,dir:Math.random()<.5?-1:1,time:0};
    air=false;vertical=0;manual=0;flipA=flipT=spinA=spinT=impA=impT=0;airSpin=0;
-   vertSpd=0;vertOut=false;
+   vertSpd=0;vertOut=false;lip=null;spGrab='';underQ=0;curGrab='';
+   if(gtype==='dark')spUse();
+   addTrick('grind',grindName(gtype,!!n.r.ledge),TH_GRINDPTS[gtype]||120); // Einstiegs-Punkte je Grind-Art
    const g0=Math.max(fwd,5.5);
    vel.set(n.dx*sgn*g0,0,n.dz*sgn*g0);
    press.grind=false; // Andock-Frame verbraucht den Tipp: kein Versehentlich-Switch im selben Frame
@@ -2654,7 +2818,7 @@ function update(dt){
    heading=Math.atan2(jx,-jz);
    const dl=si<-.35&&Math.abs(fi)<.5?'LEFT TRANSFER ':si>.35&&Math.abs(fi)<.5?'RIGHT TRANSFER ':fi<-.5?'REVERSE OLLIE ':'';
    addTrick('ollie',dl+'OLLIE OUT',150);
-   grind=null;grindCd=.22;air=true;vertical=7.4;airTime=0;airSpin=0;manual=0;flipA=flipT=spinA=spinT=impA=impT=0;airMan=0;
+   grind=null;grindCd=.22;air=true;vertical=7.4;airTime=0;airSpin=0;manual=0;flipA=flipT=spinA=spinT=impA=impT=0;airMan=0;lip=null;spGrab='';underQ=0;
    wPrev=!!(keys.w||keys.arrowup);sPrev=!!(keys.s||keys.arrowdown);
    joyUPrev=joy.active&&(joy.dir==='u'||joy.dir==='ul'||joy.dir==='ur');
    joyDPrev=joy.active&&(joy.dir==='d'||joy.dir==='dl'||joy.dir==='dr');
@@ -2712,7 +2876,7 @@ function update(dt){
    grind.time+=dt;
    const drift=grind.dir*(.32+grind.time*.5);
    grind.balance+=drift*dt-steerS*dt*2.0;
-   const gname=grind.type==='board'?'BOARDSLIDE':grind.type==='nose'?'NOSEGRIND':grind.type==='tail'?'5-0 GRIND':grind.type==='crooked'?'CROOKED GRIND':grind.type==='smith'?'SMITH GRIND':grind.type==='salad'?'SALAD GRIND':(grind.r.ledge?'LEDGE GRIND':'50-50 GRIND');
+   const gname=grindName(grind.type,!!grind.r.ledge);
    addTrick('grind',gname,0);combo+=dt*140;
    if(Math.abs(grind.balance)>=1){ // Balance verloren: vom Board
     vel.x+=grind.dir*.8;vel.z+=grind.dir*.3;
@@ -2957,7 +3121,18 @@ function update(dt){
  }else{
   // Luftphase
   if(grabFlash>0)grabFlash=Math.max(0,grabFlash-dt);
-  if(hplant){ /* HANDPLANT: haengt am Coping, bis GRIND losgelassen / OLLIE abdrueckt / Zeit ablaeuft */
+  if(lip){ /* THPS1-LIP-STALLS: Haelt am Coping bis GRIND loslaesst, OLLIE abdrueckt oder die Haltezeit ablaeuft */
+   lip.t+=dt;airTime+=dt;vertical=0;
+   vel.x*=Math.pow(.12,dt);vel.z*=Math.pow(.12,dt);
+   pos.x=lip.x-lip.ux*.12;pos.z=lip.z;pos.y=lip.y;
+   const D=TH_LIP[lip.kind];
+   if(press.ollie||lip.t>D.h||!held.grind){
+    vel.x=-lip.ux*3.0;vertical=-.3;      /* Zurueck ins Becken rollen */
+    if(lip.kind==='axle')heading+=Math.PI; /* Axle Stall: vorwaets reindrehen; Disaster hat den 180er schon am Stall */
+    /* Rock/Noseblunt/Blunt: ohne Koerperdrehung abrollen = fakie, land() erkennt die 180 */
+    lip=null;grindCd=.4;autoPopCd=.5;
+   }
+  }else if(hplant){ /* HANDPLANT: haengt am Coping, bis GRIND losgelassen / OLLIE abdrueckt / Zeit ablaeuft */
    hplant.t+=dt;airTime+=dt;vertical=0;
    vel.x*=Math.pow(.12,dt);vel.z*=Math.pow(.12,dt);
    pos.x=hplant.x-hplant.nx*.15;pos.z=hplant.z;pos.y=hplant.y+Math.sin(Math.min(hplant.t*8,3))*.05;
@@ -2978,28 +3153,27 @@ function update(dt){
   if((wA&&!wPrev)||(jU&&!joyUPrev))airMan=1;
   else if((sA&&!sPrev)||(jD&&!joyDPrev))airMan=-1;
   wPrev=wA;sPrev=sA;joyUPrev=jU;joyDPrev=jD;
-  // Flip-Tricks: 5 Varianten nach gehaltener Richtung
-  // Flip-Tricks (THPS-Layout, 9 Sektoren): flip=Rollachse, imp=vertikaler Ueberschlag (Impossible), spin=Shove-Anteil.
-  // Street/Vert-Schalter: aus einer Vert-Wand (Pipe/Pool) gibt es statt Harflip/Sex Change FINGERFLIP/VARIAL.
+  // Special-Sequenzpuffer: gemerkte Richtungswechsel (nur in der freien Luft)
+  if(!grind&&!hplant&&!lip)seqPush(trickDir());
+  // Flip-Tricks (THPS1-Liste, 9 Sektoren): flip=Rollachse, imp=vertikaler Ueberschlag (Impossible), spin=Shove-Anteil.
+  // Street/Vert-Schalter: aus einer Vert-Wand (Pipe/Pool) gibt es statt Hard-/Inward Heelflip FINGERFLIP/VARIAL HEELFLIP.
   if(press.kick&&Math.abs(flipT-flipA)+Math.abs(impT-impA)<Math.PI*3){
-   const d=trickDir(),tn=performance.now()*.001;
+   const d=trickDir();
    const vertTrick=vertSpd>2.2||(inPipeZ&&Math.abs(pos.x)>PIPE.R*.4);
    let nm,pts,fl=0,im=0,sp=0,fsh=0;
-   if(d===''||d==='l'){nm='KICKFLIP';pts=300;fl=2*Math.PI}
+   if(spMeter>=1&&seqHit('u','d')){nm='KICKFLIP UNDERFLIP';pts=750;fl=2*Math.PI;underQ=1;spUse()} // SPECIAL: Flip raus, doppelt zurueck
+   else if(d===''||d==='l'){nm='KICKFLIP';pts=300;fl=2*Math.PI}
    else if(d==='r'){nm='HEELFLIP';pts=320;fl=-2*Math.PI}
    else if(d==='u'){nm='IMPOSSIBLE';pts=380;im=2*Math.PI}                       // Board schlaegt vertikal um den hinteren Fuss
-   else if(d==='d'){
-    if(tn-dDblT<.5){nm='KICKFLIP TO INDY';pts=550;fl=2*Math.PI;fsh=.5}         // Flip + sofortige Indy-Anziehung
-    else{nm='360 SHOVE-IT';pts=380;sp=2*Math.PI}
-   }
-   else if(d==='dl'){nm='360 FLIP';pts=500;fl=2*Math.PI;sp=2*Math.PI}            // Tre Flip
-   else if(d==='dr'){nm='FRONT FOOT IMPOSSIBLE';pts=400;im=-2*Math.PI}
+   else if(d==='d'){nm='POP SHOVE-IT';pts=280;sp=Math.PI}                       // Unten + Flip: flacher 180-Shove
+   else if(d==='dl'){nm='VARIAL KICKFLIP';pts=400;fl=2*Math.PI;sp=Math.PI}      // Pop Shove-It + Kickflip
+   else if(d==='dr'){nm='VARIAL HEELFLIP';pts=410;fl=-2*Math.PI;sp=-Math.PI}   // FS Shove-It + Heelflip
    else if(d==='ul'){
     if(vertTrick){nm='FINGERFLIP';pts=380;fl=2*Math.PI;fsh=.4}                  // Vert: Grab + Fingerschnippen
-    else{nm='HARDFLIP';pts=420;fl=2*Math.PI;sp=Math.PI;im=Math.PI}              // Street: FS Shove + Kickflip diagonal
+    else{nm='HARDFLIP';pts=420;fl=2*Math.PI;sp=Math.PI;im=Math.PI}              // Street: FS Shove + Kickflip steil weg
    }else{ /* ur */
-    if(vertTrick){nm='VARIAL';pts=360;sp=Math.PI;fsh=.45}                       // Vert: Board greifen, 180 drehen
-    else{nm='SEX CHANGE';pts=450;fl=2*Math.PI;heading+=Math.PI;airSpin+=Math.PI} // Street: Kickflip + Koerper-180er
+    if(vertTrick){nm='VARIAL HEELFLIP';pts=430;fl=-2*Math.PI;sp=-Math.PI;fsh=.45} // Vert: Board greifen, 180 drehen
+    else{nm='INWARD HEELFLIP';pts=430;fl=-2*Math.PI;sp=-Math.PI;im=-Math.PI}    // Street: BS Shove + Heelflip
    }
    flipT+=fl;impT+=im;spinT+=sp;grabFlash=Math.max(grabFlash,fsh);
    addTrick('flip',nm,pts);
@@ -3024,17 +3198,29 @@ function update(dt){
    if(Math.abs(steerS)>.3)autoTurn=false;
    else if(vertical<2){const sp=Math.hypot(vel.x,vel.z);if(sp>1.5)heading+=angDiff(heading,Math.atan2(vel.x,-vel.z))*(1-Math.exp(-10*dt))}
   }
-  // Grab-Tricks: 5 Varianten nach gehaltener Richtung
+  // Grab-Specials (Leiste voll, Richtungstipp-Folge): THE 900 / CHRIST AIR / MCTWIST
+  if(held.grab&&!grabEdge){grabEdge=true;
+   if(spMeter>=1&&seqHit('r','d')){spGrab='THE 900';heading+=Math.PI*2.5;airSpin+=Math.PI*2.5;
+    /* 900 Reste 90 Grad: der Schwung dreht mit (Landung fuellen, kein ZU SCHRÄG) */
+    const ca=Math.cos(Math.PI*2.5),sa=Math.sin(Math.PI*2.5);
+    const vx=vel.x*ca-vel.z*sa,vz=vel.x*sa+vel.z*ca;vel.x=vx;vel.z=vz;
+    addTrick('grab','THE 900',900);spUse();grabFlash=1.5;sound.blip(950,1400,.18,'square',.12)}
+   else if(spMeter>=1&&seqHit('l','r')){spGrab='CHRIST AIR';
+    addTrick('grab','CHRIST AIR',980);spUse();grabFlash=1.5;sound.blip(950,1400,.18,'square',.12)}
+   else if(spMeter>=1&&seqHit('u','d')){spGrab='MCTWIST';heading+=Math.PI*3;airSpin+=Math.PI*3;
+    addTrick('grab','MCTWIST',880);spUse();grabFlash=1.5;sound.blip(950,1400,.18,'square',.12)}
+  }
+  if(!held.grab){grabEdge=false;spGrab=''}
+  // Grab-Tricks (THPS1-Layout): Richtung entscheidet; gehaltener Grab laeuft Combo je Sekunde
   if(held.grab||grabFlash>0){
-   // Grab-Tricks (THPS-Layout): Richtung entscheidet; gehaltener Grab laeuft Combo je Sekunde
-   const gd=held.grab?trickDir():'';
-   const gn=gd===''?'INDY GRAB':gd==='u'?'JAPAN AIR':gd==='d'?'TAILGRAB':gd==='l'?'STALEFISH':
-            gd==='r'?'INDY NOSEBONE':gd==='ul'?'METHOD':gd==='ur'?'ROCKET AIR':gd==='dl'?'MADONNA':
-            gd==='dr'?'BENIHANA':'INDY GRAB';
-   if(!tricks['grab']){tricks['grab']=gn;trickCount++;combo+=(gd===''||gd==='r'||gd==='l')?100:140}
+   if(held.grab)curGrab=spGrab||(TH_GRAB[trickDir()]||'INDY');
+   const gn=curGrab||'INDY';
+   if(!tricks['grab']){tricks['grab']=gn;trickCount++;combo+=TH_GRABPTS[gn]||150}
    else tricks['grab']=gn;
    combo+=dt*160;
-  }
+  }else curGrab='';
+  // UNDERFLIP: Sobald der erste Flip fast durchgelaufen ist, dreht das Board doppelt zurueck
+  if(underQ===1&&Math.abs(flipT-flipA)<.35){underQ=2;flipT-=Math.PI*4;sound.blip(620,900,.09,'square',.08)}
   if(Math.abs(flipT-flipA)>.001)flipA+=Math.sign(flipT-flipA)*Math.min(16*dt,Math.abs(flipT-flipA));
   if(Math.abs(impT-impA)>.001)impA+=Math.sign(impT-impA)*Math.min(15*dt,Math.abs(impT-impA));
   if(spinA<spinT)spinA=Math.min(spinT,spinA+16*dt);
@@ -3274,6 +3460,7 @@ function endRun(){
 function reset(){
  pos.set(0,.17,24);if(GLBDEFS[mapId]){const SP=GLBDEFS[mapId].sp;pos.set(SP[0],SP[1],SP[2])}if(CSPAWN)pos.set(CSPAWN.x,.17,CSPAWN.z);vel.set(0,0,-4);heading=0;fwd=4;vertical=0;air=false;airSpin=0;
  grind=null;grindCd=0;pushT=0;pushCd=0;turnBack=false;deflectT=0;steerS=0;manual=0;wr=null;wrCd=0;hplant=null;ollieStyleT=0;grabFlash=0;
+ lip=null;spGrab='';curGrab='';underQ=0;boardOffX=0;darkRoll=0;seqLast='';lastDirs=[];spMeter=0;
  manBal=0;manT=0;manRel=0;airLean=0;boardLift=0;wPrev=false;sPrev=false;wEdge=-9;sEdge=-9;airMan=0;joyUPrev=false;joyDPrev=false;vertSpd=0;vertOut=false;autoTurn=false;ollieBuf=0;
  shakeT=0;landT=0;boardP=0;lastSurf=heightAt(pos.x,pos.z);
  score=0;time=300;combo=0;tricks={};trickCount=0;flipA=flipT=spinA=spinT=impA=impT=0;airTime=0;
@@ -3989,7 +4176,7 @@ document.querySelectorAll('[data-act]').forEach(b=>{
  /* Getrennte Mobil-Buttons: FLIP (Ring nach unten = Shove-it), GRAB (halten),
     GRIND (Antippen dockt an, im Grind = Switch), OLLIE (Halten lädt, Loslassen springt) */
  const down=e=>{e.preventDefault();
-  if(a==='flip')press.kick=true /* 360 Shove-it / Kickflip zu Indy laeuft ueber die Richtungs-Tabelle */
+  if(a==='flip')press.kick=true /* THPS1-Richtungstabelle: Kick/Heelflip, Impossible, Pop Shove-It, Varials */
   else if(a==='grab')held.grab=true;
   else if(a==='grind'){held.grind=true;press.grind=true}
   else if(a==='ollie')held.ollie=true;
@@ -5114,3 +5301,4 @@ if(EMBED){ // eingebettet in der Spiel-HTML: Overlay über window.MB steuern (St
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" nonce="ybCLprb1lL6sfFqAGkKU6A==" data-cf-beacon='{"version":"2024.11.0","token":"36b4216ae2dc4d5488c249161e71fe1e","spa":2}' crossorigin="anonymous"></script>
 </body>
 </html>
+
