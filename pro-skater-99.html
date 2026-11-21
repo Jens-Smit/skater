@@ -2463,12 +2463,13 @@ function ryBuild(g){
   ryRoot.rotation.y=Math.PI-.3;    /* Remy-Mesh frontet durch Bake-PI rueckwaerts: PI drehen; Stance oeffnet leicht zur Fahrtrichtung */
   ryRoot.traverse(o=>{if(o.isMesh)o.castShadow=true});
   rag.add(ryRoot);                /* in rag: Sturz-Taumeln (Bail) wirkt mit */
-  /* Kopf niedriger statt langgezogen: Der komplette Kopfhub steckt als konstanter
-     Anhebungs-Track in den Clips (Skelett-Offset 70/-29, voll 33 cm Welt-Hub).
-     Er streckte den Hals bis auf Kopf-Groesse; 20 % bleiben erhalten (~6.6 cm
-     Knochen-Anteil, mit Kragen-Freiraum ~8 cm Nacken) -> Hals ~1/3 Kopf-Hoehe,
-     alle Posen konsistent (FK vermessen: Kragen 1.425 m, Haaransatz 1.445 m). */
-  for(const c of g.animations||[]){const tr=(c.tracks||[]).find(t=>t.name&&t.name.endsWith('mixamorigHead.position'));if(tr)for(let i=0;i<tr.values.length;i++)tr.values[i]*=.2}
+  /* Kopfproportionen (Skin-FK nachvermessen): Der komplette Kopfhub steckt als
+     konstanter Anhebungs-Track in den Clips (Skelett-Offset 70/-29, voll 33 cm).
+     Kalibrierung Ride-Pose: Faktor 0.2 -> Augen nur 4.4 cm ueber Schultergelenk
+     (Ohren auf Schulterhoehe, zu tief); 0.845 -> 25.7 cm (Hals kopflang).
+     Faktor 0.35 -> Kinn ~3.5 cm, Augen ~9.3 cm ueber Schultergelenk, Ohren
+     ~4 cm darueber: natuerliche Haltung, alle Posen konsistent. */
+  for(const c of g.animations||[]){const tr=(c.tracks||[]).find(t=>t.name&&t.name.endsWith('mixamorigHead.position'));if(tr)for(let i=0;i<tr.values.length;i++)tr.values[i]*=.35}
   ryMix=new THREE.AnimationMixer(ryRoot);
   for(const k of ['ride','ride2','jump','fall','flip','shove','grab','grind','manual','nmanual','land']){const c=g.animations&&g.animations.find(a=>a.name===k);
    if(!c)continue;const ac=ryMix.clipAction(c);
