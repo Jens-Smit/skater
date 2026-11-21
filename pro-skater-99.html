@@ -36,8 +36,12 @@ body.touch #mobile{display:flex}body.touch #help{display:none}body.touch #pbtn{d
 .mapsel .mtitle{font-size:10px;letter-spacing:2px;color:#69dce8;font-weight:900;margin-right:2px}
 .chip.soon{opacity:.4;cursor:default}
 .chip{padding:7px 10px;font-size:11px;border-radius:14px;background:#152a3dcc;color:#fff;border:1px solid #ffffff88;box-shadow:none}.chip.on{background:#1b986cdd}
-/* Pfeil-Auswahl im Startscreen (Karte & Figur): naechster/vorheriger statt Direktwahl */
-.selrow{display:flex;align-items:center;justify-content:center;gap:12px;margin:10px 0 0;pointer-events:auto;touch-action:pan-y}
+/* Pfeil-Auswahl im Startscreen (Karte & Figur): naechster/vorheriger statt Direktwahl.
+   Karte und Figur stehen NEBENEINANDER (User-Feedback), Beschreibungstexte entfallen. */
+.selgrid{display:flex;gap:26px;justify-content:center;align-items:flex-start;flex-wrap:wrap;pointer-events:auto}
+.selcol{display:flex;flex-direction:column;align-items:center}
+.selcol .ptitle{margin:0 0 2px}
+.selrow{display:flex;align-items:center;justify-content:center;gap:12px;margin:4px 0 0;pointer-events:auto;touch-action:pan-y}
 .selArrow{min-width:44px;height:44px;padding:0 18px;font-size:18px;line-height:1;border-radius:14px;background:#152a3dcc;color:#fff;border:1px solid #ffffff88;cursor:pointer}
 .selArrow:hover{background:#1b4055ee}.selArrow:active{background:#1b986cdd}
 .selName{min-width:170px;text-align:center;font-size:15px;font-weight:900;letter-spacing:2px;color:#fff;text-shadow:0 2px 10px #000c}
@@ -134,12 +138,10 @@ body.touch #mobile{display:flex}body.touch #help{display:none}body.touch #pbtn{d
 </div>
 <div id="rotate"><svg width="110" height="90" viewBox="0 0 24 24" fill="none" stroke="#ffd34e" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="10" width="11" height="6.5" rx="1.2"/><path d="M4.2 5.6a10 10 0 0 1 15.6 0"/><path d="M19.8 8.4V5.6H17"/></svg><div>BITTE GERÄT INS<br>QUERFORMAT DREHEN</div></div>
 <div id="menu"><div class="card"><div class="eyebrow">THE UNDERGROUND SKATE SERIES</div><h1>PRO SKATER<br>99</h1><div class="eyebrow">WAREHOUSE SESSIONS — PRO</div>
-<div class="ptitle" style="margin-top:18px">KARTE WÄHLEN</div>
-<div class="selrow" id="selMap"><button class="selArrow" id="mapPrev" aria-label="Vorherige Karte">◀</button><div class="selName"><span id="mapSelName">PRO PARK</span><span class="selSub" id="mapSelCount"></span></div><button class="selArrow" id="mapNext" aria-label="Nächste Karte">▶</button></div>
-<div class="pdesc" id="mapdesc" style="text-align:center;min-height:16px"></div>
-<div class="ptitle" style="margin-top:14px">FIGUR WÄHLEN</div>
-<div class="selrow" id="selChar"><button class="selArrow" id="charPrev" aria-label="Vorherige Figur">◀</button><div class="selName"><span id="charSelName">MICHELLE</span><span class="selSub" id="charSelSub"></span><span class="selSub" id="charSelCount"></span></div><button class="selArrow" id="charNext" aria-label="Nächste Figur">▶</button></div>
-<div class="pdesc" id="chardesc" style="text-align:center;min-height:14px">MICHELLE — texturiert (three.js-Beispielasset) · REMY — stilisiert, Clip-Quelle/Fallback</div>
+<div class="selgrid" style="margin-top:18px">
+<div class="selcol"><div class="ptitle">KARTE</div><div class="selrow" id="selMap"><button class="selArrow" id="mapPrev" aria-label="Vorherige Karte">◀</button><div class="selName"><span id="mapSelName">PRO PARK</span><span class="selSub" id="mapSelCount"></span></div><button class="selArrow" id="mapNext" aria-label="Nächste Karte">▶</button></div></div>
+<div class="selcol"><div class="ptitle">FIGUR</div><div class="selrow" id="selChar"><button class="selArrow" id="charPrev" aria-label="Vorherige Figur">◀</button><div class="selName"><span id="charSelName">MICHELLE</span><span class="selSub" id="charSelSub"></span><span class="selSub" id="charSelCount"></span></div><button class="selArrow" id="charNext" aria-label="Nächste Figur">▶</button></div></div>
+</div>
 <div class="menubtns"><button id="start" disabled style="opacity:.65;flex:1">3D-GRAFIK WIRD GELADEN …</button><button id="settingsbtn" class="secondary">EINSTELLUNGEN</button><button id="builderbtn" class="secondary">MAP BUILDER</button></div>
 </div></div>
 <div id="settings" style="display:none"><div class="card"><div class="eyebrow">SESSION</div><h1 style="font-size:clamp(26px,5vw,44px)">EINSTELLUNGEN</h1>
@@ -2510,9 +2512,9 @@ function camFollow(dt,snap){
  camH+=angDiff(camH,camT)*(snap?1:(1-Math.exp(-4*dt)));
  const fx=Math.sin(camH),fz=-Math.cos(camH);
  const spdN=clamp(Math.abs(fwd)/18,0,1);
- // Kamera 50 % näher am Charakter
- const back=3.8+spdN*.75;
- const t=V(clamp(pos.x-fx*back,-HALL.x+2,HALL.x-2),pos.y+2.25,clamp(pos.z-fz*back,HALL.zN+2,HALL.zS-2));
+ // Kamera nah am Charakter (User-Feedback 21.11., build 6: noch etwas dichter)
+ const back=3.2+spdN*.7; /* Abstand hinter dem Skater: 3.8 -> 3.2 (Ruhe), Speed-Zuschub .75 -> .7 */
+ const t=V(clamp(pos.x-fx*back,-HALL.x+2,HALL.x-2),pos.y+2.0,clamp(pos.z-fz*back,HALL.zN+2,HALL.zS-2)); /* Hoehe 2.25 -> 2.0: perspektivisch nah, Figur groesser im Bild */
  // Kamera bleibt in der Halfpipe, damit die Wand den Skater nicht verdeckt —
  // aber NUR wenn der Skater selbst in der Pipe fährt. Neben der Pipe (Plattform,
  // Zugangsbank, Boden) darf die Kamera nicht in die Pipe gezogen werden,
@@ -3758,10 +3760,11 @@ function frame(){
  // das transparente Menue liegt darueber (kein Mini-Preview mehr noetig).
  if(!started&&skater){
   const sw=clock.elapsedTime*.12;
-  /* Kamera naeher an der Figur (User-Feedback): Radius 12->7.2, Hoehe 4.8->2.6,
-     Blickpunkt auf Koerpermitte statt Fuesse -> Skater gross im Hintergrund des Menues */
-  camera.position.set(pos.x+Math.sin(sw)*7.2,pos.y+2.6,pos.z-Math.cos(sw)*7.2);
-  camera.lookAt(pos.x,pos.y+1.0,pos.z);
+  /* Kamera nah wie im Spiel (User-Feedback: Charakter mindestens 80 % der Bildhoehe):
+     FOV 65 => sichtbare Hoehe am Charakter = 2*d*tan(32.5) = 1.274*d; bei Orbit-Abstand
+     ~1.5 m deckt der Frame ~1.9 m ab, die ~1.6-m-Figur fuellt >80 % des Screens */
+  camera.position.set(pos.x+Math.sin(sw)*1.45,pos.y+1.3,pos.z-Math.cos(sw)*1.45);
+  camera.lookAt(pos.x,pos.y+.92,pos.z);
  }
  if(renderer)renderer.render(scene,camera);
 }
