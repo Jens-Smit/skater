@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="de">
-<!-- build 2026-11-21-4: Figuren-Wahl im Startscreen (MICHELLE/REMY, beide Instanzen mit eigenen Mixern vorgebaut, Auswahl persistiert), T-Pose-Flash bei langen Flugphasen behoben (PropertyMixer schreibt nur bei Wertaelnderung: Overlay-Basis = Ride-Pose statt Bind), Absprungphysik an Quarter/Halfpipe/Pool zurueck auf Lowpoly-Basis (Prognose-Auto-Pop entfernt, Rim-Band-Auto-Pop bleibt), neues Popsicle-Deck (Planform, Konkav, Kreisbogen-Kicks) mit Lathe-Rollaeln und verbesserten Trucks -->
+<!-- build 2026-11-21-7: SCHOOL exakt als THPS1-Schoolyard nachgebaut (Start auf der Markise mit START-RAIL und Gimme-Planter, Handicap-Rampe mit Handrails, Kicker-Paar, Triangle-Rails, Metall-Schuppen Minigap/Park-Gap, Big Wall + Schragdach-Rails, Winding Halfpipe + Huge-Rail-Bau, 2 Pools mit Schwimm-Rail, Ditch mit Huegeln + 2 Bruecken, GYM mit Roof-Minipark, AC + 2x4 auf die lange Awning, Annex Roof 2 Roof, Dumpster-Rail-Gap, Nord-Pfad mit Hall-Pass-Rail, Mural-Wand), Zonen neu benannt -->
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>PRO SKATER 99 — Warehouse Sessions Pro</title>
@@ -1375,167 +1375,212 @@ function buildWarehouse(){
  }
  addNPC(-30,10,1.2,'b');addNPC(20,24,-.8,'g');addNPC(52,-10,2.4,'b');
 }
-/* MAP 3: SCHOOL — THPS1-Schoolyard (Miami): 2 versenkte Pools mit Rail, Halfpipe zum Playground, Gymnasium mit Korb-Quarter & Roofline, Handicap-Steps mit Kicker-Gap, Start-Rail von der Markise, Suicidal-Mural. */
+/* MAP 3: SCHOOL — exakter THPS1-Schoolyard-Nachbau (Miami) nach der StrategyWiki-Begehung: Start oben auf der
+   Schul-Markise mit START-RAIL und Center-Planter (Gimme Gap), Handicap-Rampe mit langen Handrails und Treppen,
+   Kicker-Paar mit Luecke, gerade + Ellbogen-Triangle-Rails (Rail 2 Rail), Funbox/Tisch/Quarter am Ditch,
+   Metall-Schuppen mit Minigap/Park-Gap-Quarterpaaren, Big Wall (Wallride) + Schragdach-Bau mit zwei Dach-Rails,
+   Winding Halfpipe am Rechteckbau (Huge Rail), West-Quarter, zwei Pools mit Schwimm-Rail (Swim Team),
+   Nord-Pfad mit haengendem Hall-Pass-Rail + Long-Ass-Ledge, Ditch aus Bank-Quarters mit 3 Huegeln und
+   2 Fussgaengerbruecken (Ditch Slap, Over a Footbridge), Gym mit Metal-Bank aufs Roof-Minipark, AC-Einheit mit
+   2x4-Grind auf die lange Awning (Hidden-Tape-Linie), Roof-2-Roof-Annex, Korb-Quarter (500), Dumpster-Rail-Gap,
+   Garbage Ollie und Mural-Wand am Nordpfad. */
 function buildSchool(){
- PIPE.z0=-40;PIPE.z1=-8;PIPE.R=4.6;
- scene.background=new THREE.Color(0xa9cdf2);scene.fog=new THREE.Fog(0xa9cdf2,110,230);
- setLight(0xd4e7ff,0x6a7452,.95,0xfff1cc,2.5,-45,72,-30,5);
+ // WINDING HALFPIPE laengs Nord-Statik zwischen Poolbereich (West) und Hof-Center; Rechteckbau eng an der Ost-Kante (Huge Rail)
+ PIPE.z0=-44;PIPE.z1=-14;PIPE.R=4.2;
+ scene.background=new THREE.Color(0xa9cdf2);scene.fog=new THREE.Fog(0xa9cdf2,110,250);
+ setLight(0xd4e7ff,0x6a7452,.95,0xfff1cc,2.5,-42,74,-28,5);
  MINI.cells={};MINI.on=true;
- // Asphalt-Schulhof mit ZWEI runden Becken-Ausschnitten (THPS: die ersten beiden Pools)
+ // RAMPE mit Y-Basis (Dachkicker, Schragdach): gleiche Physik wie addRamp, aber ueber dem Boden verankert
+ const skyRamp=(x,y,z,w,len,h,rot)=>{
+  RAMPS.push({x,z,w,len,h,rot,y});
+  const g=new THREE.Group();g.position.set(x,y,z);g.rotation.y=rot;PARK.add(g);
+  const surf=box(g,w,.2,Math.hypot(len,h),M('wood',2,2,.85),0,h/2-.08,0);
+  surf.rotation.x=-Math.atan2(h,len);
+  const lip=cylXZ(g,.055,w+.2,mat(0xf5c542,.5,.4),0,h+.03,len/2-.05,10);lip.rotation.z=Math.PI/2;
+ };
+ // 1. BODEN: Asphalt-Schulhof mit zwei runden Pool-Ausschnitten (West) + Rasen hinter der Fassade
  const sh=new THREE.Shape();
  sh.moveTo(-80,-60);sh.lineTo(80,-60);sh.lineTo(80,60);sh.lineTo(-80,60);sh.closePath();
- for(const px of [-50,-34]){
-  const h=new THREE.Path();h.absarc(px,28,7.56,0,Math.PI*2,true);sh.holes.push(h);
+ for(const p of [[-54,36,8.06],[-54,14,7.06]]){
+  const h=new THREE.Path();h.absarc(p[0],p[1],p[2],0,Math.PI*2,true);sh.holes.push(h);
  }
  const floor=new THREE.Mesh(new THREE.ShapeGeometry(sh,24),M('concrete',26/160,20/120,.96));
  floor.material.color.set(0x777b80);
  floor.rotation.x=-Math.PI/2;floor.position.y=-.02;floor.receiveShadow=true;PARK.add(floor);
- // 1. POOL AREA: zwei eingelassene Betonbecken (7,5 m, 3,4 m tief) als fließende Acht, Coping bündig
- addBowl(-50,-28,7.5,3.4);
- addBowl(-34,-28,7.5,3.4);
- for(const c of [[-50,-28],[-34,-28]]){
-  for(let k=0;k<20;k++){
-   const a0=k/20*Math.PI*2,a1=(k+1)/20*Math.PI*2;
-   RAILS.push({ax:c[0]+Math.cos(a0)*7.5,ay:.12,az:c[1]+Math.sin(a0)*7.5,
-               bx:c[0]+Math.cos(a1)*7.5,by:.12,bz:c[1]+Math.sin(a1)*7.5});
-  }
- }
- addRail(-42,.68,-33,-42,.68,-23,{}); // Transfer-Rail in der Pool-Taille (Figure-Eight)
- // 2. WINDING HALFPIPE zwischen Poolbereich und Playground (Transition mit Coping)
- buildPipe();
- // 3. ABFAHRT: lineare Bank zwischen Pools und Pipe mit durchhängender Rail
- addRamp(-19.5,-24,8,8,3.2,-Math.PI/2,false);
- addRail(-22.5,2.9,-24,-16.5,.9,-24,{});
- // 4. HAUPTEINGANG NORD: Eingangspodest, Bänke, Treppen und zwei Handrails (ikonisch)
- for(const x of [-8,-4,0,4,8])kPlace('obstacle-box',x,-52,0);
- kPlace('ramp',0,-48,0,true);
- kPlace('ramp',4,-48,0,true);
- kPlace('ramp',8,-48,0,true);
- kPlace('steps',-8,-44,0);
- kPlace('steps',-4,-44,0);
- addRail(-2,1.62,-50,-2,.75,-42,{ledge:true});
- addRail(-10,1.62,-50,-10,.75,-42,{ledge:true});
- const hrm=mat(0xb8bcc2,.35);
- for(const sx of [-2,-10]){
-  const r=box(PARK,.09,.09,8.65,hrm,sx,1.185,-46);r.rotation.x=.108;
-  cylXZ(PARK,.07,1.62,mat(0x8a8f96,.4),sx,.81,-50,6);
-  cylXZ(PARK,.07,.78,mat(0x8a8f96,.4),sx,.39,-42,6);
- }
- // 5. NORTH QUARTERS beidseits des Eingangs + West-Quarter an der Zaunlinie
- addQuarter(-26,-49,18,7,3.4,0,-1);
- addQuarter(26,-49,18,7,3.4,0,-1);
- addQuarter(-68,-8,16,8,3.6,-1,0);
- // 6. SUICIDAL-MURAL an der Nordwand + Ledge davor
- {const g=new THREE.Group();g.position.set(46,0,-53.6);PARK.add(g);
-  box(g,16,5,.3,mat(0x1a1216,.95),0,2.5,0);
-  for(let k=0;k<7;k++)box(g,1.6+((k*3)%3),.5,.32,mat([0xd94b3a,0x69dce8,0xf5c542,0x7bc67e][k%4],.85),-6+k*2,1+((k*7)%3),.02);
-  box(g,16,.4,.32,mat(0xe8e4da,.9),0,5.1,.02);
- }
- addLedge(46,-51,12,1.2);
- // 7. PLAYGROUND: Funbox, gegenüberliegende Kicker, zwei Pausentische, Manual-Pad
- addFunbox(20,-28,10,8,1.4,.3);
- addRamp(11,-28,4.5,4,1.4,Math.PI/2,false);
- addRamp(29,-28,4.5,4,1.4,-Math.PI/2,false);
- kPlace('bench',12,-42,0);
- kPlace('bench',38,-42,Math.PI/2);
- fpManualPad(20,-16,6,3);
- // 8. GYMNASIUM OST: Dach-Block mit Metallrampe, AC-Einheit mit Holz, Roofline-Rail,
- //    blaue Doppeltüren, Court mit Korb + Quarter unterm Korb, drei Balance Beams
- BOXES.push({x:62,z:10,w:20,d:8,h:5.5});
- box(PARK,20,5.5,8,mat(0x8d9aa5,.9),62,2.75,10);
- addRamp(42,10,5,20,5.5,Math.PI/2,true);
- BOXES.push({x:67,z:11,w:4,d:3,h:7.1});
- box(PARK,4,1.6,3,mat(0x9aa5ad,.6,.5),67,6.3,11);
- box(PARK,4.1,.22,3.1,mat(0x8a6b45,.9),67,7.0,11);
- addRail(53.5,5.8,7,53.5,5.8,13,{});
- {const g=new THREE.Group();g.position.set(51.85,5.5,10);PARK.add(g); // blaue Doppeltüren oben an der Rampe
-  box(g,.2,2.8,1.8,mat(0x2b5f8f,.7),0,1.4,-1.1);
-  box(g,.2,2.8,1.8,mat(0x2b5f8f,.7),0,1.4,1.1);
-  box(g,.06,2.9,3.9,mat(0x22303c,.8),.09,1.45,0);
-  box(g,1.2,.3,3.9,mat(0x39434b,.8),-.5,.15,0);
- }
- const court=new THREE.Mesh(new THREE.PlaneGeometry(20,26),M('concrete',10,10,.96));
- court.material.color.set(0x83878c);
- court.rotation.x=-Math.PI/2;court.position.set(61,.005,28);court.receiveShadow=true;PARK.add(court);
- addQuarter(65,28,16,8,3.2,1,0); // Quarter UNTERM KORB (THPS: hilft beim 500 Punkte Slam Dunk)
- box(PARK,.3,.04,22,mat(0xe8e4da,.9),61,.04,18);
- {const g=new THREE.Group();g.position.set(72.6,0,28);PARK.add(g); // Korb an der Ostwand
-  box(g,.18,1.8,1.3,mat(0xf1f3f4,.4,.4),.3,4.2,0);
-  box(g,.5,.7,.1,mat(0xe63946,.5,.5),0,3.6,0);
-  const rim=cylXZ(g,.09,.8,mat(0xe63946,.4,.6),-.25,3.55,0,10);rim.rotation.z=Math.PI/2;
-  const netM=new THREE.MeshStandardMaterial({color:0xdde3e8,transparent:true,opacity:.6});
-  box(g,.02,.8,.72,netM,-.62,3.15,0);
- }
- for(const bx2 of [54,57,60])addRail(bx2,.5,20,bx2,.5,34,{}); // drei Balance Beams
- box(PARK,1.6,6,38,mat(0x8d9aa5,.9),73.2,3,25);
- WALLS.push({x:73,z:25,w:1.6,d:38,h:6});
- box(PARK,22,6,1.6,mat(0x8d9aa5,.9),63,3,43);
- WALLS.push({x:63,z:43,w:22,d:1.6,h:6});
- for(const p of [[50.8,12],[50.8,42]]){
-  box(PARK,1.2,6,1.2,mat(0x7d8994,.9),p[0],3,p[1]);
-  WALLS.push({x:p[0],z:p[1],w:1.2,d:1.2,h:6});
- }
- kPlace('obstacle-box-grind',48,22,Math.PI/2); // Dumpster-Parkour um die Balance Beams
- kPlace('obstacle-box-grind',64,32,0);
- kPlace('obstacle-box-grind',56,38,Math.PI/2);
- kPlace('bench',52,36,0);
- // 9. STEPS zwischen Playground und Gym: Deck, Stufen, Handicap-Rail, Ledge, Kicker-Gap
- BOXES.push({x:41,z:-2,w:8,d:8,h:1.2});
- box(PARK,8,1.2,8,M('concrete',4,4,.94),41,.6,-2);
- for(let k=0;k<3;k++){
-  BOXES.push({x:35.7-k*1.3,z:-2,w:1.3,d:8,h:.9-.3*k});
-  box(PARK,1.3,.9-.3*k,8,M('concrete',2,2,.94),35.7-k*1.3,(.9-.3*k)/2,-2);
- }
- addRail(37.5,1.4,-2.6,33,.9,-2.6,{});
- addLedge(35,4,7,1.2);
- addRamp(24,-6,4,3.5,1.3,Math.PI/2,false);
- addRamp(34,-6,4,3.5,1.3,-Math.PI/2,false);
- // 10. STREET-PLAZA: zweistöckige Grind-Linie + Manual-Pad + Ledge + Pausentisch
- grindLine(8,4,0,4,4,0,.68,2.6,1);
- grindLine(11.6,4,0,4,4,0,1.5,2.6,0);
- fpManualPad(-14,10,6,3);
- addLedge(-10,-2,8,1.2);
- kPlace('bench',18,16,Math.PI/2);
- kPlace('bench',-33,-12,0);
- // 11. SCHULGEBÄUDE SÜD: Backstein-Fassade, Uhr, Markise + START-RAIL (THPS-Startlinie)
- box(PARK,170,13,4,M('brick',22,2.6,.92),0,6.5,51.5);
+ const back=new THREE.Mesh(new THREE.PlaneGeometry(164,9),mat(0x5a7a42,1));
+ back.rotation.x=-Math.PI/2;back.position.set(0,.01,51.5);back.receiveShadow=true;PARK.add(back);
+ // 2. SCHULGEBEAEUDE SUED: Backsteinfassade mit Uhr + blauen Doppeltueren, Markisen-Deck als START (Spawn oben)
+ box(PARK,160,11,6,M('brick',26,2.4,.92),0,5.5,47);
+ BOXES.push({x:0,z:47,w:160,d:6,h:11});WALLS.push({x:0,z:47,w:160,d:6,h:11});
  const winM=new THREE.MeshStandardMaterial({color:0x2a4a66,metalness:.3,roughness:.15,emissive:0x0a1a28});
  for(let x=-72;x<=72;x+=18){
   if(Math.abs(x)<12)continue;
-  box(PARK,8,4.2,.3,winM,x,7.6,49.5);
-  box(PARK,8.6,.44,.34,mat(0xe8e4da,.9),x,5.3,49.4);
-  box(PARK,8.6,.44,.34,mat(0xe8e4da,.9),x,9.9,49.4);
+  box(PARK,8,4.2,.3,winM,x,7.6,43.9);
+  box(PARK,8.6,.44,.34,mat(0xe8e4da,.9),x,5.3,43.85);
+  box(PARK,8.6,.44,.34,mat(0xe8e4da,.9),x,9.9,43.85);
  }
- box(PARK,13,5.6,.6,mat(0xded8ca,.92),0,2.8,49.3);
- box(PARK,5.4,4.6,.5,mat(0x31414e,.85),0,2.3,49.1);
- box(PARK,3.6,3.6,.5,mat(0xf3efe4,.9),0,11.3,49.2);
- const clockDisc=cylXZ(PARK,1.15,.34,mat(0x22282e,.8),0,11.3,49.5,20);clockDisc.rotation.x=Math.PI/2;
- {const g=new THREE.Group();g.position.set(0,3.55,46);PARK.add(g); // grüne Markise
-  const aw=box(g,12,.3,7,mat(0x2e7d4f,.85),0,0,0);aw.rotation.x=-.22;
-  for(const px of [-5,5])cylXZ(g,.12,3.1,mat(0x4a545c,.6),px,-1.55,-3,8);
+ box(PARK,4.2,3.9,.5,mat(0xf3efe4,.9),0,8.6,43.9);
+ const clockDisc=cylXZ(PARK,1.1,.34,mat(0x22282e,.8),0,8.6,44.05,20);clockDisc.rotation.x=Math.PI/2;
+ // Markisen-Deck (Start), Kanten-Rails rundum, START-RAIL schraeg in den Platz, Tueren unten an der Deckkante
+ BOXES.push({x:0,z:31,w:68,d:26,h:2.6});
+ box(PARK,68,2.6,26,M('concrete',10,5,.95),0,1.3,31);
+ for(const px of [-34,34])addRail(px,2.85,42,px,2.85,19,{});                 // West-/Ostkante durchgehend
+ addRail(-34,2.85,18.6,-14,2.85,18.6,{});addRail(14,2.85,18.6,34,2.85,18.6,{}); // Nordkante mit Drop-Oeffnung
+ addRail(-8,3.05,17,-8,.95,1,{});                                           // START-RAIL von der Markise (Kicker-Gap-Anflug)
+ for(const dx of [-5.5,5.5])box(PARK,.25,2.9,1.7,mat(0x2b6f9e,.7),dx,4.05,43.7);
+ // HANDICAP-RAMPE West (oben Sued an der Deckkante) mit den zwei langen Handrails
+ addRamp(-22,10.5,8,15,2.6,0,false);
+ addRail(-26,2.9,17.3,-26,.42,3.5,{});
+ addRail(-18,2.9,17.3,-18,.42,3.5,{});
+ // TREPPEN Ost: vier Stufen vom Deck, Mittelhandrail
+ for(let k=0;k<4;k++){
+  const t=[16.4,13.4,10.4,7.4][k],h2=[2.05,1.5,.95,.4][k];
+  BOXES.push({x:15,z:t,w:10,d:3,h:h2});
+  box(PARK,10,h2,3,M('concrete',3,2,.95),15,h2/2,t);
  }
- addRail(0,3.3,42,0,.95,27,{}); // START-RAIL: von der Markise in die Plaza grinden
- // 12. REQUISITEN: Pflanzer, Lampen, Müll, Bäume, Paletten
- fpPlanter(20,26,5,3);
- fpPlanter(-12,38,5,3);
- fpLamp(-24,20);fpLamp(24,-16);fpLamp(52,18);
- fpTrash(-20,-40);fpTrash(48,44);
- for(const t of [[-68,-46],[68,-46],[-68,16],[70,-24],[-60,46]])fpTree(t[0],t[1]);
- kPlace('pallet',-48,-46,0);kPlace('pallet',44,18,Math.PI/2);
- kPlace('plank',-12,32,Math.PI/2);
- // Schüler-Statisten
- addNPC(-12,20,1.5,'g');addNPC(32,-28,2.2,'b');addNPC(-40,-10,-1.2,'g');
- addNPC(58,18,1.8,'b');addNPC(8,32,-2.5,'g');addNPC(-24,2,.8,'b');
- // 13. PARKZAUN & AUFFANGWÄNDE (Eingang und Quarter-Bereiche offen)
- for(let x=-76;x<=-38;x+=4)kPlace('fence',x,-54,0);
- for(let x=38;x<=76;x+=4)kPlace('fence',x,-54,0);
- for(let z=-52;z<=-22;z+=4)kPlace('fence',-76,z,Math.PI/2);
- for(let z=4;z<=52;z+=4)kPlace('fence',-76,z,Math.PI/2);
- for(let z=-52;z<=52;z+=4)kPlace('fence',76,z,Math.PI/2);
+ addRail(15,2.7,17.4,15,.55,6.6,{});
+ // 3. CENTER-PLANTER (Gimme Gap: Markisen-Sprung auf die Kante) + Pausentische + Triangle-Rails in der Plaza
+ fpPlanter(0,1,8,20);
+ kPlace('bench',26,10,0);                          // Tisch 1: U-Turn nach dem Start
+ kPlace('bench',-52,-2,Math.PI/2);                 // Tisch 2: Ecke zum Poolweg
+ kPlace('bench',-38,-16,0);                        // Tisch 3 nahe der Kicker
+ kPlace('bench',63,-11,0);                         // Tisch 4: GYM-seitig hinter der Bruecke
+ for(let i=0;i<5;i++)kPlace('rail-low',-40+i*4,6,Math.PI/2); // gerade Triangle-Rail (A-Zone mittig)
+ kPlace('rail-low',-18,2,0);kPlace('rail-low',-18,-2,0);      // Ellbogen-Schenkel
+ kPlace('rail-curve',-18,4,Math.PI/2);            // 90-Grad-Bogen nach Ost
+ kPlace('rail-low',-14,2,Math.PI/2);              // Ellbogen-Arm
+ // 4. HOF-CENTER: zwei grosse Kicker gegenueber (K-Luecke) + Funbox/Tisch/Quarter-Cluster am Ditch
+ addRamp(-27,-18,7,7,2.1,Math.PI,true);
+ addRamp(-27,-29,7,7,2.1,0,true);
+ addFunbox(32,-4,7,6,1.25,.3);
+ kPlace('bench',38,-9,Math.PI/2);                 // Tisch 5 zwischen Funbox und Quarter (Funbox To Table)
+ addQuarter(36,-4,10,5,2.3,1,0);                  // Quarter mit Blick in den Ditch
+ // 5. METALL-SCHUPPEN Ost-Plaza: zwei Quarterpaare (Minigap klein / Park Gap gross), Dachkanten grindbar
+ box(PARK,12,2.6,6,mat(0x7d8a94,.7,.5),38,1.3,11);
+ BOXES.push({x:38,z:11,w:12,d:6,h:2.6});WALLS.push({x:38,z:11,w:12,d:6,h:2.6});
+ addRail(32.4,2.78,8.4,43.6,2.78,8.4,{});
+ addRail(32.4,2.78,13.6,43.6,2.78,13.6,{});
+ addQuarter(32.5,3,4,5,2.5,0,1);                   // Minigap: 1,5 m Luecke
+ addQuarter(38,3,4,5,2.5,0,1);
+ addQuarter(46,3,4,5,2.5,0,1);                     // Park Gap: 3 m Luecke
+ addQuarter(53,3,4,5,2.5,0,1);
+ // 6. BIG WALL am Hof-West-Nord (Wallride-Wand, Top-Ledge) + Schragdach-Bau dahinter mit zwei Dach-Rails
+ box(PARK,18,3.4,1.4,M('brick',4,1,.92),-34,1.7,-40);
+ WALLS.push({x:-34,z:-40,w:18,d:1.4,h:3.4});
+ RAILS.push({ax:-42.9,ay:3.56,az:-40,bx:-25.1,by:3.56,bz:-40,ledge:true});
+ addRamp(-34,-32.8,5,5.5,3.1,Math.PI,true);        // Kicker auf die Top-Ledge der Wand
+ box(PARK,20,2.3,5.5,M('brick',3,1,.92),-32,1.15,-44.25);
+ BOXES.push({x:-32,z:-44.25,w:20,d:5.5,h:2.3});WALLS.push({x:-32,z:-44.25,w:20,d:5.5,h:2.3});
+ skyRamp(-32,2.3,-44.5,19,2.6,.9,Math.PI);        // Schragdach 2,3 -> 3,2 m gen Norden
+ addRail(-41.6,2.42,-43.3,-41.6,3.2,-45.8,{});
+ addRail(-22.4,2.42,-43.3,-22.4,3.2,-45.8,{});
+ // 7. WEST: zwei versenkte Pools (gross 3,2 m / klein 2,8 m), Coping-Ringe grindbar, Schwimm-Rail in der
+ //    Rim-Luecke (E- und 500-Zone), West-Quarter als Rueckgabe
+ addBowl(-54,-36,8,3.2);
+ addBowl(-54,-14,7,2.8);
+ for(const c of [[-54,-36,8],[-54,-14,7]]){
+  for(let k=0;k<24;k++){
+   const a0=k/24*Math.PI*2,a1=(k+1)/24*Math.PI*2;
+   RAILS.push({ax:c[0]+Math.cos(a0)*c[2],ay:.12,az:c[1]+Math.sin(a0)*c[2],
+               bx:c[0]+Math.cos(a1)*c[2],by:.12,bz:c[1]+Math.sin(a1)*c[2]});
+  }
+ }
+ addRail(-54,.55,-27.6,-54,.55,-21.4,{});          // Schwimm-Rail zwischen den beiden Rims (Swim Team)
+ addQuarter(-38.5,-14,32,6,3.2,-1,0);             // West-Quarter: Absprung gen Pool
+ // 8. WINDING HALFPIPE + kleines Rechteckgebaeude dicht an der Ost-Kante (Huge Rail an der Westdachkante)
+ buildPipe();
+ box(PARK,12,4.3,26,M('brick',3,3.4,.92),21,2.15,-29);
+ BOXES.push({x:21,z:-29,w:12,d:26,h:4.3});WALLS.push({x:21,z:-29,w:12,d:26,h:4.3});
+ addRail(15.2,4.45,-41.5,15.2,4.45,-16.5,{});
+ addRail(26.8,4.42,-41.5,26.8,4.42,-16.5,{});
+ // 9. DITCH Ost: Bank-Quarters als Kanalwaende (2,1 m), drei Huegel im Grund, zwei Fussgaengerbruecken
+ addQuarter(42,-36,40,4,2.1,1,0);
+ addQuarter(56,-36,40,4,2.1,-1,0);
+ for(const hz of [-25,-37,-49]){
+  addRamp(49,hz+1.25,6,2.5,1,Math.PI,false);      // Huegel-Nordflanke
+  addRamp(49,hz-1.25,6,2.5,1,0,false);            // Huegel-Suedflanke (First bei hz)
+ }
+ for(const bz of [-30,-42]){
+  BOXES.push({x:47.5,z:bz,w:15,d:3.6,h:2.15});
+  box(PARK,15,2.15,3.6,M('concrete',4,2,.95),47.5,1.075,bz);
+  addRail(40.2,2.32,bz-1.8,54.8,2.32,bz-1.8,{ledge:true}); // Bruecken-Coping beidseitig
+  addRail(40.2,2.32,bz+1.8,54.8,2.32,bz+1.8,{ledge:true});
+ }
+ addRamp(35,-27,5,6,2.4,Math.PI/2,true);           // Ditch Slap: Absprung gen GYM-Ufer
+ addRamp(35,-45,5,6,2.4,Math.PI/2,true);
+ // 10. GYMNASIUM Ost: Korpus mit Metalldock, Sued-Bank aufs Dach (Roof-Minipark), Dachkicker zur AC-Einheit,
+ //     2x4-Grind von der AC auf die lange AWNING, Korridor mit Pflanzerreihen unterm Awning-Vordach
+ box(PARK,16,6.4,22,mat(0x8d9aa5,.85),68,3.2,-40);
+ BOXES.push({x:68,z:-40,w:16,d:22,h:6.4});WALLS.push({x:68,z:-40,w:16,d:22,h:6.4});
+ box(PARK,16.4,.5,22.4,mat(0x5d6a74,.78),68,6.65,-40);
+ addRamp(65,-21,8,16,6.4,Math.PI,true);            // Metal-Bank: vom Hof aufs Roof-Minipark
+ skyRamp(63.5,6.4,-40.5,7,7,2.7,Math.PI/2);       // Dachkicker, zeigt auf die AC-Einheit
+ BOXES.push({x:71,z:-40.5,w:4,d:3,h:9.0});WALLS.push({x:71,z:-40.5,w:4,d:3,h:9.0});
+ box(PARK,4,2.6,3,mat(0x9aa5ad,.6,.5),71,7.7,-40.5);
+ box(PARK,4.16,.18,3.16,mat(0x8a6b45,.9),71,9.09,-40.5); // Holzdeckel (2x4-Auflager)
+ addRail(71,9.22,-42.2,58.4,3.35,-50.3,{});       // 2x4: von der AC herunter auf die Awning-Spitze
+ BOXES.push({x:58,z:-33,w:5,d:36,h:3.05});        // Lange AWNING am GYM-Westfluegel
+ box(PARK,5.2,.22,36.4,mat(0x2e7d4f,.75,.3),58,2.94,-33);
+ addRail(55.6,3.22,-50.5,55.6,3.22,-15.5,{ledge:true}); // Awning-Coping beidseitig
+ addRail(60.4,3.22,-50.5,60.4,3.22,-15.5,{ledge:true});
+ for(const dz of [-35.9,-34.1])box(PARK,.18,2.6,1.6,mat(0x2b6f9e,.75),59.85,1.3,dz); // GYM-Eingangstuer
+ fpPlanter(58,-20,3.4,5);                          // zwei Pflanzerreihen vor dem Eingang
+ fpPlanter(58,-26,3.4,5);
+ // Roof-2-Roof: kleiner Annex an der GYM-Nordwest-Ecke mit zwei Dach-Rails
+ box(PARK,8,4.3,6,mat(0x8d9aa5,.85),61,2.15,-54);
+ BOXES.push({x:61,z:-54,w:8,d:6,h:4.3});WALLS.push({x:61,z:-54,w:8,d:6,h:4.3});
+ addRail(57.3,4.48,-56.8,57.3,4.48,-51.2,{});
+ addRail(64.7,4.44,-56.8,64.7,4.44,-51.2,{});
+ // Dumpster-Rail-Gap + Garbage Ollie an der Muellzone
+ for(const p of [[69,-54.5],[73.5,-55]]){
+  box(PARK,2.6,1.3,1.5,mat(0x3f5a45,.85),p[0],.65,p[1]);
+  BOXES.push({x:p[0],z:p[1],w:2.6,d:1.5,h:1.3});WALLS.push({x:p[0],z:p[1],w:2.6,d:1.5,h:1.3});
+ }
+ addRail(66.2,1.42,-53.9,70.8,1.42,-55.1,{});
+ addRail(71.4,1.42,-54.1,75.8,1.42,-55.7,{});
+ box(PARK,2.6,1.3,1.5,mat(0x6b4f3a,.85),75,.65,-49.8);
+ BOXES.push({x:75,z:-49.8,w:2.6,d:1.5,h:1.3});WALLS.push({x:75,z:-49.8,w:2.6,d:1.5,h:1.3});
+ // 11. GYM-HOF Sued: Beton-Quarter unterm Korb (500-Linie) + Korb an der Ostwand
+ const court=new THREE.Mesh(new THREE.PlaneGeometry(20,26),M('concrete',10,10,.96));
+ court.material.color.set(0x83878c);
+ court.rotation.x=-Math.PI/2;court.position.set(67,.005,3);court.receiveShadow=true;PARK.add(court);
+ addQuarter(61,8,12,6,2.9,1,0);
+ {const g=new THREE.Group();g.position.set(76.4,0,8);PARK.add(g);
+  box(g,.18,2.1,1.3,mat(0xf1f3f4,.4,.4),.3,3.7,0);
+  box(g,.5,.8,.1,mat(0xe63946,.5,.5),0,3.1,0);
+  const rim=cylXZ(g,.09,.8,mat(0xe63946,.4,.6),-.25,3.05,0,10);rim.rotation.z=Math.PI/2;
+  const netM=new THREE.MeshStandardMaterial({color:0xdde3e8,transparent:true,opacity:.6});
+  box(g,.02,.8,.72,netM,-.62,2.65,0);
+ }
+ // 12. NORD-PFAD zwischen GYM und POOLS: Grasstreifen, haengender Hall-Pass-Rail, Long-Ass-Ledge, Einstiegs-Quarter
+ const pathG=new THREE.Mesh(new THREE.PlaneGeometry(56,7),mat(0x5a7a42,1));
+ pathG.rotation.x=-Math.PI/2;pathG.position.set(-16,.01,-54.5);pathG.receiveShadow=true;PARK.add(pathG);
+ addQuarter(-48,-54.5,10,4,2.5,1,0);
+ addRail(-40,2.9,-54.5,8,1.4,-54.5,{});           // Hall-Pass-Rail schraeg ueber dem Pfad
+ addLedge(-16,-49.6,52,1.2);                      // Long-Ass-Ledge am Suedrand des Pfads
+ // 13. MURAL-WAND am Nordpfad (abstrakte Farbubbungen in Anlehnung an das THPS-Schulmural)
+ {const g=new THREE.Group();g.position.set(-50,0,-57.2);PARK.add(g);
+  box(g,38,5,.3,mat(0x1a1216,.95),0,2.5,0);
+  for(let k=0;k<11;k++)box(g,2.4+((k*3)%3),.5,.32,mat([0xd94b3a,0x69dce8,0xf5c542,0x7bc67e][k%4],.85),-16+k*3.1,.9+((k*7)%3),.02);
+  box(g,38,.4,.32,mat(0xe8e4da,.9),0,5.1,.02);
+  WALLS.push({x:-50,z:-57.2,w:38,d:.9,h:5});
+ }
+ // 14. ZAEUNE, GRENZWAENDE, REQUISITEN, STATISTEN
+ for(let x=-76;x<=-46;x+=4)kPlace('fence',x,-54,0); // Mural-Gasse offen
+ for(let x=14;x<=76;x+=4)kPlace('fence',x,-54,0);   // Nord-Pfad offen halten
+ for(let z=-52;z<=52;z+=4)kPlace('fence',-76,z,Math.PI/2);
+ for(let z=-16;z<=52;z+=4)kPlace('fence',76,z,Math.PI/2); // OstZaun suedwaerts (GYM deckt die Nordflanke)
  BOXES.push({x:0,z:-58.6,w:170,d:2,h:8});
  BOXES.push({x:0,z:54,w:170,d:2,h:7});
  BOXES.push({x:-77,z:0,w:1.4,d:104,h:7});
  BOXES.push({x:77,z:0,w:1.4,d:104,h:7});
+ fpLamp(-28,20);fpLamp(46,0);fpLamp(60,16);fpLamp(-48,2);fpLamp(-68,-6);
+ fpTrash(-14,4);fpTrash(40,10);fpTrash(60,2);fpTrash(-52,-4);
+ fpTree(-40,51.8);fpTree(30,52);fpTree(72,14);fpTree(-72,-12);fpTree(-68,-52);
+ kPlace('pallet',-8,-34,0);kPlace('pallet',29,-20,Math.PI/2);
+ kPlace('plank',12,-12,Math.PI/2);
+ addNPC(-12,6,1.5,'g');addNPC(24,4,-.8,'b');addNPC(-30,-37.5,2.6,'g');
+ addNPC(40,-26,-1.2,'b');addNPC(64,8,-1.2,'b');addNPC(-52,-50,.9,'g');
  basePlate(0x50584c);
 }
 /* ---- MAP 6: MINI PARK (Kenney "Mini Skate"-Modelle, CC0, kenney.nl) ---- */
@@ -2563,16 +2608,20 @@ function updateZone(){
   else if(Math.abs(pos.x)>54)z='SIDE QUARTER';
  }
  else if(mapId==='school'){z='SCHOOLYARD';
-  if(pos.x>-66&&pos.x<-24&&pos.z>-38&&pos.z<-18)z='POOL AREA';
+  if(pos.z>17.6&&pos.y>2.2&&Math.abs(pos.x)<36)z='START CANOPY';
   else if(pos.z>PIPE.z0&&pos.z<PIPE.z1&&Math.abs(pos.x)<PIPE.R+5)z='WIND PIPE';
-  else if(pos.x>4&&pos.x<46&&pos.z>-48&&pos.z<-14)z='PLAYGROUND';
-  else if(pos.x>48&&pos.x<74&&pos.z>14&&pos.z<43)z='GYM';
-  else if(pos.x>50&&pos.x<74&&pos.z>4&&pos.z<15&&pos.y>4.5)z='GYM ROOF';
-  else if(pos.z<-44&&pos.z>-55&&Math.abs(x)<14)z='MAIN ENTRANCE';
-  else if(pos.x>38&&pos.x<54&&pos.z<-40)z='MURAL';
-  else if(pos.z>38&&Math.abs(x)<8)z='AWNING';
-  else if(pos.x>-4&&pos.x<20&&pos.z>-4&&pos.z<10)z='STREET PLAZA';
-  else if(pos.x<-44&&pos.z>-20&&pos.z<4)z='WEST QUARTER';
+  else if(pos.z<-50&&pos.x<-40)z='MURAL WALL';
+  else if(pos.z<-48&&pos.x<41)z='NORTH PATH';
+  else if(pos.y>5.8&&pos.x>57&&pos.z<-26)z='GYM ROOF';
+  else if(pos.z<-51&&pos.x>55&&pos.y>3.4)z='ANNEX ROOF';
+  else if(pos.x>54&&pos.x<62&&pos.z<-14&&pos.z>-52&&pos.y>2.4)z='AWNING';
+  else if(pos.x>39&&pos.x<55&&pos.z<-12)z='DITCH';
+  else if(pos.x>56&&pos.z>-53&&pos.y<4)z='GYM GROUNDS';
+  else if(pos.x<-42&&pos.z<-4)z='POOL AREA';
+  else if(pos.x>-46&&pos.x<-20&&pos.z>-50&&pos.z<-36)z='BIG WALL';
+  else if(pos.x>13&&pos.x<29&&pos.z>-44&&pos.z<-14)z='PIPE HOUSE';
+  else if(pos.x>28&&pos.x<58&&pos.z>0&&pos.z<16)z='THE SHED';
+  else if(pos.z>16)z='START PLAZA';
  }
  else if(mapId==='minipark'){z='MINI PARK';
   if(pos.x>-58&&pos.x<-34&&pos.z>-50&&pos.z<-26)z='POOL BOWL';
