@@ -1,10 +1,10 @@
 # PRO SKATER 99 - Warehouse Sessions Pro
 
-Skateboard-Spiel (three.js) als eigenstaendige HTML-Datei mit Neigungsphysik, Tricks, Vert-Rampen, Bowls, eingebettetem Map Builder und E2E-Tests. Der Skater wird als echtes 3D-Charaktermodell angezeigt (Mixamo-Charakter "Remy", siehe unten).
+Skateboard-Spiel (three.js) als eigenstaendige HTML-Datei mit Neigungsphysik, Tricks, Vert-Rampen, Bowls, eingebettetem Map Builder und E2E-Tests. Der Skater wird als echtes 3D-Charaktermodell angezeigt (Mixamo-Charakter "Remy", siehe unten). Der Startbildschirm liegt transparent ueber der Live-3D-Szene (Karten-Auswahl ohne Mini-Vorschauen).
 
 ## Spielen
 
-`pro-skater-99.html` herunterladen oder raw oeffnen und im Browser starten. Kein Build, keine Installation; three.js ist eingebettet. Das Spiel laedt die Spielfigur und optionale Assets beim Start nach (Internetverbindung noetig, sonst greift der stilisierte Fallback-Skater). Am zuverlaessigsten ist die Raw-URL:
+`pro-skater-99.html` herunterladen oder raw oeffnen und im Browser starten. Kein Build, keine Installation; three.js ist eingebettet. Das Spiel laedt die Spielfigur (Remy) und optionale Assets beim Start nach (Internetverbindung noetig; bis zum Laden bzw. bei Ladefehler laeuft das Board ohne Figur - Ersatzcharaktere sind entfernt). Am zuverlaessigsten ist die Raw-URL:
 
     https://raw.githubusercontent.com/Jens-Smit/skater/main/pro-skater-99.html
 
@@ -68,6 +68,5 @@ Lokal ausfuehren:
 
 - Spielcode und Map Builder: MIT (siehe LICENSE)
 - three.js: MIT, eingebettet in den HTML-Dateien
-- Quaternius Universal Mannequin + Universal Animation Library (CC0): Fallback-Charakter als Fallback, wird per CDN geladen
 - Kenney-Assets (CC0): eingebaute Park- und Requisitenmodelle
 - Mixamo (Adobe): Charakter "Remy" samt Animationen (Skateboarding, Jumping Up, Falling to Landing), mit eigenem Adobe-Konto heruntergeladen, offline konvertiert und als Teil des Spiels integriert. Da Adobe-Mixamo-Inhalte nicht eigenstaendig weitergegeben werden duerfen, liegen sie nur in Spielform (konvertierte Fragmente in `assets/remy/`) vor; Quell-FBX-Dateien sind bewusst nicht Teil des Repos.
