@@ -36,6 +36,12 @@ body.touch #mobile{display:flex}body.touch #help{display:none}body.touch #pbtn{d
 .mapsel .mtitle{font-size:10px;letter-spacing:2px;color:#69dce8;font-weight:900;margin-right:2px}
 .chip.soon{opacity:.4;cursor:default}
 .chip{padding:7px 10px;font-size:11px;border-radius:14px;background:#152a3dcc;color:#fff;border:1px solid #ffffff88;box-shadow:none}.chip.on{background:#1b986cdd}
+/* Pfeil-Auswahl im Startscreen (Karte & Figur): naechster/vorheriger statt Direktwahl */
+.selrow{display:flex;align-items:center;justify-content:center;gap:12px;margin:10px 0 0;pointer-events:auto;touch-action:pan-y}
+.selArrow{min-width:44px;height:44px;padding:0 18px;font-size:18px;line-height:1;border-radius:14px;background:#152a3dcc;color:#fff;border:1px solid #ffffff88;cursor:pointer}
+.selArrow:hover{background:#1b4055ee}.selArrow:active{background:#1b986cdd}
+.selName{min-width:170px;text-align:center;font-size:15px;font-weight:900;letter-spacing:2px;color:#fff;text-shadow:0 2px 10px #000c}
+.selSub{display:block;font-size:9px;font-weight:400;letter-spacing:1.5px;color:#9fb3c1;margin-top:2px;min-height:11px}
 #balance{display:none;position:absolute;left:50%;bottom:58px;transform:translateX(-50%);width:240px;height:14px;background:#0d1720e0;border:2px solid #f5c542;border-radius:10px;overflow:hidden;z-index:3}#balance.vert{width:14px;height:190px;bottom:auto;top:50%;transform:translate(-50%,-50%)}#balance.vert #balNeedle{width:8px;height:10px;margin-left:-4px;margin-top:-5px}
 #balNeedle{position:absolute;top:2px;left:50%;width:10px;height:8px;margin-left:-5px;background:#37e5ff;border-radius:3px;box-shadow:0 0 6px #37e5ff}
 #spWrap{margin-top:7px}
@@ -129,10 +135,10 @@ body.touch #mobile{display:flex}body.touch #help{display:none}body.touch #pbtn{d
 <div id="rotate"><svg width="110" height="90" viewBox="0 0 24 24" fill="none" stroke="#ffd34e" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="10" width="11" height="6.5" rx="1.2"/><path d="M4.2 5.6a10 10 0 0 1 15.6 0"/><path d="M19.8 8.4V5.6H17"/></svg><div>BITTE GERÄT INS<br>QUERFORMAT DREHEN</div></div>
 <div id="menu"><div class="card"><div class="eyebrow">THE UNDERGROUND SKATE SERIES</div><h1>PRO SKATER<br>99</h1><div class="eyebrow">WAREHOUSE SESSIONS — PRO</div>
 <div class="ptitle" style="margin-top:18px">KARTE WÄHLEN</div>
-<div class="chips" style="justify-content:center;margin:10px 0 0"><button class="chip on" data-map="tutorial">PRO PARK</button><button class="chip" data-map="warehouse">WAREHOUSE</button><button class="chip" data-map="school">SCHOOL</button><button class="chip" data-map="minipark">MINI PARK</button><button class="chip" data-map="funpark">FUN XXL</button></div>
+<div class="selrow" id="selMap"><button class="selArrow" id="mapPrev" aria-label="Vorherige Karte">◀</button><div class="selName"><span id="mapSelName">PRO PARK</span><span class="selSub" id="mapSelCount"></span></div><button class="selArrow" id="mapNext" aria-label="Nächste Karte">▶</button></div>
 <div class="pdesc" id="mapdesc" style="text-align:center;min-height:16px"></div>
 <div class="ptitle" style="margin-top:14px">FIGUR WÄHLEN</div>
-<div class="chips" style="justify-content:center;margin:8px 0 0"><button class="chip" data-char="ch2">MICHELLE</button><button class="chip" data-char="ry">REMY</button></div>
+<div class="selrow" id="selChar"><button class="selArrow" id="charPrev" aria-label="Vorherige Figur">◀</button><div class="selName"><span id="charSelName">MICHELLE</span><span class="selSub" id="charSelSub"></span><span class="selSub" id="charSelCount"></span></div><button class="selArrow" id="charNext" aria-label="Nächste Figur">▶</button></div>
 <div class="pdesc" id="chardesc" style="text-align:center;min-height:14px">MICHELLE — texturiert (three.js-Beispielasset) · REMY — stilisiert, Clip-Quelle/Fallback</div>
 <div class="menubtns"><button id="start" disabled style="opacity:.65;flex:1">3D-GRAFIK WIRD GELADEN …</button><button id="settingsbtn" class="secondary">EINSTELLUNGEN</button><button id="builderbtn" class="secondary">MAP BUILDER</button></div>
 </div></div>
@@ -140,7 +146,7 @@ body.touch #mobile{display:flex}body.touch #help{display:none}body.touch #pbtn{d
 <div class="desc">Kippen steuert auf Mobilgeräten Lenkung und Tempo. Kalibrieren richtet die Nulllage des Geräts neu aus. Sound schaltet die Akustik der Session.</div>
 <div class="chips" style="justify-content:center;margin:14px 0"><button class="chip" data-role="tilt">KIPPEN</button><button class="chip" data-role="cal">KALIBRIEREN</button><button class="chip" data-role="tex">TEXTUREN: ONLINE</button><button class="chip" data-role="snd">SOUND: AN</button></div>
 <button id="setclose">ZURÜCK ZUM MENÜ</button></div></div>
-<div id="pause"><div class="card"><div class="eyebrow">SESSION</div><h1 style="font-size:48px">PAUSE</h1><div id="stats"></div><button id="resume">WEITER SKATEN</button> <button id="restart" class="secondary">NEUSTART</button> <button id="tomenu" class="secondary" style="display:none">ZURÜCK ZUM MENÜ</button></div></div>
+<div id="pause"><div class="card"><div class="eyebrow">SESSION</div><h1 style="font-size:48px">PAUSE</h1><div id="stats"></div><button id="resume">WEITER SKATEN</button> <button id="restart" class="secondary">NEUSTART</button> <button id="tomenu" class="secondary">SPIEL ABRECHNEN</button></div></div>
 <div id="mbroot" style="display:none">
 <div id="mbview"></div>
 
@@ -1985,8 +1991,10 @@ const MATS={};
 /* ============================================================
    SKATEBOARD — echtes Modell: Deck mit Kicks, Trucks, Rollen
    ============================================================ */
+const BOARD_SCALE=.90,BOARD_Y0=-(1-BOARD_SCALE)*.17; /* User-Feedback 21.11.: Board 10% zu gross. Skalierung des VISUELLEN Modells; Rollkontakt bleibt -.17 exakt (Y-Grundversatz), Physik-Rollradius unangetastet. */
 function buildBoard(){
  board=new THREE.Group();skater.add(board);board.position.set(0,0,0);
+ board.scale.setScalar(BOARD_SCALE);
  /* NEUES POPSICLE-DECK (2026-11-21-4): Planform-Taper mit abgerundetem Nose/Tail,
     konkave Gripseite (Kanten +1.8 cm, im Kick auslaufend) und Kicks als Kreisbogen
     (R 1.25, ~21 Grad am Ende) statt drei Boxen. Materialgruppen: oben Grip,
@@ -2133,8 +2141,11 @@ const RY_E=new THREE.Euler(),RY_Q=new THREE.Quaternion(),RY_QI=new THREE.Quatern
 /* Grab-Tricks (THPS1): Richtung → Trick */
 const TH_GRAB={'':'INDY','u':'NOSEGRAB','d':'TAILGRAB','l':'MELON','r':'INDY','ul':'METHOD','ur':'STIFFY','dl':'MADONNA','dr':'BENIHANA'};
 const TH_GRABPTS={'INDY':150,'NOSEGRAB':160,'TAILGRAB':150,'MELON':160,'METHOD':200,'STIFFY':180,'MADONNA':220,'BENIHANA':220};
-/* Board-Pose je Grab: [Pitch, Yaw, Lift, Seitenversatz] */
-const GRABBOARD={'INDY':[-.2,-.28,.12,0],'NOSEGRAB':[-.55,.45,.1,0],'TAILGRAB':[.4,-.35,.06,0],
+/* Board-Pose je Grab: [Pitch, Yaw, Lift, Seitenversatz]
+   NOSEGRAB/TAILGRAB (21.11., FK-kalibriert gegen das 10 % kleinere Board): Nase
+   ragt zur Linken (vordere Hand), Tail zur Rechten (hintere Hand); Lift/OffX
+   fuehren das Deck aktiv an die Hand (Hand-Kontakt FK-vermessen: 0.03/0.03 m). */
+const GRABBOARD={'INDY':[-.2,-.28,.12,0],'NOSEGRAB':[-.42,.42,.08,0],'TAILGRAB':[.45,.30,.10,-.08],
  'MELON':[-.32,.3,.1,0],'METHOD':[-.62,.08,.2,-.15],'STIFFY':[-.15,0,.14,0],
  'MADONNA':[-.5,-.4,.1,-.18],'BENIHANA':[.42,.55,.07,.22],
  'THE 900':[-.3,-.2,.15,0],'CHRIST AIR':[0,1.51,.3,.55],'MCTWIST':[-.5,.35,.15,0]};
@@ -2153,8 +2164,13 @@ const LIPB={axle:[.06,0,0],disaster:[1.1,0,.02],rock:[-.42,.1,.04],noseblunt:[-1
 /* Prozedurale Figur-Overlays (Grad, Euler XYZ, additiv auf den Basis-Clip; achsengleich auf Remy und Michelle) */
 const RY_POSES={
  /* Grab-Familie */
- g_nosegrab:{RightArm:[-18,0,-38],RightForeArm:[-30,0,0],LeftArm:[0,0,22],Head:[-12,10,0]},
- g_tailgrab:{LeftArm:[0,22,30],LeftForeArm:[38,0,0],RightArm:[0,0,-18],Spine2:[8,0,0]},
+ /* NOSEGRAB: LINKE (vordere) Hand packt die hochgezogene Nase, Koerper faltet
+    nach VORN (Hips 26 Grad Vorlage + Wirbelsaeule) — FK-kalibriert am Ride-/Grab-Clip:
+    Hand↔Deckoberflaeche 0.003 m (Grab-Clip t=.38), Boardpose [-.42,.42,.08].
+    TAILGRAB: RECHTE (hintere) Hand packt das hochgedrehte Tail, Koerper rotiert
+    nach HINTEN (Hips -31.5 Grad Ruecklage + Drehung zum Tail) — FK: 0.026 m, Grip-z -.25. */
+ g_nosegrab:{LeftArm:[-23,91.5,-55],LeftForeArm:[-2,14,-24.5],RightArm:[0,0,-22],Hips:[26,0,0],Spine:[28,-14,0],Spine1:[24,0,0],Spine2:[11,0,6],Neck:[-6,0,0],Head:[-10,0,0]},
+ g_tailgrab:{RightArm:[-17,-107,32],RightForeArm:[32,25,20.5],LeftArm:[0,0,22],Hips:[-31.5,-22,0],Spine:[-18.5,-30,0],Spine1:[12,-20,0],Spine2:[-13,-14,17],Neck:[-4,12,0],Head:[-8,10,0]},
  g_melon:{LeftArm:[0,28,34],LeftForeArm:[42,0,0],Spine2:[12,0,0],Head:[-10,0,0]},
  g_indy:{RightArm:[0,-24,-34],RightForeArm:[-40,0,0]},
  g_method:{LeftUpLeg:[42,0,0],RightUpLeg:[42,0,0],LeftLeg:[-55,0,0],RightLeg:[-55,0,0],Spine:[-14,0,0],Spine2:[-20,0,0],LeftArm:[-14,0,36],RightArm:[0,0,26],Head:[6,0,0]},
@@ -2182,7 +2198,7 @@ const RY_POSES={
  lip_noseblunt:{Spine:[-16,0,0],Spine2:[-20,0,0],LeftArm:[0,0,58],RightArm:[0,0,-58],Head:[-24,0,0]},
  lip_blunt:{Spine:[-18,0,0],Spine2:[-22,0,0],LeftArm:[0,0,50],RightArm:[0,0,-50],Head:[-28,0,0]}
 };
-const RY_BONES=['Spine','Spine1','Spine2','Neck','Head','LeftArm','RightArm','LeftForeArm','RightForeArm','LeftHand','RightHand','LeftUpLeg','RightUpLeg','LeftLeg','RightLeg','LeftFoot','RightFoot'];
+const RY_BONES=['Hips','Spine','Spine1','Spine2','Neck','Head','LeftArm','RightArm','LeftForeArm','RightForeArm','LeftHand','RightHand','LeftUpLeg','RightUpLeg','LeftLeg','RightLeg','LeftFoot','RightFoot'];
 
 /* ---------- Tricks & Punkte ---------- */
 function addTrick(key,name,pts){if(!tricks[key])trickCount++;tricks[key]=name;combo+=pts;if(pts>0)spMeter=Math.min(1,spMeter+pts*.00055)}
@@ -2478,7 +2494,7 @@ function updateBoardVisual(dt){
  boardOffX=damp(boardOffX,wantOffX,10,dt);                                  /* Grab-Ausleger: Benihana/Christ Air */
  darkRoll=damp(darkRoll,(grind&&grind.type==='dark')?Math.PI:0,7,dt);      /* DARKSLIDE: Board aufs Griptape drehen */
  board.position.x=boardOffX;
- board.position.y=boardLift;
+ board.position.y=boardLift+BOARD_Y0; /* Grundversatz: Rollen fuetten trotz 10%-Verkleinerung den Boden exakt */
  board.rotation.set(boardP+impA,spinA+gyaw,flipA+(wr?-.5:0)+(hplant?.15:0)+darkRoll);
  for(const w of wheels)w.rotation.x-=fwd*dt/.058;
  if(frontTruck)frontTruck.rotation.y=damp(frontTruck.rotation.y,steerS*.3,12,dt);
@@ -2806,23 +2822,29 @@ function ryApplySel(){
  if(ryRoot.parent!==rag)rag.add(ryRoot);
  uiCharChips();
 }
-function charSelect(b){
- rySel=b.dataset.char;
+function charSelSet(nm){
+ rySel=nm;charIdx=Math.max(0,CHARLIST.indexOf(nm));
  try{localStorage.setItem('ps99char',rySel)}catch(e){}
  ryApplySel();
 }
-function uiCharChips(){
- document.querySelectorAll('[data-char]').forEach(x=>{
-  const nm=x.dataset.char,has=!!ryChars[nm];
-  x.classList.toggle('on',nm===rySel);
-  x.style.opacity=has?'':'.45';
-  x.title=has?'':(nm==='ch2'?'wird geladen …':'(noch nicht geladen)');
- });
+const CHARLIST=['ch2','ry'],charIdxInit=Math.max(0,CHARLIST.indexOf(rySel));
+let charIdx=charIdxInit;
+function charName(nm){return nm==='ch2'?'MICHELLE':(nm==='ry'?'REMY':'?')}
+function charGo(d){charSelSet(CHARLIST[(charIdx+d+CHARLIST.length)%CHARLIST.length])}
+function uiCharChips(){ /* neue Auswahl-UI: Name + Zusatz statt Chips */
+ const nm=$('charSelName'),sub=$('charSelSub');
+ if(nm){nm.textContent=charName(rySel);nm.style.opacity=ryChars[rySel]?'':'.6'}
+ if(sub)sub.textContent=ryChars[rySel]?'':(rySel==='ch2'?'WIRD GELADEN …':'');
+ const ct=$('charSelCount');
+ if(ct)ct.textContent=CHARLIST.length>1?((charIdx+1)+' / '+CHARLIST.length):'';
  const cd=$('chardesc');
  if(cd)cd.textContent=ryChars.ch2?'MICHELLE — texturiert (three.js-Beispielasset, Mixamo-Rig) · REMY — stilisiert, Clip-Quelle':
   'MICHELLE LÄDT — vorübergehend REMY aktiv';
 }
-document.querySelectorAll('[data-char]').forEach(b=>b.addEventListener('click',()=>charSelect(b)));
+document.querySelectorAll('[data-char]').forEach(b=>b.addEventListener('click',()=>charSelSet(b.dataset.char)));
+$('charPrev').addEventListener('click',()=>charGo(-1));
+$('charNext').addEventListener('click',()=>charGo(1));
+bindSwipe($('selChar'),charGo);
 function ryUpdate(dt){
  if(!ryMix)return; /* Remy noch nicht geladen: Board laeuft ohne Figur */
  /* SWITCH/Fakie: Beim Rueckwaertsrollen (turnBack, z.B. nach Ollie 180) dreht die Figur weich um 180 Grad zur Fahrtrichtung (Board rollt rueckwaerts). */
@@ -3685,7 +3707,7 @@ function reset(){
  bail.on=false;bail.phase='';
  if(board){
   if(board.parent!==skater){skater.attach(board)}
-  board.position.set(0,0,0);board.rotation.set(0,0,0);
+  board.position.set(0,BOARD_Y0,0);board.rotation.set(0,0,0);
  }
  boardFree=null;
  if(rag)rag.rotation.set(0,0,0);
@@ -3722,7 +3744,7 @@ function togglePause(){
  $('pause').style.display=paused?'flex':'none';
  $('pause').querySelector('h1').textContent='PAUSE';
  $('resume').style.display='inline-block';
- $('tomenu').style.display='none';
+ $('tomenu').style.display='inline-block'; /* Abbrechen auch im Pause-Menue (Rueckkehr zum Hauptmenue) */
  clock.getDelta();
 }
 function frame(){
@@ -3736,8 +3758,10 @@ function frame(){
  // das transparente Menue liegt darueber (kein Mini-Preview mehr noetig).
  if(!started&&skater){
   const sw=clock.elapsedTime*.12;
-  camera.position.set(pos.x+Math.sin(sw)*12,pos.y+4.8,pos.z-Math.cos(sw)*12);
-  camera.lookAt(pos.x,pos.y+.8,pos.z);
+  /* Kamera naeher an der Figur (User-Feedback): Radius 12->7.2, Hoehe 4.8->2.6,
+     Blickpunkt auf Koerpermitte statt Fuesse -> Skater gross im Hintergrund des Menues */
+  camera.position.set(pos.x+Math.sin(sw)*7.2,pos.y+2.6,pos.z-Math.cos(sw)*7.2);
+  camera.lookAt(pos.x,pos.y+1.0,pos.z);
  }
  if(renderer)renderer.render(scene,camera);
 }
@@ -4288,7 +4312,7 @@ function buildCustomMap(str){
  basePlate(0x3f4a4f);
 }
 
-const MAPNAME={tutorial:'PRO PARK'};
+const MAPNAME={tutorial:'PRO PARK',warehouse:'WAREHOUSE',school:'SCHOOL',minipark:'MINI PARK',funpark:'FUN XXL'};
 const MAPDESC={
  tutorial:'Pro Park: Plattform mit Rail, Halfpipe, Bowl, Funboxen, Quarter-Linie im Süden.',
  warehouse:'THPS-Klassiker: Start-Mezzanin mit Doppelschräge, zentrale Halfpipe mit Secret Room, Monster-Rail über der Back-Wall-Quarter, Taxi mit Kickern, Ollie-Channel.',
@@ -4327,44 +4351,70 @@ document.querySelectorAll('[data-role]').forEach(b=>{
   updateMobileUI();
  });
 });
-/* ---------- Map-Auswahl: TUTORIAL · WAREHOUSE · SCHOOL · MINI PARK · FUN XXL ---------- */
-function chipSelect(b){
- if(b.dataset.map===mapId)return;
- mapId=b.dataset.map;
- if(mapId.startsWith('custom:')){ // Builder-Karte aus der Bibliothek laden
+/* ---------- Map-Auswahl: Pfeile ◀/▶ (naechster/vorheriger) statt Direkt-Chips ---------- */
+const MAPBASE=['tutorial','warehouse','school','minipark','funpark'];
+let mapList=MAPBASE.slice(),mapIdx=0;
+function mapNameOf(id){const isCustom=id&&id.startsWith('custom:');return (isCustom?id.slice(7):(MAPNAME[id]||id)).toUpperCase()}
+function uiMapSel(){
+ const nm=$('mapSelName'),ct=$('mapSelCount');
+ if(nm)nm.textContent=mapNameOf(mapList[mapIdx]);
+ if(ct)ct.textContent=mapList.length>1?((mapIdx+1)+' / '+mapList.length):'';
+}
+function chipSelect(b){mapIdx=Math.max(0,mapList.indexOf(b.dataset.map));mapSelect(b.dataset.map)}
+function mapSelect(id){
+ if(id===mapId)return;
+ mapId=id;
+ const isCustom=mapId.startsWith('custom:');
+ if(isCustom){ // Builder-Karte aus der Bibliothek laden
   const nm=mapId.slice(7);
   try{CUSTOMMAPS[nm]=(JSON.parse(localStorage.getItem('ps99mb_maps')||'{}'))[nm]||''}catch(e){CUSTOMMAPS[nm]=''}
  }
- document.querySelectorAll('[data-map]').forEach(x=>x.classList.toggle('on',x===b));
- const isCustom=mapId.startsWith('custom:');
- const mn=$('mapname');if(mn)mn.textContent=(isCustom?mapId.slice(7):(MAPNAME[mapId]||mapId)).toUpperCase();
+ const mn=$('mapname');if(mn)mn.textContent=mapNameOf(mapId);
  const md=$('mapdesc');if(md)md.textContent=isCustom?('Eigene Karte aus dem Map Builder: '+mapId.slice(7)):(MAPDESC[mapId]||'');
+ uiMapSel();
  buildPark();reset();
  if(!started)camera.lookAt(pos.x+.85,pos.y+.72,pos.z);
 }
-document.querySelectorAll('[data-map]').forEach(b=>{
- b.addEventListener('click',()=>chipSelect(b));
-});
-/* CUSTOM: Gespeicherte Builder-Karten als Chips im Startmenü führen.
+function mapGo(d){mapIdx=(mapIdx+d+mapList.length)%mapList.length;mapSelect(mapList[mapIdx])}
+$('mapPrev').addEventListener('click',()=>mapGo(-1));
+$('mapNext').addEventListener('click',()=>mapGo(1));
+/* Wischen (Touch) auf der Auswahlzeile: horizontal = naechste/vorherige Karte
+   (Wischen nach links zieht naechste Karte heran, wie ublich) */
+function bindSwipe(row,fn){
+ if(!row)return;
+ const st={id:0,x:0,y:0,t:0};
+ row.addEventListener('pointerdown',e=>{st.id=e.pointerId;st.x=e.clientX;st.y=e.clientY;st.t=performance.now()});
+ row.addEventListener('pointerup',e=>{
+  if(e.pointerId!==st.id)return;
+  const dx=e.clientX-st.x,dy=e.clientY-st.y,dt=performance.now()-st.t;
+  if(dt<600&&Math.abs(dx)>28&&Math.abs(dx)>Math.abs(dy)*1.2)fn(dx>0?-1:1);
+ });
+}
+bindSwipe($('selMap'),mapGo);
+/* CUSTOM: Gespeicherte Builder-Karten wandern in die Pfeil-Auswahl.
    Erneuert sich nach jedem Schließen des Map Builders (neue/umbenannte Karten). */
 function refreshCustomChips(){
- const anchor=document.querySelector('.chips [data-map]'); // erster Chip = Kartenwahl
- const wrap=anchor?anchor.parentElement:null;
- if(!wrap)return;
- wrap.querySelectorAll('[data-map^="custom:"]').forEach(b=>b.remove());
  let lib={};try{lib=JSON.parse(localStorage.getItem('ps99mb_maps')||'{}')}catch(e){}
- for(const nm of Object.keys(lib)){
-  const b=document.createElement('button');
-  b.className='chip';b.dataset.map='custom:'+nm;b.textContent=nm.toUpperCase();
-  b.addEventListener('click',()=>chipSelect(b));
-  wrap.appendChild(b);
- }
+ mapList=MAPBASE.concat(Object.keys(lib).map(nm=>'custom:'+nm));
+ mapIdx=Math.max(0,mapList.indexOf(mapId));
+ uiMapSel();
 }
 refreshCustomChips();
 window.__refreshChips=refreshCustomChips;
 addEventListener('keydown',e=>{
  if(document.body.dataset.mb)return; // Map Builder ist offen: Eingaben gehören ihm
  const k=e.key.toLowerCase();
+ /* Startbildschirm: Pfeiltasten links/rechts = Karte, hoch/runter = Figur
+    (Alternative zu Wischen/Pfeilbuttons), solange Menue sichtbar und Einstellungen zu */
+ if(!started&&!e.repeat){
+  const menu=$('menu'),set=$('settings');
+  if(menu&&menu.style.display!=='none'&&(!set||set.style.display!=='flex')){
+   if(k==='arrowleft'){mapGo(-1);e.preventDefault();return}
+   if(k==='arrowright'){mapGo(1);e.preventDefault();return}
+   if(k==='arrowup'){charGo(-1);e.preventDefault();return}
+   if(k==='arrowdown'){charGo(1);e.preventDefault();return}
+  }
+ }
  if(!e.repeat){
   if(k===' ')press.ollie=true;
   else if(k==='q')press.kick=true;
